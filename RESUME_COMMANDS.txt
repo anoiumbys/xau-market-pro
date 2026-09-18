@@ -1,0 +1,84 @@
+# XAU Market Pro - Quick Resume Commands
+
+## Current State: Phase M0 Foundation ~70% complete
+Backend models, services, events, jobs, middleware, resources, requests, and 4/10 API controllers done.
+
+## Next Commands to Run
+
+```bash
+cd xau-market-pro
+
+# 1. Backend setup
+cd backend
+composer install
+cp .env.example .env
+php artisan key:generate
+
+# 2. Create migrations (7 tables)
+php artisan make:migration create_users_table --create=users
+php artisan make:migration create_markets_table --create=markets
+php artisan make:migration create_subscriptions_table --create=subscriptions
+php artisan make:migration create_price_alerts_table --create=price_alerts
+php artisan make:migration create_trade_journal_table --create=trade_journal
+php artisan make:migration create_market_parameters_table --create=market_parameters
+php artisan make:migration create_audit_logs_table --create=audit_logs
+
+# 3. Edit each migration file with schema from blueprint
+# 4. Run migrations
+php artisan migrate
+
+# 5. Create seeders
+php artisan make:seeder UserSeeder
+php artisan make:seeder MarketSeeder
+php artisan make:seeder MarketParameterSeeder
+php artisan make:seeder SubscriptionPlanSeeder
+
+# 6. Run seeders
+php artisan db:seed
+
+# 7. Install frontend
+cd ../frontend
+npm install
+
+# 8. Install contracts
+cd ../contracts
+npm install
+
+# 9. Sync contracts (generates TypeScript types)
+npm run sync
+
+# 10. Start dev servers
+# Terminal 1: cd backend && php artisan serve
+# Terminal 2: cd backend && php artisan websockets:serve
+# Terminal 3: cd frontend && npm run dev
+```
+
+## Files to Create Next (in order)
+1. `backend/database/migrations/xxxx_create_users_table.php`
+2. `backend/database/migrations/xxxx_create_markets_table.php`
+3. `backend/database/migrations/xxxx_create_subscriptions_table.php`
+4. `backend/database/migrations/xxxx_create_price_alerts_table.php`
+5. `backend/database/migrations/xxxx_create_trade_journal_table.php`
+6. `backend/database/migrations/xxxx_create_market_parameters_table.php`
+7. `backend/database/migrations/xxxx_create_audit_logs_table.php`
+8. `backend/database/seeders/*.php` (4 seeders)
+9. `backend/app/Http/Controllers/Auth/AuthenticatedSessionController.php`
+10. `backend/app/Http/Controllers/Auth/RegisteredUserController.php`
+11. `backend/app/Http/Controllers/Auth/PasswordResetLinkController.php`
+12. `backend/app/Http/Controllers/Auth/NewPasswordController.php`
+13. `backend/app/Http/Controllers/Api/TradeJournalController.php`
+14. `backend/app/Http/Controllers/Api/ReportController.php`
+15. `backend/app/Http/Controllers/Admin/*.php` (7 controllers)
+16. `frontend/package.json`
+17. `frontend/vite.config.ts`
+18. `frontend/tsconfig.json`
+19. `frontend/tailwind.config.js`
+20. `frontend/src/api/client.ts`
+21. `frontend/src/api/endpoints/*.ts`
+22. `frontend/src/hooks/*.ts`
+23. `frontend/src/stores/*.ts`
+24. `frontend/src/components/**/*.tsx`
+25. `frontend/src/pages/**/*.tsx`
+26. `docker/docker-compose.yml`
+27. `.github/workflows/*.yml` (4 workflows)
+28. `scripts/dev-setup.sh`

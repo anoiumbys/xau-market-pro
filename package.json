@@ -1,0 +1,28 @@
+{
+  "name": "xau-market-pro",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": [
+    "contracts",
+    "backend",
+    "frontend"
+  ],
+  "scripts": {
+    "dev": "turbo run dev",
+    "build": "turbo run build",
+    "test": "turbo run test",
+    "lint": "turbo run lint",
+    "typecheck": "turbo run typecheck",
+    "contracts:sync": "npm run sync --workspace=contracts",
+    "dev:backend": "npm run dev --workspace=backend",
+    "dev:frontend": "npm run dev --workspace=frontend",
+    "dev:ws": "npm run websockets --workspace=backend"
+  },
+  "devDependencies": {
+    "turbo": "^2.0.0"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "packageManager": "npm@10.8.0"
+}

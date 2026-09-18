@@ -1,0 +1,32 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "pipeline": {
+    "dev": {
+      "cache": false,
+      "persistent": true
+    },
+    "build": {
+      "dependsOn": ["^build"],
+      "outputs": ["dist/**", "build/**", "public/build/**"]
+    },
+    "test": {
+      "dependsOn": ["build"],
+      "outputs": ["coverage/**"]
+    },
+    "lint": {
+      "outputs": []
+    },
+    "typecheck": {
+      "dependsOn": ["^build"],
+      "outputs": []
+    },
+    "sync": {
+      "cache": false
+    },
+    "websockets": {
+      "cache": false,
+      "persistent": true
+    }
+  },
+  "globalEnv": ["APP_ENV", "DB_CONNECTION", "REDIS_HOST"]
+}

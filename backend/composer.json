@@ -1,0 +1,82 @@
+{
+  "name": "laravel/laravel",
+  "type": "project",
+  "description": "XAU Market Pro - Backend API",
+  "keywords": ["laravel", "framework"],
+  "license": "MIT",
+  "require": {
+    "php": "^8.2",
+    "laravel/framework": "^11.0",
+    "laravel/sanctum": "^4.0",
+    "laravel/breeze": "^2.0",
+    "beyondcode/laravel-websockets": "^1.15",
+    "pusher/pusher-php-server": "^7.2",
+    "barryvdh/laravel-dompdf": "^3.1",
+    "maatwebsite/excel": "^3.1",
+    "spatie/laravel-permission": "^6.0",
+    "darkaonline/l5-swagger": "^8.0",
+    "openapi-php/openapi-psr7-http-message": "^1.0",
+    "vlucas/phpdotenv": "^5.6",
+    "predis/predis": "^2.2"
+  },
+  "require-dev": {
+    "fakerphp/faker": "^1.23",
+    "laravel/pint": "^1.13",
+    "laravel/sail": "^1.26",
+    "mockery/mockery": "^1.6",
+    "nunomaduro/collision": "^8.0",
+    "pestphp/pest": "^2.34",
+    "pestphp/pest-plugin-laravel": "^2.3",
+    "phpunit/phpunit": "^11.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "App\\": "app/",
+      "Database\\Factories\\": "database/factories/",
+      "Database\\Seeders\\": "database/seeders/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Tests\\": "tests/"
+    }
+  },
+  "scripts": {
+    "post-autoload-dump": [
+      "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
+      "@php artisan package:discover --ansi"
+    ],
+    "post-update-cmd": [
+      "@php artisan vendor:publish --tag=laravel-assets --ansi --force"
+    ],
+    "post-root-package-install": [
+      "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
+    ],
+    "post-create-project-cmd": [
+      "@php artisan key:generate --ansi"
+    ],
+    "dev": [
+      "Composer\\Config::disableProcessTimeout",
+      "nohup php artisan serve --host=0.0.0.0 --port=8000 > storage/logs/serve.log 2>&1 &",
+      "php artisan websockets:serve --host=0.0.0.0 --port=6001"
+    ],
+    "test": "php artisan test --parallel",
+    "test:unit": "php artisan test --filter=Unit",
+    "test:feature": "php artisan test --filter=Feature",
+    "websockets": "php artisan websockets:serve --host=0.0.0.0 --port=6001",
+    "queue": "php artisan queue:work --tries=3 --timeout=60",
+    "schedule": "php artisan schedule:work",
+    "migrate:fresh:seed": "php artisan migrate:fresh --seed",
+    "openapi:generate": "php artisan openapi:generate"
+  },
+  "config": {
+    "optimize-autoloader": true,
+    "preferred-install": "dist",
+    "sort-packages": true,
+    "allow-plugins": {
+      "pestphp/pest-plugin": true
+    }
+  },
+  "minimum-stability": "stable",
+  "prefer-stable": true
+}

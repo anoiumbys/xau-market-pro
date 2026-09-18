@@ -1,0 +1,23 @@
+{
+  "name": "@xau-market/contracts",
+  "version": "1.0.0",
+  "private": true,
+  "main": "types/api.d.ts",
+  "types": "types/api.d.ts",
+  "files": [
+    "types/",
+    "schemas/"
+  ],
+  "scripts": {
+    "sync": "node scripts/sync-contracts.js",
+    "generate:types": "openapi-typescript openapi.yaml -o types/api.d.ts",
+    "generate:zod": "openapi-zod openapi.yaml -o schemas/",
+    "validate": "openapi-validator openapi.yaml"
+  },
+  "devDependencies": {
+    "openapi-typescript": "^7.0.0",
+    "openapi-zod": "^3.0.0",
+    "openapi-validator": "^1.0.0",
+    "yaml": "^2.4.0"
+  }
+}
