@@ -1,0 +1,14 @@
+# XAU Market Pro - Robots.txt
+User-agent: *
+Allow: /
+
+# Disallow private/admin routes
+Disallow: /admin/
+Disallow: /api/
+Disallow: /login
+Disallow: /register
+Disallow: /forgot-password
+Disallow: /reset-password
+
+# Sitemap
+Sitemap: https://xau-market-pro.com/sitemap.xml
