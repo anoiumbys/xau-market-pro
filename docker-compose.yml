@@ -1,0 +1,153 @@
+version: '3.8'
+
+services:
+  # Laravel PHP-FPM Application
+  app:
+    build:
+      context: .
+      dockerfile: docker/php.Dockerfile
+    container_name: xaupro_app
+    working_dir: /var/www
+    volumes:
+      - ./backend:/var/www
+    networks:
+      - xaupro-network
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_started
+    environment:
+      - APP_ENV=local
+      - APP_DEBUG=true
+      - LOG_CHANNEL=stderr
+    restart: unless-stopped
+
+  # Nginx Reverse Proxy
+  nginx:
+    image: nginx:alpine
+    container_name: xaupro_nginx
+    ports:
+      - "8000:80"
+    volumes:
+      - ./backend:/var/www
+      - ./docker/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+    networks:
+      - xaupro-network
+    depends_on:
+      - app
+      - frontend
+    restart: unless-stopped
+
+  # MySQL Database
+  db:
+    image: mysql:8.0
+    container_name: xaupro_db
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+    networks:
+      - xaupro-network
+    environment:
+      MYSQL_DATABASE: xau_market_pro
+      MYSQL_ROOT_PASSWORD: secret
+      MYSQL_USER: xaupro
+      MYSQL_PASSWORD: xaupro_password
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-psecret"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+
+  # Redis Cache & Queue
+  redis:
+    image: redis:alpine
+    container_name: xaupro_redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - xaupro-network
+    command: redis-server --appendonly yes
+    restart: unless-stopped
+
+  # Laravel WebSockets Server
+  websockets:
+    build:
+      context: .
+      dockerfile: docker/php.Dockerfile
+    container_name: xaupro_websockets
+    working_dir: /var/www
+    volumes:
+      - ./backend:/var/www
+    networks:
+      - xaupro-network
+    depends_on:
+      - app
+      - redis
+    command: php artisan websockets:serve --host=0.0.0.0 --port=6001
+    ports:
+      - "6001:6001"
+    restart: unless-stopped
+
+  # Queue Worker
+  queue:
+    build:
+      context: .
+      dockerfile: docker/php.Dockerfile
+    container_name: xaupro_queue
+    working_dir: /var/www
+    volumes:
+      - ./backend:/var/www
+    networks:
+      - xaupro-network
+    depends_on:
+      - app
+      - redis
+      - db
+    command: php artisan queue:work --tries=3 --timeout=60
+    restart: unless-stopped
+
+  # Scheduler
+  scheduler:
+    build:
+      context: .
+      dockerfile: docker/php.Dockerfile
+    container_name: xaupro_scheduler
+    working_dir: /var/www
+    volumes:
+      - ./backend:/var/www
+    networks:
+      - xaupro-network
+    depends_on:
+      - app
+    command: php artisan schedule:work
+    restart: unless-stopped
+
+  # Frontend Vite Dev Server
+  frontend:
+    image: node:20-alpine
+    container_name: xaupro_frontend
+    working_dir: /var/www/frontend
+    volumes:
+      - ./frontend:/var/www/frontend
+    networks:
+      - xaupro-network
+    ports:
+      - "3000:3000"
+    command: sh -c "npm install && npm run dev -- --host 0.0.0.0 --port 3000"
+    environment:
+      - VITE_API_URL=http://localhost:8000/api
+      - VITE_WS_URL=ws://localhost:6001
+    restart: unless-stopped
+
+networks:
+  xaupro-network:
+    driver: bridge
+
+volumes:
+  db_data:
+  redis_data:

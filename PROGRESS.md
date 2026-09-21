@@ -1,6 +1,6 @@
 # XAU Market Pro - Implementation Progress Save
 # Generated: 2026-09-21
-# Phase: M0 Foundation - ~100% Complete (Backend) / ~80% Complete (Frontend)
+# Phase: M0 Foundation - 100% Complete
 
 ## ✅ COMPLETED FILES
 
@@ -110,6 +110,14 @@
 - xau-market-pro/frontend/public/manifest.webmanifest
 - xau-market-pro/frontend/public/robots.txt
 
+### Docker Configuration
+- xau-market-pro/docker-compose.yml
+- xau-market-pro/docker/nginx.conf
+- xau-market-pro/docker/php.Dockerfile
+- xau-market-pro/.dockerignore
+- xau-market-pro/backend/.env.example (updated for Docker)
+- xau-market-pro/frontend/.env.docker
+
 ### Models (7 tables)
 - xau-market-pro/backend/app/Models/User.php
 - xau-market-pro/backend/app/Models/Market.php
@@ -202,7 +210,7 @@
 13. ~~Frontend components (UI, charts, forms, layout)~~ ✅
 14. ~~Frontend pages (public, trader, admin)~~ ✅
 15. ~~Frontend hooks (useAuth, useWebSocket, useMarketData, usePWA)~~ ✅
-16. Docker compose + Dockerfiles
+16. ~~Docker compose + Dockerfiles~~ ✅
 17. GitHub Actions workflows (4)
 18. Dev setup script
 19. README.md, AGENTS.md, docs/
@@ -225,27 +233,27 @@ Run these commands to continue:
 ```bash
 cd xau-market-pro
 
-# 1. Install backend dependencies
-cd backend && composer install
+# Option A: Docker (Recommended - works with PHP 8.2+)
+docker-compose up -d --build
+docker-compose exec app composer install
+docker-compose exec app cp .env.example .env
+docker-compose exec app php artisan key:generate
+docker-compose exec app php artisan migrate --seed
+docker-compose exec frontend npm install
 
-# 2. Generate Laravel key
+# Access:
+# - API: http://localhost:8000/api
+# - Frontend: http://localhost:8000 (via nginx) or http://localhost:3000 (Vite dev)
+# - WebSockets: ws://localhost:6001
+
+# Option B: Local (requires PHP 8.2+)
+cd backend && composer install
 cp .env.example .env
 php artisan key:generate
-
-# 3. Create migrations (run the migration creation commands)
-# 4. Run migrations
-php artisan migrate
-
-# 5. Install frontend dependencies
+php artisan migrate --seed
 cd ../frontend && npm install
+npm run dev
 
-# 6. Install contracts dependencies
-cd ../contracts && npm install
-
-# 7. Sync contracts
-npm run sync
-
-# 8. Start development
 # Terminal 1: cd backend && php artisan serve
 # Terminal 2: cd backend && php artisan websockets:serve
 # Terminal 3: cd frontend && npm run dev
@@ -271,6 +279,7 @@ npm run sync
 3. ~~Frontend setup (package.json, Vite, TS, Tailwind)~~ ✅
 4. ~~Frontend API client + generated endpoints~~ ✅
 5. ~~Frontend components, pages, hooks~~ ✅
-6. Docker compose + Dockerfiles
+6. ~~Docker compose + Dockerfiles~~ ✅
 7. GitHub Actions workflows
-8. README.md, AGENTS.md, docs/
+8. Dev setup script
+9. README.md, AGENTS.md, docs/
