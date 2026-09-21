@@ -8,6 +8,7 @@ use App\Http\Resources\SubscriptionResource;
 use App\Models\Subscription;
 use App\Models\User;
 use App\Events\NewSubscriptionPending;
+use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use OpenApi\Attributes as OA;
 
