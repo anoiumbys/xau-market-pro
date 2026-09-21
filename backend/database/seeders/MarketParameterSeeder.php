@@ -3,22 +3,22 @@
 namespace Database\Seeders;
 
 use App\Models\MarketParameter;
-use App\Models\User;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class MarketParameterSeeder extends Seeder
 {
     public function run(): void
     {
-        $admin = User::where('role', 'admin')->first();
-
-        MarketParameter::create([
-            'id' => 'eeeeeeee-eeee-eeee-eeee-eeeeeeeeeeee',
-            'symbol' => 'XAUUSD',
-            'support_levels' => [2320.00, 2300.00, 2280.00, 2260.00],
-            'resistance_levels' => [2370.00, 2390.00, 2410.00, 2430.00],
-            'updated_by' => $admin->id,
-            'is_active' => true,
+        DB::table("market_parameters")->insert([
+            "id" => "eeeeeeee-eeee-eeee-eeee-eeeeeeeeeeee",
+            "symbol" => "XAUUSD",
+            "support_levels" => json_encode([2320.00, 2300.00, 2280.00, 2260.00]),
+            "resistance_levels" => json_encode([2370.00, 2390.00, 2410.00, 2430.00]),
+            "updated_by" => "11111111-1111-1111-1111-111111111111",
+            "is_active" => true,
+            "created_at" => now(),
+            "updated_at" => now(),
         ]);
     }
 }

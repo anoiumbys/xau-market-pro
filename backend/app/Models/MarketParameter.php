@@ -11,51 +11,45 @@ class MarketParameter extends Model
 {
     use HasFactory;
 
-    protected $table = 'market_parameters';
+    protected $table = "market_parameters";
 
     protected $fillable = [
-        'symbol',
-        'support_levels',
-        'resistance_levels',
-        'updated_by',
-        'is_active',
+        "symbol",
+        "support_levels",
+        "resistance_levels",
+        "updated_by",
+        "is_active",
     ];
 
-    protected function casts(): array
-    {
-        return [
-            'support_levels' => 'array',
-            'resistance_levels' => 'array',
-            'is_active' => 'boolean',
-        ];
-    }
+    protected $casts = [
+        "support_levels" => "array",
+        "resistance_levels" => "array",
+        "is_active" => "boolean",
+    ];
 
-    // Relationships
     public function updater(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'updated_by');
+        return $this->belongsTo(User::class, "updated_by");
     }
 
-    // Scopes
     public function scopeActive($query)
     {
-        return $query->where('is_active', true);
+        return $query->where("is_active", true);
     }
 
     public function scopeForSymbol($query, string $symbol)
     {
-        return $query->where('symbol', strtoupper($symbol));
+        return $query->where("symbol", strtoupper($symbol));
     }
 
-    // Computed attributes
     protected function supportLevels(): Attribute
     {
         return Attribute::make(
             get: function ($value) {
-                return is_array($value) ? array_map('floatval', $value) : [];
+                return is_array($value) ? array_map("floatval", $value) : [];
             },
             set: function ($value) {
-                return array_values(array_filter(array_map('floatval', (array) $value)));
+                return array_values(array_filter(array_map("floatval", (array) $value)));
             }
         );
     }
@@ -64,15 +58,14 @@ class MarketParameter extends Model
     {
         return Attribute::make(
             get: function ($value) {
-                return is_array($value) ? array_map('floatval', $value) : [];
+                return is_array($value) ? array_map("floatval", $value) : [];
             },
             set: function ($value) {
-                return array_values(array_filter(array_map('floatval', (array) $value)));
+                return array_values(array_filter(array_map("floatval", (array) $value)));
             }
         );
     }
 
-    // Helpers
     public function getSupportLevels(): array
     {
         return $this->support_levels ?? [];
@@ -100,13 +93,13 @@ class MarketParameter extends Model
         $pivot = ($high + $low + $close) / 3;
         
         return [
-            'pivot' => round($pivot, 2),
-            'r1' => round(2 * $pivot - $low, 2),
-            'r2' => round($pivot + ($high - $low), 2),
-            'r3' => round($high + 2 * ($pivot - $low), 2),
-            's1' => round(2 * $pivot - $high, 2),
-            's2' => round($pivot - ($high - $low), 2),
-            's3' => round($low - 2 * ($high - $pivot), 2),
+            "pivot" => round($pivot, 2),
+            "r1" => round(2 * $pivot - $low, 2),
+            "r2" => round($pivot + ($high - $low), 2),
+            "r3" => round($high + 2 * ($pivot - $low), 2),
+            "s1" => round(2 * $pivot - $high, 2),
+            "s2" => round($pivot - ($high - $low), 2),
+            "s3" => round($low - 2 * ($high - $pivot), 2),
         ];
     }
 
@@ -115,30 +108,24 @@ class MarketParameter extends Model
         $errors = [];
         
         if (count($this->getSupportLevels()) < 3) {
-            $errors[] = 'Minimum 3 support levels required';
+            $errors[] = "Minimum 3 support levels required";
         }
         
         if (count($this->getResistanceLevels()) < 3) {
-            $errors[] = 'Minimum 3 resistance levels required';
+            $errors[] = "Minimum 3 resistance levels required";
         }
-
-        // Check for duplicates
+        
         $supports = $this->getSupportLevels();
         $resistances = $this->getResistanceLevels();
         
         if (count($supports) !== count(array_unique($supports))) {
-            $errors[] = 'Support levels must be unique';
+            $errors[] = "Support levels must be unique";
         }
         
         if (count($resistances) !== count(array_unique($resistances))) {
-            $errors[] = 'Resistance levels must be unique';
+            $errors[] = "Resistance levels must be unique";
         }
-
-        // Check ordering
-        if ($supports !== array_values(array_unique($supports)) || $supports !== array_reverse(array_reverse($supports))) {
-            // Just warn, don't error
-        }
-
+        
         return $errors;
     }
 }

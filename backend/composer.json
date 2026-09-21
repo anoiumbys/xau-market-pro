@@ -5,26 +5,18 @@
   "keywords": ["laravel", "framework"],
   "license": "MIT",
   "require": {
-    "php": "^8.0",
-    "laravel/framework": "^9.52",
-    "laravel/sanctum": "^2.0",
-    "laravel/breeze": "^1.0",
-    "beyondcode/laravel-websockets": "^1.13",
+    "php": "^8.2",
+    "laravel/framework": "^11.0",
+    "laravel/sanctum": "^4.0",
     "pusher/pusher-php-server": "^7.2",
-    "spatie/laravel-permission": "^5.0",
-    "darkaonline/l5-swagger": "^8.0",
+    "spatie/laravel-permission": "^6.0",
     "vlucas/phpdotenv": "^5.6",
     "predis/predis": "^2.2"
   },
   "require-dev": {
     "fakerphp/faker": "^1.23",
-    "laravel/pint": "^1.0",
-    "laravel/sail": "^1.0",
-    "mockery/mockery": "^1.6",
-    "nunomaduro/collision": "^6.0",
-    "pestphp/pest": "^1.0",
-    "pestphp/pest-plugin-laravel": "^1.0",
-    "phpunit/phpunit": "^9.0"
+    "nunomaduro/collision": "^8.0",
+    "phpunit/phpunit": "^11.0"
   },
   "autoload": {
     "psr-4": {
@@ -70,12 +62,21 @@
     "optimize-autoloader": true,
     "preferred-install": "dist",
     "sort-packages": true,
-    "allow-plugins": {
-      "pestphp/pest-plugin": true
-    },
+    "allow-plugins": {},
     "platform": {
+      "php": "8.2.33",
       "ext-gd": "2.0.0"
-    }
+    },
+    "policy.advisories.block": false,
+    "policy.advisories.ignore-id": [
+      "PKSA-m5cs-t1y6-qpcs",
+      "PKSA-3r5d-mb8f-1qw9",
+      "PKSA-mdq4-51ck-6kdq",
+      "PKSA-8qx3-n5y5-vvnd",
+      "PKSA-q46n-4fdk-zjr4",
+      "PKSA-qzrn-rnz3-85w1",
+      "PKSA-w7xr-vk7n-rstm"
+    ]
   },
   "minimum-stability": "dev",
   "prefer-stable": true
