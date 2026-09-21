@@ -1,0 +1,44 @@
+{
+  "header": "# Changelog\n\nAll notable changes to this project will be documented in this file.\n\nThe format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),\nand this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).\n",
+  "categories": [
+    {
+      "title": "## 🚀 Features",
+      "labels": ["feature", "feat", "features"]
+    },
+    {
+      "title": "## 🐛 Bug Fixes",
+      "labels": ["bug", "fix", "bugfix"]
+    },
+    {
+      "title": "## 📝 Documentation",
+      "labels": ["documentation", "docs"]
+    },
+    {
+      "title": "## ♻️ Refactoring",
+      "labels": ["refactor", "refactoring"]
+    },
+    {
+      "title": "## ⚡ Performance",
+      "labels": ["performance", "perf"]
+    },
+    {
+      "title": "## 🔧 Maintenance",
+      "labels": ["maintenance", "chore", "ci", "build"]
+    },
+    {
+      "title": "## 🧪 Tests",
+      "labels": ["test", "tests"]
+    },
+    {
+      "title": "## 🔒 Security",
+      "labels": ["security", "sec"]
+    },
+    {
+      "title": "## 📦 Dependencies",
+      "labels": ["dependencies", "deps"]
+    }
+  ],
+  "exclude_labels": ["skip-changelog", "dependencies"],
+  "author_pattern": "^.*$",
+  "pull_request_pattern": "^(?:Merge pull request|Merge branch).*$"
+}

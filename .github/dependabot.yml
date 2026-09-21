@@ -1,0 +1,94 @@
+# Dependabot Configuration for Automated Dependency Updates
+# https://docs.github.com/en/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file
+
+version: 2
+updates:
+  # ===== Backend (Composer) =====
+  - package-ecosystem: "composer"
+    directory: "/backend"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "06:00"
+      timezone: "Asia/Jakarta"
+    labels:
+      - "dependencies"
+      - "backend"
+      - "composer"
+    commit-message:
+      prefix: "[backend] "
+      prefix-development: "[backend][dev] "
+    open-pull-requests-limit: 10
+    allow:
+      - dependency-type: "direct"
+      - dependency-type: "indirect"
+    ignore:
+      - dependency-name: "laravel/framework"
+        update-type: "version-update:semver-major"
+    reviewers:
+      - "anoiumbys"
+    assignees:
+      - "anoiumbys"
+
+  # ===== Frontend (npm) =====
+  - package-ecosystem: "npm"
+    directory: "/frontend"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "06:30"
+      timezone: "Asia/Jakarta"
+    labels:
+      - "dependencies"
+      - "frontend"
+      - "npm"
+    commit-message:
+      prefix: "[frontend] "
+      prefix-development: "[frontend][dev] "
+    open-pull-requests-limit: 10
+    allow:
+      - dependency-type: "direct"
+      - dependency-type: "indirect"
+    ignore:
+      - dependency-name: "react"
+        update-type: "version-update:semver-major"
+      - dependency-name: "typescript"
+        update-type: "version-update:semver-major"
+      - dependency-name: "vite"
+        update-type: "version-update:semver-major"
+    reviewers:
+      - "anoiumbys"
+    assignees:
+      - "anoiumbys"
+
+  # ===== GitHub Actions =====
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "07:00"
+      timezone: "Asia/Jakarta"
+    labels:
+      - "dependencies"
+      - "github-actions"
+    commit-message:
+      prefix: "[actions] "
+    open-pull-requests-limit: 5
+    reviewers:
+      - "anoiumbys"
+
+  # ===== Docker =====
+  - package-ecosystem: "docker"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "tuesday"
+      time: "06:00"
+      timezone: "Asia/Jakarta"
+    labels:
+      - "dependencies"
+      - "docker"
+    commit-message:
+      prefix: "[docker] "
+    open-pull-requests-limit: 5

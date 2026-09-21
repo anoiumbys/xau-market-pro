@@ -114,9 +114,18 @@
 - xau-market-pro/docker-compose.yml
 - xau-market-pro/docker/nginx.conf
 - xau-market-pro/docker/php.Dockerfile
+- xau-market-pro/docker/nginx-frontend.conf
 - xau-market-pro/.dockerignore
 - xau-market-pro/backend/.env.example (updated for Docker)
 - xau-market-pro/frontend/.env.docker
+- xau-market-pro/frontend/Dockerfile
+
+### GitHub Actions Workflows
+- xau-market-pro/.github/workflows/ci.yml
+- xau-market-pro/.github/workflows/deploy.yml
+- xau-market-pro/.github/workflows/release.yml
+- xau-market-pro/.github/dependabot.yml
+- xau-market-pro/.github/changelog-config.json
 
 ### Models (7 tables)
 - xau-market-pro/backend/app/Models/User.php
@@ -211,7 +220,7 @@
 14. ~~Frontend pages (public, trader, admin)~~ ✅
 15. ~~Frontend hooks (useAuth, useWebSocket, useMarketData, usePWA)~~ ✅
 16. ~~Docker compose + Dockerfiles~~ ✅
-17. GitHub Actions workflows (4)
+17. ~~GitHub Actions workflows (4)~~ ✅
 18. Dev setup script
 19. README.md, AGENTS.md, docs/
 
@@ -280,6 +289,6 @@ npm run dev
 4. ~~Frontend API client + generated endpoints~~ ✅
 5. ~~Frontend components, pages, hooks~~ ✅
 6. ~~Docker compose + Dockerfiles~~ ✅
-7. GitHub Actions workflows
+7. ~~GitHub Actions workflows~~ ✅
 8. Dev setup script
 9. README.md, AGENTS.md, docs/
