@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\Api\Admin;
 
+use App\Events\SubscriptionActivated;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\SubscriptionResource;
 use App\Models\Subscription;
 use App\Models\User;
-use App\Events\SubscriptionActivated;
 use Illuminate\Http\Request;
 use OpenApi\Attributes as OA;
 
@@ -43,6 +43,7 @@ class AdminSubscriptionController extends Controller
     public function show(string $id)
     {
         $subscription = Subscription::with('user')->findOrFail($id);
+
         return new SubscriptionResource($subscription);
     }
 
@@ -121,7 +122,7 @@ class AdminSubscriptionController extends Controller
     {
         $subscription = Subscription::findOrFail($id);
 
-        if (!in_array($subscription->status, ['active', 'pending'])) {
+        if (! in_array($subscription->status, ['active', 'pending'])) {
             return response()->json([
                 'message' => 'Only active or pending subscriptions can be cancelled',
             ], 422);

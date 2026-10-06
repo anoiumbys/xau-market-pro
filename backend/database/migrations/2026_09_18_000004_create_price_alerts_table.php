@@ -16,7 +16,7 @@ return new class extends Migration
             $table->decimal('price_level', 12, 4);
             $table->boolean('is_triggered')->default(false);
             $table->timestamps();
-            
+
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->index(['user_id', 'is_triggered']);
             $table->index(['symbol', 'is_triggered']);

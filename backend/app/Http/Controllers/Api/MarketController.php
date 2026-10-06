@@ -41,8 +41,8 @@ class MarketController extends Controller
 
         // Get cached data or fetch fresh
         $marketData = $this->marketData->getMarketData($symbol);
-        
-        if (!$marketData) {
+
+        if (! $marketData) {
             $marketData = $this->marketData->fetchFromExternal($symbol);
             if ($marketData) {
                 $this->marketData->updatePrice($symbol, $marketData['price'], $marketData);
@@ -51,7 +51,7 @@ class MarketController extends Controller
 
         // Get market parameters for S/R levels
         $parameters = $market->parameters()->active()->first();
-        
+
         $response = (object) [
             'symbol' => $market->symbol,
             'spot_price' => $marketData['price'] ?? 0,

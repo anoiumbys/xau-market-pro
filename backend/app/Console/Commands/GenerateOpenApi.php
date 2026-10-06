@@ -3,8 +3,12 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
-use OpenApi\Generator;
+use OpenApi\Annotations\Components;
+use OpenApi\Annotations\Info;
 use OpenApi\Annotations\OpenApi;
+use OpenApi\Annotations\Server;
+use OpenApi\Annotations\Tag;
+use OpenApi\Generator;
 
 class GenerateOpenApi extends Command
 {
@@ -38,7 +42,7 @@ class GenerateOpenApi extends Command
 
             // Ensure output directory exists
             $outputDir = dirname($outputPath);
-            if (!is_dir($outputDir)) {
+            if (! is_dir($outputDir)) {
                 mkdir($outputDir, 0755, true);
             }
 
@@ -53,30 +57,31 @@ class GenerateOpenApi extends Command
             return Command::SUCCESS;
 
         } catch (\Throwable $e) {
-            $this->error('Failed to generate OpenAPI spec: ' . $e->getMessage());
+            $this->error('Failed to generate OpenAPI spec: '.$e->getMessage());
             $this->error($e->getTraceAsString());
+
             return Command::FAILURE;
         }
     }
 
-    private function mergeBaseConfig(\OpenApi\Annotations\OpenApi $openapi, array $baseConfig): void
+    private function mergeBaseConfig(OpenApi $openapi, array $baseConfig): void
     {
         // Merge info
         if (isset($baseConfig['info'])) {
-            $openapi->info = new \OpenApi\Annotations\Info($baseConfig['info']);
+            $openapi->info = new Info($baseConfig['info']);
         }
 
         // Merge servers
         if (isset($baseConfig['servers'])) {
             $openapi->servers = array_map(
-                fn($server) => new \OpenApi\Annotations\Server($server),
+                fn ($server) => new Server($server),
                 $baseConfig['servers']
             );
         }
 
         // Merge components
         if (isset($baseConfig['components'])) {
-            $openapi->components = new \OpenApi\Annotations\Components($baseConfig['components']);
+            $openapi->components = new Components($baseConfig['components']);
         }
 
         // Merge security
@@ -87,7 +92,7 @@ class GenerateOpenApi extends Command
         // Merge tags
         if (isset($baseConfig['tags'])) {
             $openapi->tags = array_map(
-                fn($tag) => new \OpenApi\Annotations\Tag($tag),
+                fn ($tag) => new Tag($tag),
                 $baseConfig['tags']
             );
         }
@@ -96,10 +101,10 @@ class GenerateOpenApi extends Command
     private function validateSpec(string $path): void
     {
         $this->info('Validating OpenAPI specification...');
-        
+
         // Use openapi-validator if available
         $validatorPath = base_path('../contracts/node_modules/.bin/openapi-validator');
-        
+
         if (file_exists($validatorPath)) {
             $output = shell_exec("{$validatorPath} {$path} 2>&1");
             if ($output) {

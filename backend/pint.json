@@ -1,0 +1,9 @@
+{
+    "preset": "laravel",
+    "notName": [
+        "test_*.php",
+        "check_*.php",
+        "debug_middleware.php",
+        "composer-setup.php"
+    ]
+}

@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreTradeJournalRequest;
 use App\Http\Requests\UpdateTradeJournalRequest;
 use App\Http\Resources\TradeJournalResource;
-use App\Models\TradeJournal;
 use Illuminate\Http\Request;
 use OpenApi\Attributes as OA;
 
@@ -77,6 +76,7 @@ class TradeJournalController extends Controller
     public function show(Request $request, string $id)
     {
         $trade = $request->user()->tradeJournals()->findOrFail($id);
+
         return new TradeJournalResource($trade);
     }
 

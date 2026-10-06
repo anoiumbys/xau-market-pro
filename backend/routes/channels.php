@@ -1,8 +1,6 @@
 <?php
 
 use App\Models\User;
-use App\Models\PriceAlert;
-use App\Models\Subscription;
 use Illuminate\Support\Facades\Broadcast;
 
 /*

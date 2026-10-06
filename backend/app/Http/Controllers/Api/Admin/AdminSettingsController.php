@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Api\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\MarketParameter;
-use App\Models\User;
 use Illuminate\Http\Request;
 use OpenApi\Attributes as OA;
 
@@ -67,7 +66,7 @@ class AdminSettingsController extends Controller
         $parameters = MarketParameter::with('updater')->latest()->get();
 
         return response()->json([
-            'market_parameters' => $parameters->map(fn($p) => [
+            'market_parameters' => $parameters->map(fn ($p) => [
                 'id' => $p->id,
                 'symbol' => $p->symbol,
                 'support_levels' => $p->getSupportLevels(),

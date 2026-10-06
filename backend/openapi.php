@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-use OpenApi\Attributes as OA;
-
 return [
     'openapi' => '3.1.0',
     'info' => [

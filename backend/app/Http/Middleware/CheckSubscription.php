@@ -12,7 +12,7 @@ class CheckSubscription
     {
         $user = $request->user();
 
-        if (!$user) {
+        if (! $user) {
             return response()->json([
                 'message' => 'Unauthenticated',
             ], 401);
@@ -20,7 +20,7 @@ class CheckSubscription
 
         $subscription = $user->activeSubscription;
 
-        if (!$subscription || !$subscription->isActive()) {
+        if (! $subscription || ! $subscription->isActive()) {
             return response()->json([
                 'message' => 'Active subscription required',
                 'required_plan' => $requiredPlan,

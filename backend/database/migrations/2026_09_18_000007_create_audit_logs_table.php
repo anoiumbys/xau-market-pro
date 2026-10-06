@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('ip_address', 45)->nullable();
             $table->string('user_agent')->nullable();
             $table->timestamp('created_at')->useCurrent();
-            
+
             $table->foreign('actor_id')->references('id')->on('users')->onDelete('set null');
             $table->index(['entity', 'entity_id']);
             $table->index('actor_id');

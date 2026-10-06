@@ -53,6 +53,7 @@ class AuditLogFactory extends Factory
     public function forActor(User|string $actor): static
     {
         $actorId = $actor instanceof User ? $actor->id : $actor;
+
         return $this->state(fn (array $attributes) => [
             'actor_id' => $actorId,
         ]);

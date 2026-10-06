@@ -12,13 +12,13 @@ class AdminOnly
     {
         $user = $request->user();
 
-        if (!$user) {
+        if (! $user) {
             return response()->json([
                 'message' => 'Unauthenticated',
             ], 401);
         }
 
-        if (!$user->isAdmin()) {
+        if (! $user->isAdmin()) {
             return response()->json([
                 'message' => 'Admin access required',
             ], 403);

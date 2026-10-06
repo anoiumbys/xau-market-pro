@@ -4,9 +4,7 @@ namespace App\Observers;
 
 use App\Models\AuditLog;
 use App\Models\MarketParameter;
-use App\Models\PriceAlert;
 use App\Models\Subscription;
-use App\Models\TradeJournal;
 use App\Models\User;
 
 class AuditObserver
@@ -20,8 +18,8 @@ class AuditObserver
     {
         $changes = $model->getChanges();
         unset($changes['updated_at']);
-        
-        if (!empty($changes)) {
+
+        if (! empty($changes)) {
             $original = [];
             foreach (array_keys($changes) as $key) {
                 $original[$key] = $model->getOriginal($key);
@@ -80,7 +78,7 @@ class SubscriptionAuditObserver extends AuditObserver
                 'expired' => 'expired',
                 default => 'updated',
             };
-            
+
             AuditLog::log(
                 $action,
                 'Subscription',
@@ -100,7 +98,7 @@ class MarketParameterAuditObserver extends AuditObserver
     {
         $changes = $parameter->getChanges();
         unset($changes['updated_at']);
-        
+
         if (isset($changes['support_levels']) || isset($changes['resistance_levels'])) {
             AuditLog::log(
                 'levels_updated',
@@ -117,7 +115,7 @@ class MarketParameterAuditObserver extends AuditObserver
                 auth()->user()
             );
         }
-        
+
         parent::updated($parameter);
     }
 }

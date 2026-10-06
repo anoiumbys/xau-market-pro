@@ -62,14 +62,16 @@ class Subscription extends Model
         if ($this->expires_at && $this->expires_at->isPast()) {
             return false;
         }
+
         return true;
     }
 
     public function daysRemaining(): ?int
     {
-        if (!$this->expires_at) {
+        if (! $this->expires_at) {
             return null;
         }
+
         return max(0, now()->diffInDays($this->expires_at, false));
     }
 

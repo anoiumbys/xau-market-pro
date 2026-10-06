@@ -33,11 +33,11 @@ class CheckPriceAlerts implements ShouldQueue
             foreach ($alerts as $alert) {
                 try {
                     $currentPrice = $marketData->getCurrentPrice($alert->symbol);
-                    
+
                     if ($currentPrice && $alert->checkTrigger($currentPrice)) {
                         // Fire event for real-time notification
                         PriceAlertTriggered::dispatch($alert, $currentPrice);
-                        
+
                         Log::info('Price alert triggered', [
                             'alert_id' => $alert->id,
                             'user_id' => $alert->user_id,

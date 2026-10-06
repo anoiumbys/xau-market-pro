@@ -37,7 +37,7 @@ class AdminReportController extends Controller
             ->where(function ($q) {
                 $q->whereNull('expires_at')->orWhere('expires_at', '>', now());
             })->get()
-            ->sum(fn($s) => match ($s->plan_type) {
+            ->sum(fn ($s) => match ($s->plan_type) {
                 'basic' => 29,
                 'pro' => 99,
                 'enterprise' => 299,
@@ -184,7 +184,7 @@ class AdminReportController extends Controller
         return response()->json([
             'period' => ['from' => $from->toDateString(), 'to' => $to->toDateString()],
             'total_revenue' => round($totalRevenue, 2),
-            'monthly_revenue' => array_map(fn($v) => round($v, 2), $monthlyRevenue),
+            'monthly_revenue' => array_map(fn ($v) => round($v, 2), $monthlyRevenue),
             'avg_revenue_per_user' => count($activeSubs) > 0 ? round($totalRevenue / count($activeSubs), 2) : 0,
         ]);
     }

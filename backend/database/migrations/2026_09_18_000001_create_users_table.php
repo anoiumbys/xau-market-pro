@@ -17,7 +17,7 @@ return new class extends Migration
             $table->enum('role', ['guest', 'trader', 'admin'])->default('guest');
             $table->rememberToken();
             $table->timestamps();
-            
+
             $table->index('email');
             $table->index('role');
         });

@@ -44,6 +44,7 @@ class AuditLog extends Model
         if ($entityId) {
             $query->where('entity_id', $entityId);
         }
+
         return $query;
     }
 

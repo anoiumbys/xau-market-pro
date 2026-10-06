@@ -49,6 +49,7 @@ class TradeJournalFactory extends Factory
     {
         $contractSize = 100;
         $directionMultiplier = $direction === 'long' ? 1 : -1;
+
         return round(($exit - $entry) * $lot * $contractSize * $directionMultiplier, 2);
     }
 
@@ -59,6 +60,7 @@ class TradeJournalFactory extends Factory
         if ($risk <= 0) {
             return 0;
         }
+
         return round($reward / $risk, 4);
     }
 
@@ -86,7 +88,7 @@ class TradeJournalFactory extends Factory
         ]);
     }
 
-    public function closed(float $exitPrice = null): static
+    public function closed(?float $exitPrice = null): static
     {
         return $this->state(function (array $attributes) use ($exitPrice) {
             $direction = $attributes['direction'] ?? fake()->randomElement(['long', 'short']);

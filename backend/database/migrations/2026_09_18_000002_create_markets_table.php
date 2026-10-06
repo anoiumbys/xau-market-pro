@@ -15,7 +15,7 @@ return new class extends Migration
             $table->string('asset_class', 30);
             $table->boolean('is_active')->default(false);
             $table->timestamps();
-            
+
             $table->index('symbol');
             $table->index('is_active');
         });

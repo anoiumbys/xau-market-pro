@@ -14,7 +14,7 @@ class MarketParameterResource extends JsonResource
             'support_levels' => $this->support_levels ?? [],
             'resistance_levels' => $this->resistance_levels ?? [],
             'pivot_points' => $this->when(isset($this->pivot_points), $this->pivot_points),
-            'updated_by' => $this->whenLoaded('updater', fn() => [
+            'updated_by' => $this->whenLoaded('updater', fn () => [
                 'id' => $this->updater->id,
                 'name' => $this->updater->name,
             ]),

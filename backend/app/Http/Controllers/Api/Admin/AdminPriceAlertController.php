@@ -44,6 +44,7 @@ class AdminPriceAlertController extends Controller
     public function show(string $id)
     {
         $alert = PriceAlert::with('user')->findOrFail($id);
+
         return new PriceAlertResource($alert);
     }
 

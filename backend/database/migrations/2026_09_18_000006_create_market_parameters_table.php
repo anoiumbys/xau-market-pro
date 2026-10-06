@@ -16,7 +16,7 @@ return new class extends Migration
             $table->uuid('updated_by');
             $table->boolean('is_active')->default(true);
             $table->timestamps();
-            
+
             $table->foreign('updated_by')->references('id')->on('users')->onDelete('cascade');
             $table->index(['symbol', 'is_active']);
         });

@@ -53,6 +53,7 @@ class AdminTradeJournalController extends Controller
     public function show(string $id)
     {
         $trade = TradeJournal::with('user')->findOrFail($id);
+
         return new TradeJournalResource($trade);
     }
 

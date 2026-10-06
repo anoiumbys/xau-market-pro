@@ -45,6 +45,7 @@ class AdminUserController extends Controller
     public function show(string $id)
     {
         $user = User::with(['activeSubscription', 'priceAlerts', 'tradeJournals', 'subscriptions'])->findOrFail($id);
+
         return new UserResource($user);
     }
 
@@ -60,7 +61,7 @@ class AdminUserController extends Controller
 
         $request->validate([
             'name' => ['sometimes', 'string', 'max:100'],
-            'email' => ['sometimes', 'string', 'email', 'max:255', 'unique:users,email,' . $user->id],
+            'email' => ['sometimes', 'string', 'email', 'max:255', 'unique:users,email,'.$user->id],
             'email_verified_at' => ['nullable', 'date'],
         ]);
 

@@ -22,7 +22,7 @@ class ReportService
             'summary' => $metrics,
             'daily_pnl' => $dailyPnL,
             'monthly_pnl' => $monthlyPnL,
-            'trades' => $trades->map(fn($t) => $this->formatTrade($t))->toArray(),
+            'trades' => $trades->map(fn ($t) => $this->formatTrade($t))->toArray(),
         ];
     }
 
@@ -33,23 +33,23 @@ class ReportService
         return [
             'period' => ['from' => $from->toDateString(), 'to' => $to->toDateString()],
             'total_trades' => $trades->count(),
-            'trades' => $trades->map(fn($t) => $this->formatTrade($t))->toArray(),
+            'trades' => $trades->map(fn ($t) => $this->formatTrade($t))->toArray(),
         ];
     }
 
     public function generateWinRateReport(User $user, Carbon $from, Carbon $to): array
     {
         $trades = $this->getTradesInRange($user, $from, $to)->where('status', 'closed');
-        
+
         $metrics = $this->calculateMetrics($trades);
-        
+
         $byDirection = [
             'long' => $this->calculateMetrics($trades->where('direction', 'long')),
             'short' => $this->calculateMetrics($trades->where('direction', 'short')),
         ];
 
         $bySymbol = $trades->groupBy('symbol')
-            ->map(fn($group) => $this->calculateMetrics($group))
+            ->map(fn ($group) => $this->calculateMetrics($group))
             ->toArray();
 
         return [
@@ -92,13 +92,13 @@ class ReportService
     {
         $closedTrades = $trades->where('status', 'closed');
         $totalTrades = $closedTrades->count();
-        
+
         if ($totalTrades === 0) {
             return $this->emptyMetrics();
         }
 
-        $winningTrades = $closedTrades->filter(fn($t) => $t->pnl > 0);
-        $losingTrades = $closedTrades->filter(fn($t) => $t->pnl < 0);
+        $winningTrades = $closedTrades->filter(fn ($t) => $t->pnl > 0);
+        $losingTrades = $closedTrades->filter(fn ($t) => $t->pnl < 0);
 
         $grossProfit = $winningTrades->sum('pnl');
         $grossLoss = abs($losingTrades->sum('pnl'));
@@ -129,7 +129,7 @@ class ReportService
             'avg_rr' => $avgRR,
             'max_win' => round($maxWin, 2),
             'max_loss' => round($maxLoss, 2),
-            'expectancy' => $totalTrades > 0 ? round(($winRate/100 * $avgWin) - ((100-$winRate)/100 * $avgLoss), 2) : 0,
+            'expectancy' => $totalTrades > 0 ? round(($winRate / 100 * $avgWin) - ((100 - $winRate) / 100 * $avgLoss), 2) : 0,
         ];
     }
 
@@ -156,13 +156,13 @@ class ReportService
     private function calculateDailyPnL(Collection $trades): array
     {
         return $trades->where('status', 'closed')
-            ->groupBy(fn($t) => $t->closed_at->toDateString())
-            ->map(fn($group) => [
+            ->groupBy(fn ($t) => $t->closed_at->toDateString())
+            ->map(fn ($group) => [
                 'date' => $group->first()->closed_at->toDateString(),
                 'pnl' => round($group->sum('pnl'), 2),
                 'trades' => $group->count(),
-                'wins' => $group->filter(fn($t) => $t->pnl > 0)->count(),
-                'losses' => $group->filter(fn($t) => $t->pnl < 0)->count(),
+                'wins' => $group->filter(fn ($t) => $t->pnl > 0)->count(),
+                'losses' => $group->filter(fn ($t) => $t->pnl < 0)->count(),
             ])
             ->values()
             ->toArray();
@@ -171,15 +171,15 @@ class ReportService
     private function calculateMonthlyPnL(Collection $trades): array
     {
         return $trades->where('status', 'closed')
-            ->groupBy(fn($t) => $t->closed_at->format('Y-m'))
-            ->map(fn($group) => [
+            ->groupBy(fn ($t) => $t->closed_at->format('Y-m'))
+            ->map(fn ($group) => [
                 'month' => $group->first()->closed_at->format('Y-m'),
                 'pnl' => round($group->sum('pnl'), 2),
                 'trades' => $group->count(),
-                'wins' => $group->filter(fn($t) => $t->pnl > 0)->count(),
-                'losses' => $group->filter(fn($t) => $t->pnl < 0)->count(),
-                'win_rate' => $group->count() > 0 
-                    ? round(($group->filter(fn($t) => $t->pnl > 0)->count() / $group->count()) * 100, 2)
+                'wins' => $group->filter(fn ($t) => $t->pnl > 0)->count(),
+                'losses' => $group->filter(fn ($t) => $t->pnl < 0)->count(),
+                'win_rate' => $group->count() > 0
+                    ? round(($group->filter(fn ($t) => $t->pnl > 0)->count() / $group->count()) * 100, 2)
                     : 0,
             ])
             ->values()
@@ -211,7 +211,7 @@ class ReportService
 
         foreach ($equityCurve as $point) {
             $equity = $point['equity'];
-            
+
             if ($equity > $peak) {
                 $peak = $equity;
             }
@@ -228,7 +228,7 @@ class ReportService
             ];
         }
 
-        return array_filter($drawdowns, fn($d) => $d['drawdown'] > 0);
+        return array_filter($drawdowns, fn ($d) => $d['drawdown'] > 0);
     }
 
     private function formatTrade(TradeJournal $trade): array

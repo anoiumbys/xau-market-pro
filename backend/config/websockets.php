@@ -1,6 +1,9 @@
 <?php
 
+use BeyondCode\LaravelWebSockets\Apps\ConfigAppProvider;
+use BeyondCode\LaravelWebSockets\Channels\ChannelManager;
 use BeyondCode\LaravelWebSockets\Dashboard\Http\Middleware\Authorize;
+use BeyondCode\LaravelWebSockets\Statistics\Models\WebSocketsStatisticsEntry;
 
 return [
 
@@ -55,7 +58,7 @@ return [
      * You can create a custom provider by implementing the
      * `BeyondCode\LaravelWebSockets\Apps\AppProvider` interface.
      */
-    'app_provider' => BeyondCode\LaravelWebSockets\Apps\ConfigAppProvider::class,
+    'app_provider' => ConfigAppProvider::class,
 
     /*
      * This array contains the hosts of which you want to allow incoming requests.
@@ -114,13 +117,13 @@ return [
     /*
      * Channel manager options
      */
-    'channel_manager' => \BeyondCode\LaravelWebSockets\Channels\ChannelManager::class,
+    'channel_manager' => ChannelManager::class,
 
     /*
      * Statistics options
      */
     'statistics' => [
-        'model' => \BeyondCode\LaravelWebSockets\Statistics\Models\WebSocketsStatisticsEntry::class,
+        'model' => WebSocketsStatisticsEntry::class,
         'interval_in_seconds' => 60,
         'delete_statistics_older_than_days' => 30,
         'perform_dns_lookup' => false,

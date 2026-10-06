@@ -3,7 +3,6 @@
 namespace App\Services;
 
 use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\Http;
 
 class MarketDataService
 {
@@ -12,14 +11,14 @@ class MarketDataService
     public function getCurrentPrice(string $symbol): ?float
     {
         $cacheKey = "price:{$symbol}";
-        
+
         return Cache::get($cacheKey);
     }
 
     public function getMarketData(string $symbol): ?array
     {
         $cacheKey = "market:{$symbol}";
-        
+
         return Cache::get($cacheKey);
     }
 
@@ -31,7 +30,7 @@ class MarketDataService
         // Also update market data cache
         $marketKey = "market:{$symbol}";
         $marketData = Cache::get($marketKey, []);
-        
+
         $marketData = array_merge($marketData, [
             'spot_price' => $price,
             'timestamp' => now()->toIso8601String(),

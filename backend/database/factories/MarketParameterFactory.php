@@ -72,6 +72,7 @@ class MarketParameterFactory extends Factory
     public function updatedBy(User|string $user): static
     {
         $userId = $user instanceof User ? $user->id : $user;
+
         return $this->state(fn (array $attributes) => [
             'updated_by' => $userId,
         ]);

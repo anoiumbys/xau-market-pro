@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StorePriceAlertRequest;
 use App\Http\Resources\PriceAlertResource;
-use App\Models\PriceAlert;
 use Illuminate\Http\Request;
 use OpenApi\Attributes as OA;
 
@@ -34,7 +33,7 @@ class PriceAlertController extends Controller
     public function index(Request $request)
     {
         $alerts = $request->user()->priceAlerts()->latest()->paginate(20);
-        
+
         return PriceAlertResource::collection($alerts);
     }
 
@@ -56,7 +55,7 @@ class PriceAlertController extends Controller
     public function store(StorePriceAlertRequest $request)
     {
         $alert = $request->user()->priceAlerts()->create($request->validated());
-        
+
         return new PriceAlertResource($alert);
     }
 
@@ -78,7 +77,7 @@ class PriceAlertController extends Controller
     {
         $alert = $request->user()->priceAlerts()->findOrFail($id);
         $alert->delete();
-        
+
         return response()->noContent();
     }
 }

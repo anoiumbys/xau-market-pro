@@ -2,10 +2,10 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Casts\Attribute;
 
 class TradeJournal extends Model
 {
@@ -90,18 +90,20 @@ class TradeJournal extends Model
                 if ($value !== null) {
                     return (float) $value;
                 }
-                
+
                 // Auto-calculate if exit_price exists
-                if (!empty($attributes['exit_price']) && !empty($attributes['entry_price'])) {
+                if (! empty($attributes['exit_price']) && ! empty($attributes['entry_price'])) {
                     $contractSize = 100; // XAUUSD contract size
                     $direction = $attributes['direction'] === 'long' ? 1 : -1;
+
                     return round(
-                        ($attributes['exit_price'] - $attributes['entry_price']) 
-                        * $attributes['lot_size'] 
-                        * $contractSize 
+                        ($attributes['exit_price'] - $attributes['entry_price'])
+                        * $attributes['lot_size']
+                        * $contractSize
                         * $direction, 2
                     );
                 }
+
                 return null;
             }
         );
@@ -115,15 +117,16 @@ class TradeJournal extends Model
                     return (float) $value;
                 }
 
-                if (!empty($attributes['stop_loss']) && !empty($attributes['take_profit']) && !empty($attributes['entry_price'])) {
+                if (! empty($attributes['stop_loss']) && ! empty($attributes['take_profit']) && ! empty($attributes['entry_price'])) {
                     $direction = $attributes['direction'] === 'long' ? 1 : -1;
                     $risk = abs($attributes['entry_price'] - $attributes['stop_loss']);
                     $reward = abs($attributes['take_profit'] - $attributes['entry_price']);
-                    
+
                     if ($risk > 0) {
                         return round($reward / $risk, 4);
                     }
                 }
+
                 return null;
             }
         );
@@ -132,30 +135,30 @@ class TradeJournal extends Model
     // Helpers
     public function calculatePnl(): ?float
     {
-        if (!$this->exit_price) {
+        if (! $this->exit_price) {
             return null;
         }
 
         $contractSize = 100; // XAUUSD
         $direction = $this->direction === 'long' ? 1 : -1;
-        
+
         return round(
-            ($this->exit_price - $this->entry_price) 
-            * $this->lot_size 
-            * $contractSize 
+            ($this->exit_price - $this->entry_price)
+            * $this->lot_size
+            * $contractSize
             * $direction, 2
         );
     }
 
     public function calculateRiskReward(): ?float
     {
-        if (!$this->stop_loss || !$this->take_profit) {
+        if (! $this->stop_loss || ! $this->take_profit) {
             return null;
         }
 
         $risk = abs($this->entry_price - $this->stop_loss);
         $reward = abs($this->take_profit - $this->entry_price);
-        
+
         if ($risk <= 0) {
             return null;
         }
@@ -193,6 +196,7 @@ class TradeJournal extends Model
         if ($this->pnl === null) {
             return null;
         }
+
         return $this->pnl > 0;
     }
 }

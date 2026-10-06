@@ -19,6 +19,7 @@ class AdminMarketController extends Controller
     public function index()
     {
         $markets = Market::with('parameters')->latest()->get();
+
         return MarketDataResource::collection($markets);
     }
 
@@ -56,6 +57,7 @@ class AdminMarketController extends Controller
     public function show(string $id)
     {
         $market = Market::with('parameters')->findOrFail($id);
+
         return new MarketDataResource($market);
     }
 
@@ -70,7 +72,7 @@ class AdminMarketController extends Controller
         $market = Market::findOrFail($id);
 
         $request->validate([
-            'symbol' => ['sometimes', 'string', 'max:20', 'unique:markets,symbol,' . $market->id],
+            'symbol' => ['sometimes', 'string', 'max:20', 'unique:markets,symbol,'.$market->id],
             'name' => ['sometimes', 'string', 'max:100'],
             'asset_class' => ['sometimes', 'string', 'max:30'],
             'is_active' => ['sometimes', 'boolean'],
@@ -95,7 +97,7 @@ class AdminMarketController extends Controller
     public function toggleActive(string $id)
     {
         $market = Market::findOrFail($id);
-        $market->update(['is_active' => !$market->is_active]);
+        $market->update(['is_active' => ! $market->is_active]);
 
         return new MarketDataResource($market->refresh());
     }

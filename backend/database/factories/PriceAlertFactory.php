@@ -50,7 +50,7 @@ class PriceAlertFactory extends Factory
         ]);
     }
 
-    public function above(float $price = null): static
+    public function above(?float $price = null): static
     {
         return $this->state(fn (array $attributes) => [
             'condition' => 'above',
@@ -58,7 +58,7 @@ class PriceAlertFactory extends Factory
         ]);
     }
 
-    public function below(float $price = null): static
+    public function below(?float $price = null): static
     {
         return $this->state(fn (array $attributes) => [
             'condition' => 'below',
@@ -66,7 +66,7 @@ class PriceAlertFactory extends Factory
         ]);
     }
 
-    public function crosses(float $price = null): static
+    public function crosses(?float $price = null): static
     {
         return $this->state(fn (array $attributes) => [
             'condition' => 'cross',

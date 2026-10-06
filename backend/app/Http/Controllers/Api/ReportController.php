@@ -3,7 +3,10 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\TradeJournal;
+use App\Models\User;
 use App\Services\ReportService;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use OpenApi\Attributes as OA;
@@ -30,8 +33,8 @@ class ReportController extends Controller
         ]);
 
         $format = $request->input('format', 'json');
-        $from = $request->filled('from') ? \Carbon\Carbon::parse($request->from) : now()->subMonth();
-        $to = $request->filled('to') ? \Carbon\Carbon::parse($request->to) : now();
+        $from = $request->filled('from') ? Carbon::parse($request->from) : now()->subMonth();
+        $to = $request->filled('to') ? Carbon::parse($request->to) : now();
         $type = $request->input('type', 'journal');
 
         $user = Auth::user();
@@ -63,8 +66,8 @@ class ReportController extends Controller
             'to' => ['sometimes', 'date', 'after_or_equal:from'],
         ]);
 
-        $from = $request->filled('from') ? \Carbon\Carbon::parse($request->from) : now()->subMonths(3);
-        $to = $request->filled('to') ? \Carbon\Carbon::parse($request->to) : now();
+        $from = $request->filled('from') ? Carbon::parse($request->from) : now()->subMonths(3);
+        $to = $request->filled('to') ? Carbon::parse($request->to) : now();
 
         $user = Auth::user();
 
@@ -90,7 +93,7 @@ class ReportController extends Controller
         ]);
     }
 
-    private function exportCsv(array $data, string $type, \Carbon\Carbon $from, \Carbon\Carbon $to)
+    private function exportCsv(array $data, string $type, Carbon $from, Carbon $to)
     {
         $filename = "xaupro_{$type}_{$from->format('Ymd')}_{$to->format('Ymd')}.csv";
 
@@ -131,9 +134,9 @@ class ReportController extends Controller
         return response()->stream($callback, 200, $headers);
     }
 
-    private function calculateStreaks(\App\Models\User $user, \Carbon\Carbon $from, \Carbon\Carbon $to): array
+    private function calculateStreaks(User $user, Carbon $from, Carbon $to): array
     {
-        $trades = \App\Models\TradeJournal::where('user_id', $user->id)
+        $trades = TradeJournal::where('user_id', $user->id)
             ->whereBetween('opened_at', [$from->startOfDay(), $to->endOfDay()])
             ->where('status', 'closed')
             ->orderBy('closed_at')
@@ -172,18 +175,18 @@ class ReportController extends Controller
         ];
     }
 
-    private function calculateTimeAnalysis(\App\Models\User $user, \Carbon\Carbon $from, \Carbon\Carbon $to): array
+    private function calculateTimeAnalysis(User $user, Carbon $from, Carbon $to): array
     {
-        $trades = \App\Models\TradeJournal::where('user_id', $user->id)
+        $trades = TradeJournal::where('user_id', $user->id)
             ->whereBetween('opened_at', [$from->startOfDay(), $to->endOfDay()])
             ->where('status', 'closed')
             ->get();
 
         $byHour = [];
         foreach (range(0, 23) as $hour) {
-            $hourTrades = $trades->filter(fn($t) => $t->opened_at->hour === $hour);
-            $wins = $hourTrades->filter(fn($t) => $t->pnl > 0);
-            $losses = $hourTrades->filter(fn($t) => $t->pnl < 0);
+            $hourTrades = $trades->filter(fn ($t) => $t->opened_at->hour === $hour);
+            $wins = $hourTrades->filter(fn ($t) => $t->pnl > 0);
+            $losses = $hourTrades->filter(fn ($t) => $t->pnl < 0);
 
             $byHour[] = [
                 'hour' => $hour,
@@ -198,9 +201,9 @@ class ReportController extends Controller
         return $byHour;
     }
 
-    private function calculateConsecutive(\App\Models\User $user, \Carbon\Carbon $from, \Carbon\Carbon $to): array
+    private function calculateConsecutive(User $user, Carbon $from, Carbon $to): array
     {
-        $trades = \App\Models\TradeJournal::where('user_id', $user->id)
+        $trades = TradeJournal::where('user_id', $user->id)
             ->whereBetween('opened_at', [$from->startOfDay(), $to->endOfDay()])
             ->where('status', 'closed')
             ->orderBy('closed_at')

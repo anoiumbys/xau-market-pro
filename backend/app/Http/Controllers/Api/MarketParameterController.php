@@ -29,7 +29,7 @@ class MarketParameterController extends Controller
     public function show(string $symbol)
     {
         $parameter = MarketParameter::forSymbol($symbol)->active()->firstOrFail();
-        
+
         return new MarketParameterResource($parameter);
     }
 }

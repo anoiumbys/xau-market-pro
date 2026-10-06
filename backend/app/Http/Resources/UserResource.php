@@ -16,7 +16,7 @@ class UserResource extends JsonResource
             'role' => $this->role,
             'email_verified_at' => $this->email_verified_at?->toIso8601String(),
             'created_at' => $this->created_at->toIso8601String(),
-            'subscription' => $this->whenLoaded('activeSubscription', fn() => new SubscriptionResource($this->activeSubscription)),
+            'subscription' => $this->whenLoaded('activeSubscription', fn () => new SubscriptionResource($this->activeSubscription)),
         ];
     }
 }

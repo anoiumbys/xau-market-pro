@@ -3,8 +3,6 @@
 namespace App\Services;
 
 use App\Models\Market;
-use App\Models\MarketParameter;
-use App\Models\TradeJournal;
 
 class IndicatorService
 {
@@ -54,7 +52,7 @@ class IndicatorService
     public function calculatePivotPoints(float $high, float $low, float $close): array
     {
         $pivot = ($high + $low + $close) / 3;
-        
+
         return [
             'pivot' => round($pivot, 2),
             'r1' => round(2 * $pivot - $low, 2),
@@ -72,7 +70,7 @@ class IndicatorService
     public function calculateFibonacciLevels(float $high, float $low): array
     {
         $diff = $high - $low;
-        
+
         return [
             '0' => round($high, 2),
             '0.236' => round($high - $diff * 0.236, 2),
@@ -158,13 +156,15 @@ class IndicatorService
 
     private function getNearestSupport(float $price, array $supports): ?float
     {
-        $valid = array_filter($supports, fn($level) => $level < $price);
+        $valid = array_filter($supports, fn ($level) => $level < $price);
+
         return $valid ? max($valid) : null;
     }
 
     private function getNearestResistance(float $price, array $resistances): ?float
     {
-        $valid = array_filter($resistances, fn($level) => $level > $price);
+        $valid = array_filter($resistances, fn ($level) => $level > $price);
+
         return $valid ? min($valid) : null;
     }
 }

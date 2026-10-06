@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Events\NewSubscriptionPending;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreSubscriptionRequest;
 use App\Http\Resources\SubscriptionResource;
 use App\Models\Subscription;
 use App\Models\User;
-use App\Events\NewSubscriptionPending;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use OpenApi\Attributes as OA;
@@ -32,7 +32,7 @@ class SubscriptionController extends Controller
     public function store(StoreSubscriptionRequest $request)
     {
         $user = $request->user();
-        
+
         // Check if user already has an active subscription
         if ($user->hasActiveSubscription()) {
             return response()->json([
@@ -41,7 +41,7 @@ class SubscriptionController extends Controller
         }
 
         $planType = $request->input('plan_type');
-        $paymentRef = 'SIM-' . strtoupper(Str::random(6));
+        $paymentRef = 'SIM-'.strtoupper(Str::random(6));
 
         $subscription = Subscription::create([
             'user_id' => $user->id,
@@ -74,8 +74,8 @@ class SubscriptionController extends Controller
     public function show(Request $request)
     {
         $subscription = $request->user()->activeSubscription;
-        
-        if (!$subscription) {
+
+        if (! $subscription) {
             return response()->json([
                 'message' => 'No active subscription found',
             ], 404);

@@ -1,25 +1,25 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Api\MarketController;
-use App\Http\Controllers\Api\PriceAlertController;
-use App\Http\Controllers\Api\SubscriptionController;
-use App\Http\Controllers\Api\TradeJournalController;
-use App\Http\Controllers\Api\ReportController;
-use App\Http\Controllers\Api\MarketParameterController;
-use App\Http\Controllers\Api\Admin\AdminUserController;
 use App\Http\Controllers\Api\Admin\AdminMarketController;
-use App\Http\Controllers\Api\Admin\AdminSubscriptionController;
 use App\Http\Controllers\Api\Admin\AdminPriceAlertController;
-use App\Http\Controllers\Api\Admin\AdminTradeJournalController;
 use App\Http\Controllers\Api\Admin\AdminReportController;
 use App\Http\Controllers\Api\Admin\AdminSettingsController;
+use App\Http\Controllers\Api\Admin\AdminSubscriptionController;
+use App\Http\Controllers\Api\Admin\AdminTradeJournalController;
+use App\Http\Controllers\Api\Admin\AdminUserController;
+use App\Http\Controllers\Api\MarketController;
+use App\Http\Controllers\Api\MarketParameterController;
+use App\Http\Controllers\Api\PriceAlertController;
+use App\Http\Controllers\Api\ReportController;
+use App\Http\Controllers\Api\SubscriptionController;
+use App\Http\Controllers\Api\TradeJournalController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
-use App\Http\Controllers\Auth\RegisteredUserController;
-use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Auth\NewPasswordController;
-use App\Http\Middleware\CheckSubscription;
+use App\Http\Controllers\Auth\PasswordResetLinkController;
+use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Middleware\AdminOnly;
+use App\Http\Middleware\CheckSubscription;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -40,7 +40,7 @@ Route::get('/market-parameters/{symbol}', [MarketParameterController::class, 'sh
 // Protected routes (require authentication)
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [AuthenticatedSessionController::class, 'destroy']);
-    Route::get('/user', fn() => request()->user());
+    Route::get('/user', fn () => request()->user());
     Route::put('/user/profile', [AuthenticatedSessionController::class, 'updateProfile']);
 
     // Price Alerts
