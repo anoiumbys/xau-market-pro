@@ -244,16 +244,6 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
-      - name: Build frontend image
-        uses: docker/build-push-action@v5
-        with:
-          context: ./frontend
-          file: Dockerfile
-          load: true
-          tags: xaupro/frontend:test
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
-
   # ===== Security Audit =====
   security-audit:
     name: Security Audit
