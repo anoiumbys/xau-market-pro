@@ -101,7 +101,8 @@ jobs:
           php artisan key:generate
 
       - name: Run tests
-        run: vendor/bin/phpunit --display-details --colors=always
+        run: vendor/bin/phpunit
+        working-directory: backend
 
       - name: Upload coverage
         uses: codecov/codecov-action@v4
