@@ -4,7 +4,7 @@
   "description": "XAU Market Pro - Backend API",
   "keywords": ["laravel", "framework"],
   "license": "MIT",
-"require": {
+  "require": {
     "php": "^8.2",
     "laravel/framework": "^11.0",
     "laravel/sanctum": "^4.0",
