@@ -40,13 +40,19 @@ COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 WORKDIR /var/www
 
 # Copy composer files first for caching
-COPY backend/composer.json backend/composer.lock* ./
-
-# Install PHP dependencies (without scripts to avoid artisan errors)
-RUN composer install --no-dev --optimize-autoloader --no-scripts --no-interaction || true
+COPY backend/composer.json ./
 
 # Copy application code
 COPY backend/ .
+
+# Remove host vendor (contains dev packages like collision)
+RUN rm -rf vendor
+
+# Remove host composer.lock (contains dev packages like collision)
+RUN rm -f composer.lock
+
+# Install PHP dependencies (fresh install without dev packages)
+RUN composer install --no-dev --optimize-autoloader --no-scripts --no-interaction --no-cache
 
 # Create storage directories and set permissions
 RUN mkdir -p \
@@ -60,11 +66,13 @@ RUN mkdir -p \
     && chown -R www-data:www-data storage bootstrap/cache \
     && chmod -R 775 storage bootstrap/cache
 
-# Generate optimized autoload
-RUN composer dump-autoload --optimize --no-dev
-
 # Expose PHP-FPM port
 EXPOSE 9000
 
-# Default command
+# Copy entrypoint script
+COPY docker/entrypoint.sh /usr/local/bin/entrypoint.sh
+RUN chmod +x /usr/local/bin/entrypoint.sh
+
+# Default command (passed to entrypoint)
+ENTRYPOINT ["entrypoint.sh"]
 CMD ["php-fpm"]

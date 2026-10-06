@@ -1,4 +1,5 @@
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@components/ui/Card';
+import { Button } from '@components/ui/Button';
 import { Users, CreditCard, BookOpen, DollarSign, TrendingUp, Activity } from 'lucide-react';
 import { cn } from '@utils/cn';
 
@@ -21,8 +22,8 @@ export function AdminDashboardPage() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-bold text-white">Admin Dashboard</h1>
-        <p className="text-dark-400 mt-1">Platform overview and key metrics</p>
+        <h1 className="text-2xl font-bold text-light-900 dark:text-white">Admin Dashboard</h1>
+        <p className="text-light-600 dark:text-dark-400 mt-1">Platform overview and key metrics</p>
       </div>
 
       {/* Stats Grid */}
@@ -32,8 +33,8 @@ export function AdminDashboardPage() {
             <CardContent className="pt-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm font-medium text-dark-400">{stat.label}</p>
-                  <p className="text-3xl font-bold text-white mt-1 tabular-nums">{stat.value}</p>
+                  <p className="text-sm font-medium text-light-600 dark:text-dark-400">{stat.label}</p>
+                  <p className="text-3xl font-bold text-light-900 dark:text-white mt-1 tabular-nums">{stat.value}</p>
                   <p className={cn('text-sm mt-1', stat.change.startsWith('+') ? 'text-green-400' : 'text-red-400')}>
                     {stat.change} vs last month
                   </p>
@@ -55,8 +56,8 @@ export function AdminDashboardPage() {
             <CardDescription>Last 30 days</CardDescription>
           </CardHeader>
           <CardContent className="h-64 flex items-center justify-center">
-            <TrendingUp className="w-16 h-16 text-dark-600" />
-            <p className="text-dark-400">Chart placeholder - integrate with Recharts</p>
+            <TrendingUp className="w-16 h-16 text-light-400 dark:text-dark-600" />
+            <p className="text-light-600 dark:text-dark-400">Chart placeholder - integrate with Recharts</p>
           </CardContent>
         </Card>
 
@@ -66,8 +67,8 @@ export function AdminDashboardPage() {
             <CardDescription>Monthly recurring revenue</CardDescription>
           </CardHeader>
           <CardContent className="h-64 flex items-center justify-center">
-            <DollarSign className="w-16 h-16 text-dark-600" />
-            <p className="text-dark-400">Chart placeholder - integrate with Recharts</p>
+            <DollarSign className="w-16 h-16 text-light-400 dark:text-dark-600" />
+            <p className="text-light-600 dark:text-dark-400">Chart placeholder - integrate with Recharts</p>
           </CardContent>
         </Card>
       </div>
@@ -84,7 +85,7 @@ export function AdminDashboardPage() {
         <CardContent>
           <div className="space-y-4">
             {RECENT_ACTIVITY.map((activity, index) => (
-              <div key={index} className="flex items-center justify-between p-4 bg-dark-800/50 rounded-lg">
+              <div key={index} className="flex items-center justify-between p-4 bg-light-100/50 dark:bg-dark-800/50 rounded-lg">
                 <div className="flex items-center gap-4">
                   <div className={cn('p-2 rounded-lg', activity.type === 'user' && 'bg-blue-500/20', activity.type === 'subscription' && 'bg-primary-500/20', activity.type === 'trade' && 'bg-green-500/20', activity.type === 'alert' && 'bg-purple-500/20')}>
                     {activity.type === 'user' && <Users className="w-5 h-5 text-blue-400" />}
@@ -93,12 +94,12 @@ export function AdminDashboardPage() {
                     {activity.type === 'alert' && <Activity className="w-5 h-5 text-purple-400" />}
                   </div>
                   <div>
-                    <p className="font-medium text-white">{activity.action}</p>
-                    <p className="text-sm text-dark-400">{activity.user}</p>
+                    <p className="font-medium text-light-900 dark:text-white">{activity.action}</p>
+                    <p className="text-sm text-light-600 dark:text-dark-400">{activity.user}</p>
                   </div>
                 </div>
                 <div className="text-right">
-                  <p className="text-sm text-dark-400">{activity.time}</p>
+                  <p className="text-sm text-light-600 dark:text-dark-400">{activity.time}</p>
                   {activity.pnl && <p className="text-sm text-green-400 font-medium">{activity.pnl}</p>}
                 </div>
               </div>

@@ -1,6 +1,6 @@
 import { create } from 'zustand';
-import { marketApi } from '@api';
 import type { Market, MarketData, MarketParameter } from '@types';
+import { marketApi } from '@api';
 
 interface MarketState {
   currentMarket: MarketData | null;

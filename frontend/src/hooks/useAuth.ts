@@ -1,17 +1,22 @@
-import { useAuthStore, selectAuth, selectUser, selectIsAuthenticated, selectIsLoading } from '@stores/authStore';
+import useAuthStore, { type AuthStore } from '@stores/authStore';
 
 export function useAuth() {
-  return useAuthStore(selectAuth);
+  return useAuthStore((state) => ({
+    user: state.user,
+    token: state.token,
+    isAuthenticated: state.isAuthenticated,
+    isLoading: state.isLoading,
+  }));
 }
 
 export function useUser() {
-  return useAuthStore(selectUser);
+  return useAuthStore((state) => state.user);
 }
 
 export function useIsAuthenticated() {
-  return useAuthStore(selectIsAuthenticated);
+  return useAuthStore((state) => state.isAuthenticated);
 }
 
 export function useIsLoading() {
-  return useAuthStore(selectIsLoading);
+  return useAuthStore((state) => state.isLoading);
 }

@@ -66,4 +66,35 @@ class AuthenticatedSessionController extends Controller
             'message' => 'Logged out successfully',
         ]);
     }
+
+    #[OA\Put(
+        path: '/api/user/profile',
+        summary: 'Update user profile',
+        tags: ['Authentication'],
+        security: [['sanctum' => []]],
+    )]
+    public function updateProfile(Request $request)
+    {
+        $user = $request->user();
+
+        $request->validate([
+            'name' => ['sometimes', 'required', 'string', 'max:255'],
+            'email' => ['sometimes', 'required', 'string', 'email', 'max:255', 'unique:users,email,' . $user->id],
+        ]);
+
+        if ($request->has('name')) {
+            $user->name = $request->name;
+        }
+        if ($request->has('email')) {
+            $user->email = $request->email;
+            $user->email_verified_at = null; // Require re-verification on email change
+        }
+
+        $user->save();
+
+        return response()->json([
+            'user' => new UserResource($user->load('activeSubscription')),
+            'message' => 'Profile updated successfully',
+        ]);
+    }
 }

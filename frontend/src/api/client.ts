@@ -1,5 +1,5 @@
 import axios, { AxiosError, AxiosInstance, InternalAxiosRequestConfig } from 'axios';
-import { useAuthStore } from '@stores/authStore';
+import useAuthStore from '@stores/authStore';
 import type { ApiError, ApiResponse, PaginatedResponse } from '@types';
 
 const API_BASE_URL = import.meta.env.VITE_API_URL || '/api';
@@ -27,7 +27,6 @@ class ApiClient {
   }
 
   private setupInterceptors() {
-    // Request interceptor - add auth token
     this.client.interceptors.request.use(
       (config: InternalAxiosRequestConfig) => {
         const token = useAuthStore.getState().token;
@@ -39,7 +38,6 @@ class ApiClient {
       (error) => Promise.reject(error)
     );
 
-    // Response interceptor - handle 401
     this.client.interceptors.response.use(
       (response) => response,
       async (error: AxiosError<ApiError>) => {
@@ -58,7 +56,6 @@ class ApiClient {
           this.isRefreshing = true;
 
           try {
-            // Try to refresh token (if refresh endpoint exists)
             const refreshToken = useAuthStore.getState().refreshToken;
             if (refreshToken) {
               const response = await axios.post(`${API_BASE_URL}/auth/refresh`, {
@@ -105,7 +102,6 @@ class ApiClient {
     return formattedError;
   }
 
-  // Generic request methods
   async get<T>(url: string, params?: Record<string, unknown>): Promise<T> {
     const response = await this.client.get<T>(url, { params });
     return response.data;
@@ -131,7 +127,6 @@ class ApiClient {
     return response.data;
   }
 
-  // Paginated get
   async getPaginated<T>(url: string, params?: Record<string, unknown>): Promise<PaginatedResponse<T>> {
     const response = await this.client.get<PaginatedResponse<T>>(url, { params });
     return response.data;

@@ -1,6 +1,14 @@
 import { create } from 'zustand';
+import type {
+  TradeJournal,
+  TradeStats,
+  TradeDirection,
+  TradeStatus,
+  PaginatedResponse,
+  TradeJournalCreateForm,
+  TradeJournalUpdateForm,
+} from '@types';
 import { journalApi } from '@api';
-import type { TradeJournal, TradeStats, TradeDirection, TradeStatus, PaginatedResponse, TradeJournalCreateForm, TradeJournalUpdateForm } from '@types';
 
 interface JournalState {
   trades: TradeJournal[];

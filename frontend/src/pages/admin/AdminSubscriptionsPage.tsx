@@ -1,4 +1,5 @@
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@components/ui/Card';
+import { Button } from '@components/ui/Button';
 import { Badge, PlanBadge, SubscriptionStatusBadge } from '@components/ui/Badge';
 import { Input } from '@components/ui/Input';
 import { Search, Check, X, Clock } from 'lucide-react';

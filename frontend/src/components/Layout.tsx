@@ -1,10 +1,9 @@
 import { ReactNode } from 'react';
 import { Outlet, NavLink, useLocation } from 'react-router-dom';
-import { useAuthStore, selectUser } from '@stores/authStore';
+import useAuthStore from '@stores/authStore';
 import { useUIStore, selectSidebarOpen, selectMobileMenuOpen } from '@stores/uiStore';
 import {
   LayoutDashboard,
-  Braille,
   BookOpen,
   Bell,
   CreditCard,
@@ -22,7 +21,7 @@ import { cn } from '@utils/cn';
 
 const NAV_ITEMS = [
   { path: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
-  { path: '/chart', label: 'Chart', icon: Braille },
+  { path: '/chart', label: 'Chart', icon: BarChart3 },
   { path: '/journal', label: 'Journal', icon: BookOpen },
   { path: '/alerts', label: 'Alerts', icon: Bell },
   { path: '/subscription', label: 'Subscription', icon: CreditCard },
@@ -32,7 +31,7 @@ const NAV_ITEMS = [
 
 export function Layout() {
   const location = useLocation();
-  const { user } = useAuthStore(selectUser);
+  const user = useAuthStore(selectUser);
   const sidebarOpen = useUIStore(selectSidebarOpen);
   const mobileMenuOpen = useUIStore(selectMobileMenuOpen);
   const { setSidebarOpen, setMobileMenuOpen, toggleSidebar } = useUIStore();
@@ -44,7 +43,7 @@ export function Layout() {
   };
 
   return (
-    <div className="min-h-screen bg-dark-950 flex">
+    <div className="min-h-screen bg-light-50 dark:bg-dark-950 flex">
       {/* Mobile overlay */}
       {isMobile && mobileMenuOpen && (
         <div
@@ -57,18 +56,18 @@ export function Layout() {
       {/* Sidebar */}
       <aside
         className={cn(
-          'fixed lg:static z-50 lg:z-auto h-full lg:h-auto w-64 bg-dark-900/80 backdrop-blur-xl border-r border-dark-700 flex flex-col transition-transform duration-300 ease-in-out',
+          'fixed lg:static z-50 lg:z-auto h-full lg:h-auto w-64 bg-light-100/80 dark:bg-dark-900/80 backdrop-blur-xl border-r border-light-200 dark:border-dark-700 flex flex-col transition-transform duration-300 ease-in-out',
           isMobile ? (mobileMenuOpen ? 'translate-x-0' : '-translate-x-full') : 'translate-x-0'
         )}
         aria-label="Main navigation"
       >
         {/* Logo */}
-        <div className="flex items-center justify-between h-16 px-4 border-b border-dark-700">
+        <div className="flex items-center justify-between h-16 px-4 border-b border-light-200 dark:border-dark-700">
           <Link to="/dashboard" className="flex items-center gap-2">
             <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary-500 to-gold-500 flex items-center justify-center">
               <span className="text-xs font-bold text-dark-950">XAU</span>
             </div>
-            <span className="font-semibold text-lg text-white">XAU Pro</span>
+            <span className="font-semibold text-lg text-light-900 dark:text-dark-50">XAU Pro</span>
           </Link>
           {isMobile && (
             <button
@@ -95,7 +94,7 @@ export function Layout() {
                     'flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200',
                     isActive
                       ? 'bg-primary-600 text-white shadow-lg shadow-primary-500/25'
-                      : 'text-dark-300 hover:bg-dark-800 hover:text-white'
+                      : 'text-light-700 dark:text-dark-300 hover:bg-light-200 dark:hover:bg-dark-800 hover:text-light-900 dark:hover:text-white'
                   )
                 }
                 onClick={() => isMobile && setMobileMenuOpen(false)}
@@ -110,7 +109,7 @@ export function Layout() {
           {/* Admin link */}
           {user?.role === 'admin' && (
             <>
-              <div className="h-px bg-dark-700 my-2" />
+              <div className="h-px bg-light-200 dark:bg-dark-700 my-2" />
               <NavLink
                 to="/admin/dashboard"
                 className={({ isActive }) =>
@@ -118,7 +117,7 @@ export function Layout() {
                     'flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200',
                     isActive
                       ? 'bg-gold-500/20 text-gold-400 border border-gold-500/30'
-                      : 'text-dark-300 hover:bg-dark-800 hover:text-white'
+                      : 'text-light-700 dark:text-dark-300 hover:bg-light-200 dark:hover:bg-dark-800 hover:text-light-900 dark:hover:text-white'
                   )
                 }
                 onClick={() => isMobile && setMobileMenuOpen(false)}
@@ -131,14 +130,14 @@ export function Layout() {
         </nav>
 
         {/* User section */}
-        <div className="p-3 border-t border-dark-700">
+        <div className="p-3 border-t border-light-200 dark:border-dark-700">
           <div className="flex items-center gap-3 px-3 py-2">
-            <div className="w-8 h-8 rounded-full bg-dark-800 flex items-center justify-center">
-              <User className="w-4 h-4 text-dark-400" aria-hidden="true" />
+            <div className="w-8 h-8 rounded-full bg-light-200 dark:bg-dark-800 flex items-center justify-center">
+              <User className="w-4 h-4 text-light-500 dark:text-dark-400" aria-hidden="true" />
             </div>
             <div className="flex-1 min-w-0">
-              <p className="text-sm font-medium text-white truncate">{user?.name}</p>
-              <p className="text-xs text-dark-500 truncate capitalize">{user?.role}</p>
+              <p className="text-sm font-medium text-light-900 dark:text-white truncate">{user?.name}</p>
+              <p className="text-xs text-light-500 dark:text-dark-500 truncate capitalize">{user?.role}</p>
             </div>
           </div>
           <button
@@ -154,7 +153,7 @@ export function Layout() {
       {/* Main content */}
       <main className={cn('flex-1 flex flex-col min-w-0', sidebarOpen ? 'lg:ml-0' : '')}>
         {/* Top bar */}
-        <header className="h-16 bg-dark-900/80 backdrop-blur-xl border-b border-dark-700 flex items-center justify-between px-4 lg:px-6">
+        <header className="h-16 bg-light-100/80 dark:bg-dark-900/80 backdrop-blur-xl border-b border-light-200 dark:border-dark-700 flex items-center justify-between px-4 lg:px-6">
           <div className="flex items-center gap-4">
             <button
               onClick={isMobile ? () => setMobileMenuOpen(true) : toggleSidebar}
@@ -178,7 +177,7 @@ export function Layout() {
 
           <div className="flex items-center gap-3">
             {/* Theme toggle could go here */}
-            <div className="hidden sm:flex items-center gap-2 px-3 py-1.5 bg-dark-800 rounded-lg text-xs text-dark-400">
+            <div className="hidden sm:flex items-center gap-2 px-3 py-1.5 bg-light-200 dark:bg-dark-800 rounded-lg text-xs text-light-600 dark:text-dark-400">
               <span className="font-mono text-gold-400">XAUUSD</span>
             </div>
           </div>

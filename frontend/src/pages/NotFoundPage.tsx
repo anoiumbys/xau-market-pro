@@ -12,9 +12,9 @@ export function NotFoundPage() {
           <div className="w-20 h-20 mx-auto mb-6 rounded-full bg-primary-500/20 flex items-center justify-center">
             <Search className="w-10 h-10 text-primary-400" />
           </div>
-          <h1 className="text-3xl font-bold text-white mb-2">404</h1>
-          <p className="text-dark-400 mb-6 text-lg">Page not found</p>
-          <p className="text-dark-500 mb-8">
+          <h1 className="text-3xl font-bold text-light-900 dark:text-white mb-2">404</h1>
+          <p className="text-light-600 dark:text-dark-400 mb-6 text-lg">Page not found</p>
+          <p className="text-light-500 dark:text-dark-500 mb-8">
             Sorry, we couldn't find the page you're looking for. It might have been moved or doesn't exist.
           </p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">

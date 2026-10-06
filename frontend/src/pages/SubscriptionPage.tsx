@@ -9,8 +9,8 @@ export function SubscriptionPage() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-bold text-white">Subscription</h1>
-        <p className="text-dark-400 mt-1">Choose the plan that fits your trading needs</p>
+        <h1 className="text-2xl font-bold text-light-900 dark:text-white">Subscription</h1>
+        <p className="text-light-600 dark:text-dark-400 mt-1">Choose the plan that fits your trading needs</p>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -32,34 +32,34 @@ export function SubscriptionPage() {
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="text-center">
-                  <span className="text-4xl font-bold text-white">${price}</span>
-                  <span className="text-dark-400">/month</span>
+                  <span className="text-4xl font-bold text-light-900 dark:text-white">${price}</span>
+                  <span className="text-light-600 dark:text-dark-400">/month</span>
                 </div>
                 <ul className="space-y-3">
-                  <li className="flex items-center gap-3 text-dark-300">
+                  <li className="flex items-center gap-3 text-light-700 dark:text-dark-300">
                     <Check className="w-5 h-5 text-green-400 flex-shrink-0" />
                     <span>Price alerts: {features.alerts === -1 ? 'Unlimited' : features.alerts}</span>
                   </li>
-                  <li className="flex items-center gap-3 text-dark-300">
+                  <li className="flex items-center gap-3 text-light-700 dark:text-dark-300">
                     <Check className="w-5 h-5 text-green-400 flex-shrink-0" />
                     <span>Report exports: {features.exports === -1 ? 'Unlimited' : features.exports === 0 ? 'Not included' : features.exports}</span>
                   </li>
-                  <li className="flex items-center gap-3 text-dark-300">
+                  <li className="flex items-center gap-3 text-light-700 dark:text-dark-300">
                     <Check className="w-5 h-5 text-green-400 flex-shrink-0" />
                     <span>Trade journal</span>
                   </li>
-                  <li className="flex items-center gap-3 text-dark-300">
+                  <li className="flex items-center gap-3 text-light-700 dark:text-dark-300">
                     <Check className="w-5 h-5 text-green-400 flex-shrink-0" />
                     <span>Real-time charts</span>
                   </li>
                   {plan !== 'basic' && (
-                    <li className="flex items-center gap-3 text-dark-300">
+                    <li className="flex items-center gap-3 text-light-700 dark:text-dark-300">
                       <Check className="w-5 h-5 text-green-400 flex-shrink-0" />
                       <span>Advanced analytics</span>
                     </li>
                   )}
                   {plan === 'enterprise' && (
-                    <li className="flex items-center gap-3 text-dark-300">
+                    <li className="flex items-center gap-3 text-light-700 dark:text-dark-300">
                       <Check className="w-5 h-5 text-green-400 flex-shrink-0" />
                       <span>Priority support</span>
                     </li>
@@ -87,22 +87,22 @@ export function SubscriptionPage() {
         <CardContent className="grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
           <div className="p-4">
             <Crown className="w-8 h-8 text-gold-400 mx-auto mb-2" />
-            <p className="font-medium text-white">No Contracts</p>
-            <p className="text-sm text-dark-400">Cancel anytime</p>
+            <p className="font-medium text-light-900 dark:text-white">No Contracts</p>
+            <p className="text-sm text-light-600 dark:text-dark-400">Cancel anytime</p>
           </div>
           <div className="p-4">
             <CardTitle className="flex items-center justify-center gap-2">
               <Check className="w-5 h-5 text-green-400" />
               Instant Access
             </CardTitle>
-            <p className="text-sm text-dark-400">Features activate immediately</p>
+            <p className="text-sm text-light-600 dark:text-dark-400">Features activate immediately</p>
           </div>
           <div className="p-4">
             <CardTitle className="flex items-center justify-center gap-2">
               <Shield className="w-5 h-5 text-primary-400" />
               Secure Billing
             </CardTitle>
-            <p className="text-sm text-dark-400">SSL encrypted payments</p>
+            <p className="text-sm text-light-600 dark:text-dark-400">SSL encrypted payments</p>
           </div>
         </CardContent>
       </Card>

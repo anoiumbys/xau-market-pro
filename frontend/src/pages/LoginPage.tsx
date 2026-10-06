@@ -3,11 +3,11 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { useAuthStore } from '@stores/authStore';
+import useAuthStore from '@stores/authStore';
 import { Button } from '@components/ui/Button';
 import { Input } from '@components/ui/Input';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from '@components/ui/Card';
-import { Toaster, toast } from 'sonner';
+import { toast } from 'sonner';
 import { Eye, EyeOff, Loader2 } from 'lucide-react';
 import { cn } from '@utils/cn';
 
@@ -145,7 +145,6 @@ export function LoginPage() {
           </CardFooter>
         </Card>
       </div>
-      <Toaster position="top-right" theme="dark" />
     </div>
   );
 }

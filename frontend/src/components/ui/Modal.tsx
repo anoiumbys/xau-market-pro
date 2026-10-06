@@ -83,19 +83,19 @@ export function Modal({
           <div className="modal-header">
             <div>
               {title && (
-                <h2 id="modal-title" className="text-lg font-semibold text-white">
+                <h2 id="modal-title" className="text-lg font-semibold text-light-900 dark:text-dark-50">
                   {title}
                 </h2>
               )}
               {description && (
-                <p id="modal-description" className="text-sm text-dark-400 mt-1">
+                <p id="modal-description" className="text-sm text-light-600 dark:text-dark-400 mt-1">
                   {description}
                 </p>
               )}
             </div>
             <button
               onClick={onClose}
-              className="btn-ghost btn-icon text-dark-400 hover:text-white"
+              className="btn-ghost btn-icon text-light-600 dark:text-dark-400 hover:text-light-900 dark:hover:text-dark-50"
               aria-label="Close modal"
             >
               <X className="w-5 h-5" aria-hidden="true" />
@@ -136,7 +136,7 @@ export function ConfirmModal({
 }: ConfirmModalProps) {
   return (
     <Modal isOpen={isOpen} onClose={onClose} title={title} size="sm">
-      <p className="text-dark-300">{message}</p>
+      <p className="text-light-700 dark:text-dark-300">{message}</p>
       <div slot="footer" className="modal-footer">
         <Button variant="ghost" onClick={onClose} disabled={loading}>
           {cancelText}

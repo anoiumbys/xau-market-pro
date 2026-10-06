@@ -77,8 +77,8 @@ export function DashboardPage() {
       {/* Page Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-white">Dashboard</h1>
-          <p className="text-dark-400 mt-1">Welcome back! Here's your trading overview.</p>
+          <h1 className="text-2xl font-bold text-light-900 dark:text-white">Dashboard</h1>
+          <p className="text-light-600 dark:text-dark-400 mt-1">Welcome back! Here's your trading overview.</p>
         </div>
         <div className="flex items-center gap-3">
           <Link to="/subscription">
@@ -101,9 +101,9 @@ export function DashboardPage() {
         <CardContent className="pt-6">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
             <div>
-              <p className="text-sm font-medium text-dark-400">XAUUSD Spot Price</p>
+              <p className="text-sm font-medium text-light-600 dark:text-dark-400">XAUUSD Spot Price</p>
               <div className="flex items-baseline gap-3 mt-1">
-                <span className="text-4xl font-bold text-white tabular-nums">{formatPrice(spotPrice)}</span>
+                <span className="text-4xl font-bold text-light-900 dark:text-white tabular-nums">{formatPrice(spotPrice)}</span>
                 <div className={cn('flex items-center gap-1 px-3 py-1 rounded-full text-sm font-medium', change24h >= 0 ? 'bg-green-500/20 text-green-400' : 'bg-red-500/20 text-red-400')}>
                   {change24h >= 0 ? <TrendingUp className="w-4 h-4" /> : <TrendingDown className="w-4 h-4" />}
                   <span className="tabular-nums">{change24h >= 0 ? '+' : ''}{formatPrice(change24h)} ({changePct24h >= 0 ? '+' : ''}{changePct24h.toFixed(2)}%)</span>
@@ -111,20 +111,20 @@ export function DashboardPage() {
               </div>
             </div>
             <div>
-              <p className="text-sm font-medium text-dark-400">Daily High</p>
-              <p className="text-2xl font-bold text-white mt-1 tabular-nums">{formatPrice(market?.daily_high ?? 0)}</p>
+              <p className="text-sm font-medium text-light-600 dark:text-dark-400">Daily High</p>
+              <p className="text-2xl font-bold text-light-900 dark:text-white mt-1 tabular-nums">{formatPrice(market?.daily_high ?? 0)}</p>
             </div>
             <div>
-              <p className="text-sm font-medium text-dark-400">Daily Low</p>
-              <p className="text-2xl font-bold text-white mt-1 tabular-nums">{formatPrice(market?.daily_low ?? 0)}</p>
+              <p className="text-sm font-medium text-light-600 dark:text-dark-400">Daily Low</p>
+              <p className="text-2xl font-bold text-light-900 dark:text-white mt-1 tabular-nums">{formatPrice(market?.daily_low ?? 0)}</p>
             </div>
             <div>
-              <p className="text-sm font-medium text-dark-400">Market Status</p>
+              <p className="text-sm font-medium text-light-600 dark:text-dark-400">Market Status</p>
               <div className="mt-1 flex items-center gap-2">
                 <Badge variant={market?.market_status === 'open' ? 'success' : 'neutral'} dot>
                   {market?.market_status === 'open' ? 'Open' : 'Closed'}
                 </Badge>
-                <span className="text-sm text-dark-400">Last updated: {market?.timestamp ? formatDate(market.timestamp, 'datetime') : '-'}</span>
+                <span className="text-sm text-light-600 dark:text-dark-400">Last updated: {market?.timestamp ? formatDate(market.timestamp, 'datetime') : '-'}</span>
               </div>
             </div>
           </div>
@@ -137,8 +137,8 @@ export function DashboardPage() {
           <CardContent className="pt-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-dark-400">Open Trades</p>
-                <p className="text-3xl font-bold text-white mt-1">{stats?.open_trades ?? 0}</p>
+                <p className="text-sm font-medium text-light-600 dark:text-dark-400">Open Trades</p>
+                <p className="text-3xl font-bold text-light-900 dark:text-white mt-1">{stats?.open_trades ?? 0}</p>
               </div>
               <div className={cn('p-3 rounded-xl', 'bg-blue-500/20')}>
                 <BookOpen className="w-6 h-6 text-blue-400" />
@@ -151,8 +151,8 @@ export function DashboardPage() {
           <CardContent className="pt-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-dark-400">Active Alerts</p>
-                <p className="text-3xl font-bold text-white mt-1">{pendingAlerts.length}</p>
+                <p className="text-sm font-medium text-light-600 dark:text-dark-400">Active Alerts</p>
+                <p className="text-3xl font-bold text-light-900 dark:text-white mt-1">{pendingAlerts.length}</p>
               </div>
               <div className={cn('p-3 rounded-xl', 'bg-purple-500/20')}>
                 <Bell className="w-6 h-6 text-purple-400" />
@@ -165,8 +165,8 @@ export function DashboardPage() {
           <CardContent className="pt-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-dark-400">Win Rate</p>
-                <p className="text-3xl font-bold text-white mt-1 tabular-nums">{stats?.win_rate?.toFixed(1) ?? '0.0'}%</p>
+                <p className="text-sm font-medium text-light-600 dark:text-dark-400">Win Rate</p>
+                <p className="text-3xl font-bold text-light-900 dark:text-white mt-1 tabular-nums">{stats?.win_rate?.toFixed(1) ?? '0.0'}%</p>
               </div>
               <div className={cn('p-3 rounded-xl', 'bg-primary-500/20')}>
                 <Target className="w-6 h-6 text-primary-400" />
@@ -179,7 +179,7 @@ export function DashboardPage() {
           <CardContent className="pt-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-dark-400">Total PnL</p>
+                <p className="text-sm font-medium text-light-600 dark:text-dark-400">Total PnL</p>
                 <p className={cn('text-3xl font-bold mt-1 tabular-nums', getPnLColor(stats?.total_pnl ?? null))}>
                   {formatPnL(stats?.total_pnl ?? null)}
                 </p>
@@ -251,7 +251,7 @@ export function DashboardPage() {
             <CardContent>
               <div className="space-y-3">
                 <PlanBadge plan="pro" />
-                <p className="text-sm text-dark-300">Pro Plan - Unlimited alerts & exports</p>
+                <p className="text-sm text-light-700 dark:text-dark-300">Pro Plan - Unlimited alerts & exports</p>
                 <Button variant="ghost" size="sm" className="w-full">
                   Manage Subscription
                 </Button>
@@ -292,14 +292,14 @@ export function DashboardPage() {
                     {stats ? (
                       <>
                         <tr>
-                          <td className="text-center text-dark-400 py-8" colSpan={7}>
+                          <td className="text-center text-light-600 dark:text-dark-400 py-8" colSpan={7}>
                             No trades yet. <Link to="/journal" className="text-primary-400 hover:underline">Add your first trade</Link>
                           </td>
                         </tr>
                       </>
                     ) : (
                       <tr>
-                        <td className="text-center text-dark-400 py-8" colSpan={7}>
+                        <td className="text-center text-light-600 dark:text-dark-400 py-8" colSpan={7}>
                           Loading...
                         </td>
                       </tr>

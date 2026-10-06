@@ -1,10 +1,15 @@
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
-import type { User, AuthState } from '@types';
+import type { User } from '@types';
 import { authApi } from '@api';
 
-interface AuthStore extends AuthState {
+interface AuthStore {
+  user: User | null;
+  token: string | null;
   refreshToken: string | null;
+  isAuthenticated: boolean;
+  isLoading: boolean;
+
   setTokens: (token: string, refreshToken?: string) => void;
   setUser: (user: User) => void;
   login: (email: string, password: string, remember?: boolean) => Promise<void>;
@@ -12,11 +17,10 @@ interface AuthStore extends AuthState {
   logout: () => Promise<void>;
   initialize: () => Promise<void>;
   updateUser: (data: Partial<User>) => void;
+  updateProfile: (data: { name?: string; email?: string }) => Promise<void>;
 }
 
-const STORAGE_KEY = 'xaupro-auth';
-
-export const useAuthStore = create<AuthStore>()(
+const useAuthStore = create<AuthStore>()(
   persist(
     (set, get) => ({
       user: null,
@@ -108,28 +112,30 @@ export const useAuthStore = create<AuthStore>()(
           user: state.user ? { ...state.user, ...data } : null,
         }));
       },
+
+      updateProfile: async (data: { name?: string; email?: string }) => {
+        set({ isLoading: true });
+        try {
+          const response = await authApi.updateProfile(data);
+          set({ user: response.user, isLoading: false });
+        } catch (error) {
+          set({ isLoading: false });
+          throw error;
+        }
+      },
     }),
     {
-      name: STORAGE_KEY,
+      name: 'xaupro-auth',
       storage: createJSONStorage(() => localStorage),
-      partialize: (state) => ({
+      partialize: (state: AuthStore) => ({
         token: state.token,
         refreshToken: state.refreshToken,
         user: state.user,
+        isAuthenticated: state.isAuthenticated,
       }),
     }
   )
 );
 
-// Selectors for performance
-export const selectAuth = (state: AuthStore) => ({
-  user: state.user,
-  token: state.token,
-  isAuthenticated: state.isAuthenticated,
-  isLoading: state.isLoading,
-});
-
-export const selectUser = (state: AuthStore) => state.user;
-export const selectToken = (state: AuthStore) => state.token;
-export const selectIsAuthenticated = (state: AuthStore) => state.isAuthenticated;
-export const selectIsLoading = (state: AuthStore) => state.isLoading;
+export default useAuthStore;
+export type { AuthStore };

@@ -1,22 +1,37 @@
-import { forwardRef, InputHTMLAttributes, LabelHTMLAttributes } from 'react';
+import { forwardRef, InputHTMLAttributes, TextareaHTMLAttributes, SelectHTMLAttributes } from 'react';
 import { cn } from '@utils/cn';
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   label?: string;
   error?: string;
   helperText?: string;
+  icon?: React.ReactNode;
 }
 
 export const Input = forwardRef<HTMLInputElement, InputProps>(
-  ({ className, label, error, helperText, id, ...props }, ref) => {
+  ({ className, label, error, helperText, icon, id, ...props }, ref) => {
     const inputId = id || label?.toLowerCase().replace(/\s+/g, '-');
 
     return (
-      <div className="w-full">
+      <div className="w-full relative">
         {label && (
           <label htmlFor={inputId} className="label">
             {label}
           </label>
+        )}
+        {icon && (
+          <span
+            className={cn('absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-light-400 flex items-center justify-center', error && 'text-red-500')}
+            aria-hidden="true"
+          >
+            {typeof icon === 'string' ? (
+              <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 100 2v6a1 1 0 102 0V5z" clipRule="evenodd" />
+              </svg>
+            ) : (
+              icon
+            )}
+          </span>
         )}
         <input
           ref={ref}
@@ -35,7 +50,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
           </p>
         )}
         {helperText && !error && (
-          <p id={`${inputId}-helper`} className="text-xs text-dark-500 mt-1.5">
+          <p id={`${inputId}-helper`} className="text-xs text-light-500 dark:text-dark-500 mt-1.5">
             {helperText}
           </p>
         )}
@@ -46,7 +61,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
 
 Input.displayName = 'Input';
 
-interface TextareaProps extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
+interface TextareaProps extends TextareaHTMLAttributes<HTMLTextAreaElement> {
   label?: string;
   error?: string;
   helperText?: string;
@@ -80,7 +95,7 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
           </p>
         )}
         {helperText && !error && (
-          <p id={`${inputId}-helper`} className="text-xs text-dark-500 mt-1.5">
+          <p id={`${inputId}-helper`} className="text-xs text-light-500 dark:text-dark-500 mt-1.5">
             {helperText}
           </p>
         )}
@@ -91,7 +106,7 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
 
 Textarea.displayName = 'Textarea';
 
-interface SelectProps extends React.SelectHTMLAttributes<HTMLSelectElement> {
+interface SelectProps extends SelectHTMLAttributes<HTMLSelectElement> {
   label?: string;
   error?: string;
   helperText?: string;
@@ -138,7 +153,7 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(
           </p>
         )}
         {helperText && !error && (
-          <p id={`${inputId}-helper`} className="text-xs text-dark-500 mt-1.5">
+          <p id={`${inputId}-helper`} className="text-xs text-light-500 dark:text-dark-500 mt-1.5">
             {helperText}
           </p>
         )}

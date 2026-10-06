@@ -75,19 +75,17 @@ export function ForgotPasswordPage() {
                 Send Reset Link
               </Button>
             </form>
+            <CardFooter className="flex-col gap-4">
+              <p className="text-sm text-dark-400 text-center w-full">
+                Remember your password?{' '}
+                <Link to="/login" className="text-primary-400 hover:text-primary-300 font-medium">
+                  Sign in
+                </Link>
+              </p>
+            </CardFooter>
           </CardContent>
-          <CardFooter className="flex-col gap-4">
-            <p className="text-sm text-dark-400 text-center w-full">
-              Remember your password?{' '}
-              <Link to="/login" className="text-primary-400 hover:text-primary-300 font-medium">
-                Sign in
-              </Link>
-            </p>
-          </CardFooter>
         </Card>
       </div>
     </div>
   );
 }
-
-import { useState } from 'react';

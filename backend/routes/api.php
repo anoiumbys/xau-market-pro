@@ -28,7 +28,7 @@ use App\Http\Middleware\AdminOnly;
 */
 
 // Public routes
-Route::post('/login', [AuthenticatedSessionController::class, 'store']);
+Route::post('/login', [AuthenticatedSessionController::class, 'store'])->name('login');
 Route::post('/register', [RegisteredUserController::class, 'store']);
 Route::post('/forgot-password', [PasswordResetLinkController::class, 'store']);
 Route::post('/reset-password', [NewPasswordController::class, 'store']);
@@ -41,6 +41,7 @@ Route::get('/market-parameters/{symbol}', [MarketParameterController::class, 'sh
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [AuthenticatedSessionController::class, 'destroy']);
     Route::get('/user', fn() => request()->user());
+    Route::put('/user/profile', [AuthenticatedSessionController::class, 'updateProfile']);
 
     // Price Alerts
     Route::apiResource('alerts', PriceAlertController::class)->only(['index', 'store', 'destroy']);

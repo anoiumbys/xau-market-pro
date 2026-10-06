@@ -33,7 +33,7 @@ export function formatNumber(num: number, decimals = 0): string {
 
 export function formatDate(date: string | Date, format: 'short' | 'long' | 'time' | 'datetime' = 'short'): string {
   const d = new Date(date);
-  const options: Intl.DateTimeFormatOptions = {
+  const options: Record<string, Intl.DateTimeFormatOptions> = {
     short: { month: 'short', day: 'numeric', year: 'numeric' },
     long: { month: 'long', day: 'numeric', year: 'numeric' },
     time: { hour: '2-digit', minute: '2-digit', hour12: false },

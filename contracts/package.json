@@ -12,12 +12,12 @@
     "sync": "node scripts/sync-contracts.js",
     "generate:types": "openapi-typescript openapi.yaml -o types/api.d.ts",
     "generate:zod": "openapi-zod openapi.yaml -o schemas/",
-    "validate": "openapi-validator openapi.yaml"
+    "validate": "npx @apidevtools/swagger-parser validate openapi.yaml"
   },
   "devDependencies": {
     "openapi-typescript": "^7.0.0",
-    "openapi-zod": "^3.0.0",
-    "openapi-validator": "^1.0.0",
+    "openapi-zod": "^0.2.7",
+    "@apidevtools/swagger-parser": "^10.0.0",
     "yaml": "^2.4.0"
   }
 }

@@ -19,12 +19,12 @@ export function Badge({
   dotColor,
 }: BadgeProps) {
   const variantClasses = {
-    primary: 'bg-primary-500/20 text-primary-400 border border-primary-500/30',
-    gold: 'bg-gold-500/20 text-gold-400 border border-gold-500/30',
-    success: 'bg-green-500/20 text-green-400 border border-green-500/30',
-    warning: 'bg-yellow-500/20 text-yellow-400 border border-yellow-500/30',
-    danger: 'bg-red-500/20 text-red-400 border border-red-500/30',
-    neutral: 'bg-dark-700 text-dark-400 border border-dark-600',
+    primary: 'bg-primary-500/20 text-primary-700 dark:text-primary-400 border border-primary-500/30 dark:border-primary-500/30',
+    gold: 'bg-gold-500/20 text-gold-700 dark:text-gold-400 border border-gold-500/30 dark:border-gold-500/30',
+    success: 'bg-green-500/20 text-green-700 dark:text-green-400 border border-green-500/30 dark:border-green-500/30',
+    warning: 'bg-yellow-500/20 text-yellow-700 dark:text-yellow-400 border border-yellow-500/30 dark:border-yellow-500/30',
+    danger: 'bg-red-500/20 text-red-700 dark:text-red-400 border border-red-500/30 dark:border-red-500/30',
+    neutral: 'bg-light-200 text-light-700 dark:bg-dark-700 dark:text-dark-400 border border-light-300 dark:border-dark-600',
   };
 
   const sizeClasses = {
@@ -52,7 +52,7 @@ export function Badge({
               success: 'bg-green-400',
               warning: 'bg-yellow-400',
               danger: 'bg-red-400',
-              neutral: 'bg-dark-400',
+              neutral: 'bg-light-400 dark:bg-dark-400',
             }[variant]
           )}
           style={{ width: size === 'sm' ? 6 : size === 'md' ? 6 : 8, height: size === 'sm' ? 6 : size === 'md' ? 6 : 8 }}

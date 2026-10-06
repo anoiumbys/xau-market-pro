@@ -52,7 +52,7 @@ class MarketController extends Controller
         // Get market parameters for S/R levels
         $parameters = $market->parameters()->active()->first();
         
-        $response = [
+        $response = (object) [
             'symbol' => $market->symbol,
             'spot_price' => $marketData['price'] ?? 0,
             'daily_high' => $marketData['daily_high'] ?? 0,

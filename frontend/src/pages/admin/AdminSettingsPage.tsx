@@ -1,6 +1,7 @@
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@components/ui/Card';
 import { Button } from '@components/ui/Button';
 import { Input } from '@components/ui/Input';
+import { Badge } from '@components/ui/Badge';
 import { Shield, Globe, Bell, Database, Key, Palette } from 'lucide-react';
 import { useState } from 'react';
 
@@ -17,15 +18,15 @@ export function AdminSettingsPage() {
   return (
     <div className="space-y-6 max-w-4xl">
       <div>
-        <h1 className="text-2xl font-bold text-white">Admin Settings</h1>
-        <p className="text-dark-400 mt-1">Configure platform settings and market parameters</p>
+        <h1 className="text-2xl font-bold text-light-900 dark:text-white">Admin Settings</h1>
+        <p className="text-light-600 dark:text-dark-400 mt-1">Configure platform settings and market parameters</p>
       </div>
 
       {/* General Settings */}
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
-            <Globe className="w-5 h-5" />
+            <Globe className="w-5 h-5 text-light-500 dark:text-dark-400" />
             General Settings
           </CardTitle>
           <CardDescription>Basic platform configuration</CardDescription>
@@ -34,36 +35,36 @@ export function AdminSettingsPage() {
           <Input label="Application Name" value={appName} onChange={(e) => setAppName(e.target.value)} placeholder="XAU Market Pro" />
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="flex items-center justify-between p-4 bg-dark-800/50 rounded-lg">
+            <div className="flex items-center justify-between p-4 bg-light-100/50 dark:bg-dark-800/50 rounded-lg">
               <div className="flex items-center gap-3">
-                <Database className="w-5 h-5 text-dark-400" />
+                <Database className="w-5 h-5 text-light-500 dark:text-dark-400" />
                 <div>
-                  <p className="font-medium text-white">Maintenance Mode</p>
-                  <p className="text-sm text-dark-400">Disable access for non-admin users</p>
+                  <p className="font-medium text-light-900 dark:text-white">Maintenance Mode</p>
+                  <p className="text-sm text-light-600 dark:text-dark-400">Disable access for non-admin users</p>
                 </div>
               </div>
               <label className="relative inline-flex items-center cursor-pointer">
                 <input type="checkbox" checked={maintenanceMode} onChange={(e) => setMaintenanceMode(e.target.checked)} className="sr-only peer" />
-                <div className="w-11 h-6 bg-dark-600 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary-500/30 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary-600"></div>
+                <div className="w-11 h-6 bg-light-600 dark:bg-dark-600 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary-500/30 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary-600"></div>
               </label>
             </div>
 
-            <div className="flex items-center justify-between p-4 bg-dark-800/50 rounded-lg">
+            <div className="flex items-center justify-between p-4 bg-light-100/50 dark:bg-dark-800/50 rounded-lg">
               <div className="flex items-center gap-3">
-                <Key className="w-5 h-5 text-dark-400" />
+                <Key className="w-5 h-5 text-light-500 dark:text-dark-400" />
                 <div>
-                  <p className="font-medium text-white">Debug Mode</p>
-                  <p className="text-sm text-dark-400">Enable detailed error logging</p>
+                  <p className="font-medium text-light-900 dark:text-white">Debug Mode</p>
+                  <p className="text-sm text-light-600 dark:text-dark-400">Enable detailed error logging</p>
                 </div>
               </div>
               <label className="relative inline-flex items-center cursor-pointer">
                 <input type="checkbox" checked={debugMode} onChange={(e) => setDebugMode(e.target.checked)} className="sr-only peer" />
-                <div className="w-11 h-6 bg-dark-600 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary-500/30 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary-600"></div>
+                <div className="w-11 h-6 bg-light-600 dark:bg-dark-600 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary-500/30 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary-600"></div>
               </label>
             </div>
           </div>
 
-          <div className="flex gap-3 pt-4 border-t border-dark-700">
+          <div className="flex gap-3 pt-4 border-t border-light-200 dark:border-dark-700">
             <Button onClick={() => alert('Settings saved!')}>Save Changes</Button>
             <Button variant="secondary">Reset to Defaults</Button>
           </div>
@@ -74,7 +75,7 @@ export function AdminSettingsPage() {
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
-            <Database className="w-5 h-5" />
+            <Database className="w-5 h-5 text-light-500 dark:text-dark-400" />
             Market Parameters
           </CardTitle>
           <CardDescription>Configure support and resistance levels for each symbol</CardDescription>

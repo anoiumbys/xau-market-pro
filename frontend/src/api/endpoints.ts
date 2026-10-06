@@ -30,7 +30,7 @@ import type {
   TradeJournalUpdateForm,
   PriceAlertCreateForm,
   SubscriptionCreateForm,
-} from '@types';
+} from './src/types';
 
 // Auth endpoints
 export const authApi = {
@@ -40,6 +40,7 @@ export const authApi = {
   forgotPassword: (data: ForgotPasswordForm) => api.post('/forgot-password', data),
   resetPassword: (data: ResetPasswordForm) => api.post('/reset-password', data),
   me: () => api.get<User>('/user'),
+  updateProfile: (data: { name?: string; email?: string }) => api.put<{ user: User; message: string }>('/user/profile', data),
 };
 
 // Market endpoints

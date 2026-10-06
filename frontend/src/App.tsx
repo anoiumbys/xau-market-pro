@@ -1,5 +1,5 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
-import { useAuthStore } from '@stores/authStore';
+import useAuthStore from '@stores/authStore';
 import { Layout } from '@components/Layout';
 import { LoginPage } from '@pages/LoginPage';
 import { RegisterPage } from '@pages/RegisterPage';
@@ -8,6 +8,7 @@ import { ResetPasswordPage } from '@pages/ResetPasswordPage';
 import { DashboardPage } from '@pages/DashboardPage';
 import { ChartPage } from '@pages/ChartPage';
 import { JournalPage } from '@pages/JournalPage';
+import { JournalNewPage } from '@pages/JournalNewPage';
 import { AlertsPage } from '@pages/AlertsPage';
 import { SubscriptionPage } from '@pages/SubscriptionPage';
 import { ReportsPage } from '@pages/ReportsPage';
@@ -24,9 +25,10 @@ import { AdminSettingsPage } from '@pages/admin/AdminSettingsPage';
 import { NotFoundPage } from '@pages/NotFoundPage';
 
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
-  const { isAuthenticated, isLoading } = useAuthStore();
+  const { isAuthenticated, isLoading, token } = useAuthStore();
 
-  if (isLoading) {
+  // Show loading while initializing OR if token exists but auth not yet verified
+  if (isLoading || (token && !isAuthenticated)) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-dark-950">
         <div className="animate-spin-slow rounded-full h-12 w-12 border-4 border-primary-500 border-t-transparent"></div>
@@ -42,9 +44,9 @@ function ProtectedRoute({ children }: { children: React.ReactNode }) {
 }
 
 function AdminRoute({ children }: { children: React.ReactNode }) {
-  const { user, isAuthenticated, isLoading } = useAuthStore();
+  const { user, isAuthenticated, isLoading, token } = useAuthStore();
 
-  if (isLoading) {
+  if (isLoading || (token && !isAuthenticated)) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-dark-950">
         <div className="animate-spin-slow rounded-full h-12 w-12 border-4 border-primary-500 border-t-transparent"></div>
@@ -80,6 +82,7 @@ export default function App() {
         <Route path="/dashboard" element={<DashboardPage />} />
         <Route path="/chart" element={<ChartPage />} />
         <Route path="/journal" element={<JournalPage />} />
+        <Route path="/journal/new" element={<JournalNewPage />} />
         <Route path="/alerts" element={<AlertsPage />} />
         <Route path="/subscription" element={<SubscriptionPage />} />
         <Route path="/reports" element={<ReportsPage />} />
