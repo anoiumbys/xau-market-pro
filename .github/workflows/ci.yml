@@ -71,22 +71,7 @@ jobs:
       PUSHER_APP_KEY: test-key
       PUSHER_APP_SECRET: test-secret
       PUSHER_APP_CLUSTER: mt1
-    services:
-      mysql:
-        image: mysql:8.0
-        env:
-          MYSQL_DATABASE: xau_market_pro_test
-          MYSQL_ROOT_PASSWORD: secret
-          MYSQL_USER: xaupro
-          MYSQL_PASSWORD: xaupro_password
-        ports:
-          - 3306:3306
-        options: --health-cmd="mysqladmin ping -h localhost -u root -psecret" --health-interval=10s --health-timeout=5s --health-retries=5
-      redis:
-        image: redis:alpine
-        ports:
-          - 6379:6379
-        options: --health-cmd="redis-cli ping" --health-interval=10s --health-timeout=5s --health-retries=5
+    
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -114,35 +99,6 @@ jobs:
         run: |
           cp .env.example .env
           php artisan key:generate
-          sed -i 's/DB_DATABASE=xau_market_pro/DB_DATABASE=xau_market_pro_test/' .env
-          sed -i 's/DB_HOST=db/DB_HOST=127.0.0.1/' .env
-          sed -i 's/REDIS_HOST=redis/REDIS_HOST=127.0.0.1/' .env
-          sed -i 's/CACHE_DRIVER=redis/CACHE_DRIVER=array/' .env
-          sed -i 's/CACHE_STORE=redis/CACHE_STORE=array/' .env
-          sed -i 's/SESSION_DRIVER=database/SESSION_DRIVER=array/' .env
-          sed -i 's/QUEUE_CONNECTION=redis/QUEUE_CONNECTION=sync/' .env
-          sed -i 's/BROADCAST_DRIVER=websockets/BROADCAST_DRIVER=log/' .env
-          sed -i 's/BROADCAST_CONNECTION=websockets/BROADCAST_CONNECTION=log/' .env
-          sed -i 's/MAIL_MAILER=log/MAIL_MAILER=array/' .env
-
-      - name: Wait for database
-        run: |
-          for i in {1..30}; do
-            if mysqladmin ping -h 127.0.0.1 -u xaupro -pxaupro_password --silent; then
-              echo "Database is ready"
-              exit 0
-            fi
-            echo "Waiting for database... ($i/30)"
-            sleep 2
-          done
-          echo "Database not ready after 60 seconds"
-          exit 1
-
-      - name: Run migrations
-        run: php artisan migrate --force -v
-
-      - name: Run seeders
-        run: php artisan db:seed --force -v
 
       - name: Run tests
         run: php artisan test --parallel --coverage --min=80 --verbose
