@@ -125,6 +125,19 @@ jobs:
           sed -i 's/BROADCAST_CONNECTION=websockets/BROADCAST_CONNECTION=log/' .env
           sed -i 's/MAIL_MAILER=log/MAIL_MAILER=array/' .env
 
+      - name: Wait for database
+        run: |
+          for i in {1..30}; do
+            if mysqladmin ping -h 127.0.0.1 -u xaupro -pxaupro_password --silent; then
+              echo "Database is ready"
+              exit 0
+            fi
+            echo "Waiting for database... ($i/30)"
+            sleep 2
+          done
+          echo "Database not ready after 60 seconds"
+          exit 1
+
       - name: Run migrations
         run: php artisan migrate --force
 
