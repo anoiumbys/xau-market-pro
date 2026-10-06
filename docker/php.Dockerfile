@@ -1,5 +1,5 @@
 # XAU Market Pro - PHP 8.2 FPM Dockerfile
-FROM php:8.2-fpm-alpine
+FROM php:8.2-fpm-alpine AS production
 
 # Install system dependencies
 RUN apk add --no-cache \
