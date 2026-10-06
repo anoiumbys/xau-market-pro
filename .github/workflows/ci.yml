@@ -117,6 +117,13 @@ jobs:
           sed -i 's/DB_DATABASE=xau_market_pro/DB_DATABASE=xau_market_pro_test/' .env
           sed -i 's/DB_HOST=db/DB_HOST=127.0.0.1/' .env
           sed -i 's/REDIS_HOST=redis/REDIS_HOST=127.0.0.1/' .env
+          sed -i 's/CACHE_DRIVER=redis/CACHE_DRIVER=array/' .env
+          sed -i 's/CACHE_STORE=redis/CACHE_STORE=array/' .env
+          sed -i 's/SESSION_DRIVER=database/SESSION_DRIVER=array/' .env
+          sed -i 's/QUEUE_CONNECTION=redis/QUEUE_CONNECTION=sync/' .env
+          sed -i 's/BROADCAST_DRIVER=websockets/BROADCAST_DRIVER=log/' .env
+          sed -i 's/BROADCAST_CONNECTION=websockets/BROADCAST_CONNECTION=log/' .env
+          sed -i 's/MAIL_MAILER=log/MAIL_MAILER=array/' .env
 
       - name: Run migrations
         run: php artisan migrate --force
