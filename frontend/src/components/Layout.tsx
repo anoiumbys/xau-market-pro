@@ -15,7 +15,6 @@ import {
   ChevronLeft,
   User,
   Shield,
-  ArrowLeft,
 } from 'lucide-react';
 import { cn } from '@utils/cn';
 

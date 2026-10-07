@@ -1,6 +1,6 @@
 import axios, { AxiosError, AxiosInstance, InternalAxiosRequestConfig } from 'axios';
 import useAuthStore from '@stores/authStore';
-import type { ApiError, ApiResponse, PaginatedResponse } from '@types';
+import type { ApiError, PaginatedResponse } from '@types';
 
 const API_BASE_URL = import.meta.env.VITE_API_URL || '/api';
 

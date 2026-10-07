@@ -1,4 +1,3 @@
-import { ReactNode } from 'react';
 import { Outlet, NavLink, useLocation } from 'react-router-dom';
 import useAuthStore from '@stores/authStore';
 import { useUIStore, selectSidebarOpen, selectMobileMenuOpen } from '@stores/uiStore';
@@ -37,7 +36,7 @@ export function AdminLayout() {
   const user = useAuthStore(selectUser);
   const sidebarOpen = useUIStore(selectSidebarOpen);
   const mobileMenuOpen = useUIStore(selectMobileMenuOpen);
-  const { setSidebarOpen, setMobileMenuOpen, toggleSidebar } = useUIStore();
+  const { setMobileMenuOpen, toggleSidebar } = useUIStore();
 
   const isMobile = typeof window !== 'undefined' && window.innerWidth < 1024;
 
