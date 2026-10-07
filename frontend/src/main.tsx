@@ -19,15 +19,22 @@ const queryClient = new QueryClient({
 });
 
 // Initialize auth and theme before rendering
-await Promise.all([useAuthStore.getState().initialize(), useUIStore.getState().initializeTheme()]);
+async function bootstrap() {
+  await Promise.all([
+    useAuthStore.getState().initialize(),
+    useUIStore.getState().initializeTheme(),
+  ]);
 
-ReactDOM.createRoot(document.getElementById('root')!).render(
-  <React.StrictMode>
-    <QueryClientProvider client={queryClient}>
-      <BrowserRouter>
-        <App />
-        <Toaster position="top-right" theme="dark" />
-      </BrowserRouter>
-    </QueryClientProvider>
-  </React.StrictMode>
-);
+  ReactDOM.createRoot(document.getElementById('root')!).render(
+    <React.StrictMode>
+      <QueryClientProvider client={queryClient}>
+        <BrowserRouter>
+          <App />
+          <Toaster position="top-right" theme="dark" />
+        </BrowserRouter>
+      </QueryClientProvider>
+    </React.StrictMode>
+  );
+}
+
+void bootstrap();
