@@ -11,7 +11,6 @@ interface MarketState {
   priceHistory: Map<string, { price: number; timestamp: number }[]>;
 
   fetchMarket: (symbol: string) => Promise<void>;
-  fetchMarkets: () => Promise<void>;
   fetchParameters: (symbol: string) => Promise<void>;
   updatePrice: (symbol: string, price: number, change24h: number, changePct24h: number) => void;
   clearError: () => void;
@@ -30,16 +29,6 @@ export const useMarketStore = create<MarketState>((set) => ({
     try {
       const data = await marketApi.getMarket(symbol);
       set({ currentMarket: data, isLoading: false });
-    } catch (error) {
-      set({ error: (error as Error).message, isLoading: false });
-    }
-  },
-
-  fetchMarkets: async () => {
-    set({ isLoading: true, error: null });
-    try {
-      const data = await marketApi.getMarkets();
-      set({ markets: data, isLoading: false });
     } catch (error) {
       set({ error: (error as Error).message, isLoading: false });
     }
@@ -64,9 +53,15 @@ export const useMarketStore = create<MarketState>((set) => ({
       newHistory.set(symbol, history);
 
       return {
-        currentMarket: state.currentMarket?.symbol === symbol
-          ? { ...state.currentMarket, spot_price: price, change_24h: change24h, change_pct_24h: changePct24h }
-          : state.currentMarket,
+        currentMarket:
+          state.currentMarket?.symbol === symbol
+            ? {
+                ...state.currentMarket,
+                spot_price: price,
+                change_24h: change24h,
+                change_pct_24h: changePct24h,
+              }
+            : state.currentMarket,
         priceHistory: newHistory,
       };
     });

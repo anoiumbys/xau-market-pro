@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 import { Outlet, NavLink, useLocation } from 'react-router-dom';
-import useAuthStore from '@stores/authStore';
+import useAuthStore, { selectUser } from '@stores/authStore';
 import { useUIStore, selectSidebarOpen, selectMobileMenuOpen } from '@stores/uiStore';
 import {
   LayoutDashboard,
@@ -42,11 +42,11 @@ export function Layout() {
   };
 
   return (
-    <div className="min-h-screen bg-light-50 dark:bg-dark-950 flex">
+    <div className="flex min-h-screen bg-light-50 dark:bg-dark-950">
       {/* Mobile overlay */}
       {isMobile && mobileMenuOpen && (
         <div
-          className="fixed inset-0 bg-black/50 z-40 lg:hidden"
+          className="fixed inset-0 z-40 bg-black/50 lg:hidden"
           onClick={() => setMobileMenuOpen(false)}
           aria-hidden="true"
         />
@@ -55,18 +55,18 @@ export function Layout() {
       {/* Sidebar */}
       <aside
         className={cn(
-          'fixed lg:static z-50 lg:z-auto h-full lg:h-auto w-64 bg-light-100/80 dark:bg-dark-900/80 backdrop-blur-xl border-r border-light-200 dark:border-dark-700 flex flex-col transition-transform duration-300 ease-in-out',
+          'fixed z-50 flex h-full w-64 flex-col border-r border-light-200 bg-light-100/80 backdrop-blur-xl transition-transform duration-300 ease-in-out dark:border-dark-700 dark:bg-dark-900/80 lg:static lg:z-auto lg:h-auto',
           isMobile ? (mobileMenuOpen ? 'translate-x-0' : '-translate-x-full') : 'translate-x-0'
         )}
         aria-label="Main navigation"
       >
         {/* Logo */}
-        <div className="flex items-center justify-between h-16 px-4 border-b border-light-200 dark:border-dark-700">
+        <div className="flex h-16 items-center justify-between border-b border-light-200 px-4 dark:border-dark-700">
           <Link to="/dashboard" className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary-500 to-gold-500 flex items-center justify-center">
+            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-primary-500 to-gold-500">
               <span className="text-xs font-bold text-dark-950">XAU</span>
             </div>
-            <span className="font-semibold text-lg text-light-900 dark:text-dark-50">XAU Pro</span>
+            <span className="text-lg font-semibold text-light-900 dark:text-dark-50">XAU Pro</span>
           </Link>
           {isMobile && (
             <button
@@ -74,13 +74,13 @@ export function Layout() {
               className="btn-ghost btn-sm btn-icon lg:hidden"
               aria-label="Close menu"
             >
-              <X className="w-5 h-5" />
+              <X className="h-5 w-5" />
             </button>
           )}
         </div>
 
         {/* Navigation */}
-        <nav className="flex-1 px-3 py-4 space-y-1 overflow-y-auto" role="navigation">
+        <nav className="flex-1 space-y-1 overflow-y-auto px-3 py-4" role="navigation">
           {NAV_ITEMS.map((item) => {
             const Icon = item.icon;
             const isActive = location.pathname === item.path;
@@ -90,16 +90,16 @@ export function Layout() {
                 to={item.path}
                 className={({ isActive }) =>
                   cn(
-                    'flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200',
+                    'flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-all duration-200',
                     isActive
                       ? 'bg-primary-600 text-white shadow-lg shadow-primary-500/25'
-                      : 'text-light-700 dark:text-dark-300 hover:bg-light-200 dark:hover:bg-dark-800 hover:text-light-900 dark:hover:text-white'
+                      : 'text-light-700 hover:bg-light-200 hover:text-light-900 dark:text-dark-300 dark:hover:bg-dark-800 dark:hover:text-white'
                   )
                 }
                 onClick={() => isMobile && setMobileMenuOpen(false)}
                 aria-current={isActive ? 'page' : undefined}
               >
-                <Icon className="w-5 h-5 flex-shrink-0" aria-hidden="true" />
+                <Icon className="h-5 w-5 flex-shrink-0" aria-hidden="true" />
                 {item.label}
               </NavLink>
             );
@@ -108,20 +108,20 @@ export function Layout() {
           {/* Admin link */}
           {user?.role === 'admin' && (
             <>
-              <div className="h-px bg-light-200 dark:bg-dark-700 my-2" />
+              <div className="my-2 h-px bg-light-200 dark:bg-dark-700" />
               <NavLink
                 to="/admin/dashboard"
                 className={({ isActive }) =>
                   cn(
-                    'flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200',
+                    'flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-all duration-200',
                     isActive
-                      ? 'bg-gold-500/20 text-gold-400 border border-gold-500/30'
-                      : 'text-light-700 dark:text-dark-300 hover:bg-light-200 dark:hover:bg-dark-800 hover:text-light-900 dark:hover:text-white'
+                      ? 'border border-gold-500/30 bg-gold-500/20 text-gold-400'
+                      : 'text-light-700 hover:bg-light-200 hover:text-light-900 dark:text-dark-300 dark:hover:bg-dark-800 dark:hover:text-white'
                   )
                 }
                 onClick={() => isMobile && setMobileMenuOpen(false)}
               >
-                <Shield className="w-5 h-5 flex-shrink-0" aria-hidden="true" />
+                <Shield className="h-5 w-5 flex-shrink-0" aria-hidden="true" />
                 Admin Panel
               </NavLink>
             </>
@@ -129,37 +129,41 @@ export function Layout() {
         </nav>
 
         {/* User section */}
-        <div className="p-3 border-t border-light-200 dark:border-dark-700">
+        <div className="border-t border-light-200 p-3 dark:border-dark-700">
           <div className="flex items-center gap-3 px-3 py-2">
-            <div className="w-8 h-8 rounded-full bg-light-200 dark:bg-dark-800 flex items-center justify-center">
-              <User className="w-4 h-4 text-light-500 dark:text-dark-400" aria-hidden="true" />
+            <div className="flex h-8 w-8 items-center justify-center rounded-full bg-light-200 dark:bg-dark-800">
+              <User className="h-4 w-4 text-light-500 dark:text-dark-400" aria-hidden="true" />
             </div>
-            <div className="flex-1 min-w-0">
-              <p className="text-sm font-medium text-light-900 dark:text-white truncate">{user?.name}</p>
-              <p className="text-xs text-light-500 dark:text-dark-500 truncate capitalize">{user?.role}</p>
+            <div className="min-w-0 flex-1">
+              <p className="truncate text-sm font-medium text-light-900 dark:text-white">
+                {user?.name}
+              </p>
+              <p className="truncate text-xs capitalize text-light-500 dark:text-dark-500">
+                {user?.role}
+              </p>
             </div>
           </div>
           <button
             onClick={handleLogout}
-            className="w-full btn-secondary btn-sm justify-start gap-2 mt-2"
+            className="btn-secondary btn-sm mt-2 w-full justify-start gap-2"
           >
-            <LogOut className="w-4 h-4" aria-hidden="true" />
+            <LogOut className="h-4 w-4" aria-hidden="true" />
             Logout
           </button>
         </div>
       </aside>
 
       {/* Main content */}
-      <main className={cn('flex-1 flex flex-col min-w-0', sidebarOpen ? 'lg:ml-0' : '')}>
+      <main className={cn('flex min-w-0 flex-1 flex-col', sidebarOpen ? 'lg:ml-0' : '')}>
         {/* Top bar */}
-        <header className="h-16 bg-light-100/80 dark:bg-dark-900/80 backdrop-blur-xl border-b border-light-200 dark:border-dark-700 flex items-center justify-between px-4 lg:px-6">
+        <header className="flex h-16 items-center justify-between border-b border-light-200 bg-light-100/80 px-4 backdrop-blur-xl dark:border-dark-700 dark:bg-dark-900/80 lg:px-6">
           <div className="flex items-center gap-4">
             <button
               onClick={isMobile ? () => setMobileMenuOpen(true) : toggleSidebar}
               className="btn-ghost btn-icon lg:hidden"
               aria-label={isMobile ? 'Open menu' : 'Toggle sidebar'}
             >
-              <Menu className="w-5 h-5" aria-hidden="true" />
+              <Menu className="h-5 w-5" aria-hidden="true" />
             </button>
             <button
               onClick={toggleSidebar}
@@ -167,23 +171,23 @@ export function Layout() {
               aria-label={sidebarOpen ? 'Collapse sidebar' : 'Expand sidebar'}
             >
               {sidebarOpen ? (
-                <ChevronLeft className="w-5 h-5" aria-hidden="true" />
+                <ChevronLeft className="h-5 w-5" aria-hidden="true" />
               ) : (
-                <Menu className="w-5 h-5" aria-hidden="true" />
+                <Menu className="h-5 w-5" aria-hidden="true" />
               )}
             </button>
           </div>
 
           <div className="flex items-center gap-3">
             {/* Theme toggle could go here */}
-            <div className="hidden sm:flex items-center gap-2 px-3 py-1.5 bg-light-200 dark:bg-dark-800 rounded-lg text-xs text-light-600 dark:text-dark-400">
+            <div className="hidden items-center gap-2 rounded-lg bg-light-200 px-3 py-1.5 text-xs text-light-600 dark:bg-dark-800 dark:text-dark-400 sm:flex">
               <span className="font-mono text-gold-400">XAUUSD</span>
             </div>
           </div>
         </header>
 
         {/* Page content */}
-        <div className="flex-1 p-4 lg:p-6 overflow-auto">
+        <div className="flex-1 overflow-auto p-4 lg:p-6">
           <Outlet />
         </div>
       </main>
@@ -192,7 +196,15 @@ export function Layout() {
 }
 
 // Simple Link component to avoid importing from react-router-dom in this file
-function Link({ to, children, className }: { to: string; children: ReactNode; className?: string }) {
+function Link({
+  to,
+  children,
+  className,
+}: {
+  to: string;
+  children: ReactNode;
+  className?: string;
+}) {
   return (
     <a href={to} className={className}>
       {children}

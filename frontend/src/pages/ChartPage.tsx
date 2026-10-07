@@ -6,7 +6,9 @@ export function ChartPage() {
     <div className="space-y-6">
       <div>
         <h1 className="text-2xl font-bold text-light-900 dark:text-white">Chart</h1>
-        <p className="text-light-600 dark:text-dark-400 mt-1">XAUUSD real-time chart with TradingView</p>
+        <p className="mt-1 text-light-600 dark:text-dark-400">
+          XAUUSD real-time chart with TradingView
+        </p>
       </div>
 
       <Card className="h-[600px]">

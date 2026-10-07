@@ -83,22 +83,28 @@ export function Modal({
           <div className="modal-header">
             <div>
               {title && (
-                <h2 id="modal-title" className="text-lg font-semibold text-light-900 dark:text-dark-50">
+                <h2
+                  id="modal-title"
+                  className="text-lg font-semibold text-light-900 dark:text-dark-50"
+                >
                   {title}
                 </h2>
               )}
               {description && (
-                <p id="modal-description" className="text-sm text-light-600 dark:text-dark-400 mt-1">
+                <p
+                  id="modal-description"
+                  className="mt-1 text-sm text-light-600 dark:text-dark-400"
+                >
                   {description}
                 </p>
               )}
             </div>
             <button
               onClick={onClose}
-              className="btn-ghost btn-icon text-light-600 dark:text-dark-400 hover:text-light-900 dark:hover:text-dark-50"
+              className="btn-ghost btn-icon text-light-600 hover:text-light-900 dark:text-dark-400 dark:hover:text-dark-50"
               aria-label="Close modal"
             >
-              <X className="w-5 h-5" aria-hidden="true" />
+              <X className="h-5 w-5" aria-hidden="true" />
             </button>
           </div>
         )}

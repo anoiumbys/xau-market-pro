@@ -19,12 +19,17 @@ export function Badge({
   dotColor,
 }: BadgeProps) {
   const variantClasses = {
-    primary: 'bg-primary-500/20 text-primary-700 dark:text-primary-400 border border-primary-500/30 dark:border-primary-500/30',
+    primary:
+      'bg-primary-500/20 text-primary-700 dark:text-primary-400 border border-primary-500/30 dark:border-primary-500/30',
     gold: 'bg-gold-500/20 text-gold-700 dark:text-gold-400 border border-gold-500/30 dark:border-gold-500/30',
-    success: 'bg-green-500/20 text-green-700 dark:text-green-400 border border-green-500/30 dark:border-green-500/30',
-    warning: 'bg-yellow-500/20 text-yellow-700 dark:text-yellow-400 border border-yellow-500/30 dark:border-yellow-500/30',
-    danger: 'bg-red-500/20 text-red-700 dark:text-red-400 border border-red-500/30 dark:border-red-500/30',
-    neutral: 'bg-light-200 text-light-700 dark:bg-dark-700 dark:text-dark-400 border border-light-300 dark:border-dark-600',
+    success:
+      'bg-green-500/20 text-green-700 dark:text-green-400 border border-green-500/30 dark:border-green-500/30',
+    warning:
+      'bg-yellow-500/20 text-yellow-700 dark:text-yellow-400 border border-yellow-500/30 dark:border-yellow-500/30',
+    danger:
+      'bg-red-500/20 text-red-700 dark:text-red-400 border border-red-500/30 dark:border-red-500/30',
+    neutral:
+      'bg-light-200 text-light-700 dark:bg-dark-700 dark:text-dark-400 border border-light-300 dark:border-dark-600',
   };
 
   const sizeClasses = {
@@ -36,7 +41,7 @@ export function Badge({
   return (
     <span
       className={cn(
-        'inline-flex items-center gap-1.5 rounded-full font-medium border',
+        'inline-flex items-center gap-1.5 rounded-full border font-medium',
         variantClasses[variant],
         sizeClasses[size],
         className
@@ -46,16 +51,20 @@ export function Badge({
         <span
           className={cn(
             'rounded-full',
-            dotColor || {
-              primary: 'bg-primary-400',
-              gold: 'bg-gold-400',
-              success: 'bg-green-400',
-              warning: 'bg-yellow-400',
-              danger: 'bg-red-400',
-              neutral: 'bg-light-400 dark:bg-dark-400',
-            }[variant]
+            dotColor ||
+              {
+                primary: 'bg-primary-400',
+                gold: 'bg-gold-400',
+                success: 'bg-green-400',
+                warning: 'bg-yellow-400',
+                danger: 'bg-red-400',
+                neutral: 'bg-light-400 dark:bg-dark-400',
+              }[variant]
           )}
-          style={{ width: size === 'sm' ? 6 : size === 'md' ? 6 : 8, height: size === 'sm' ? 6 : size === 'md' ? 6 : 8 }}
+          style={{
+            width: size === 'sm' ? 6 : size === 'md' ? 6 : 8,
+            height: size === 'sm' ? 6 : size === 'md' ? 6 : 8,
+          }}
         />
       )}
       {children}
@@ -71,7 +80,11 @@ export function StatusBadge({ status }: { status: 'open' | 'closed' | 'cancelled
     cancelled: { label: 'Cancelled', variant: 'neutral' as const, dotColor: 'bg-gray-400' },
   };
   const config = configs[status];
-  return <Badge variant={config.variant} dot dotColor={config.dotColor}>{config.label}</Badge>;
+  return (
+    <Badge variant={config.variant} dot dotColor={config.dotColor}>
+      {config.label}
+    </Badge>
+  );
 }
 
 export function DirectionBadge({ direction }: { direction: 'long' | 'short' }) {
@@ -98,11 +111,19 @@ export function PlanBadge({ plan }: { plan: 'basic' | 'pro' | 'enterprise' }) {
 
 export function AlertConditionBadge({ condition }: { condition: 'above' | 'below' | 'cross' }) {
   const labels = { above: 'Above', below: 'Below', cross: 'Crosses' };
-  const variants = { above: 'success' as const, below: 'danger' as const, cross: 'warning' as const };
+  const variants = {
+    above: 'success' as const,
+    below: 'danger' as const,
+    cross: 'warning' as const,
+  };
   return <Badge variant={variants[condition]}>{labels[condition]}</Badge>;
 }
 
-export function SubscriptionStatusBadge({ status }: { status: 'pending' | 'active' | 'expired' | 'cancelled' | 'rejected' }) {
+export function SubscriptionStatusBadge({
+  status,
+}: {
+  status: 'pending' | 'active' | 'expired' | 'cancelled' | 'rejected';
+}) {
   const configs = {
     pending: { variant: 'warning' as const, label: 'Pending' },
     active: { variant: 'success' as const, label: 'Active' },

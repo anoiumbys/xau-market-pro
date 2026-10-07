@@ -1,4 +1,11 @@
-import { useMarketStore, selectCurrentMarket, selectMarkets, selectParameters, selectMarketLoading, selectMarketError } from '@stores/marketStore';
+import {
+  useMarketStore,
+  selectCurrentMarket,
+  selectMarkets,
+  selectParameters,
+  selectMarketLoading,
+  selectMarketError,
+} from '@stores/marketStore';
 
 export function useMarket() {
   return useMarketStore(selectCurrentMarket);
@@ -22,9 +29,8 @@ export function useMarketError() {
 
 export function useMarketActions() {
   const fetchMarket = useMarketStore((state) => state.fetchMarket);
-  const fetchMarkets = useMarketStore((state) => state.fetchMarkets);
   const fetchParameters = useMarketStore((state) => state.fetchParameters);
   const clearError = useMarketStore((state) => state.clearError);
 
-  return { fetchMarket, fetchMarkets, fetchParameters, clearError };
+  return { fetchMarket, fetchParameters, clearError };
 }

@@ -1,4 +1,11 @@
-import { useAlertStore, selectAlerts, selectAlertLoading, selectAlertError, selectPendingAlerts, selectTriggeredAlerts } from '@stores/alertStore';
+import {
+  useAlertStore,
+  selectAlerts,
+  selectAlertLoading,
+  selectAlertError,
+  selectPendingAlerts,
+  selectTriggeredAlerts,
+} from '@stores/alertStore';
 
 export function useAlerts() {
   return useAlertStore(selectAlerts);

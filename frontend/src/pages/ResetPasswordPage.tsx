@@ -5,18 +5,27 @@ import { z } from 'zod';
 import { authApi } from '@api';
 import { Button } from '@components/ui/Button';
 import { Input } from '@components/ui/Input';
-import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from '@components/ui/Card';
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+  CardContent,
+  CardFooter,
+} from '@components/ui/Card';
 import { toast } from 'sonner';
 import { Loader2, Lock, Eye, EyeOff } from 'lucide-react';
 import { useState } from 'react';
 
-const resetSchema = z.object({
-  password: z.string().min(8, 'Password must be at least 8 characters'),
-  password_confirmation: z.string(),
-}).refine((data) => data.password === data.password_confirmation, {
-  message: 'Passwords do not match',
-  path: ['password_confirmation'],
-});
+const resetSchema = z
+  .object({
+    password: z.string().min(8, 'Password must be at least 8 characters'),
+    password_confirmation: z.string(),
+  })
+  .refine((data) => data.password === data.password_confirmation, {
+    message: 'Passwords do not match',
+    path: ['password_confirmation'],
+  });
 
 type ResetForm = z.infer<typeof resetSchema>;
 
@@ -43,7 +52,12 @@ export function ResetPasswordPage() {
     }
     setIsLoading(true);
     try {
-      await authApi.resetPassword({ token, email: email || '', password: data.password, password_confirmation: data.password_confirmation });
+      await authApi.resetPassword({
+        token,
+        email: email || '',
+        password: data.password,
+        password_confirmation: data.password_confirmation,
+      });
       toast.success('Password has been reset successfully');
       navigate('/login');
     } catch (error) {
@@ -55,12 +69,14 @@ export function ResetPasswordPage() {
 
   if (!token) {
     return (
-      <div className="min-h-screen flex items-center justify-center p-4 bg-dark-950">
+      <div className="flex min-h-screen items-center justify-center bg-dark-950 p-4">
         <Card className="w-full max-w-md text-center">
-          <CardContent className="py-12 px-8">
-            <Lock className="w-12 h-12 text-red-400 mx-auto mb-4" />
-            <h1 className="text-2xl font-bold text-white mb-2">Invalid Reset Link</h1>
-            <p className="text-dark-400 mb-6">This password reset link is invalid or has expired.</p>
+          <CardContent className="px-8 py-12">
+            <Lock className="mx-auto mb-4 h-12 w-12 text-red-400" />
+            <h1 className="mb-2 text-2xl font-bold text-white">Invalid Reset Link</h1>
+            <p className="mb-6 text-dark-400">
+              This password reset link is invalid or has expired.
+            </p>
             <Link to="/forgot-password">
               <Button>Request New Link</Button>
             </Link>
@@ -71,14 +87,14 @@ export function ResetPasswordPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-4 bg-dark-950">
+    <div className="flex min-h-screen items-center justify-center bg-dark-950 p-4">
       <div className="w-full max-w-md">
-        <div className="flex justify-center mb-8">
+        <div className="mb-8 flex justify-center">
           <Link to="/login" className="flex items-center gap-2">
-            <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-primary-500 to-gold-500 flex items-center justify-center">
+            <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-primary-500 to-gold-500">
               <span className="text-sm font-bold text-dark-950">XAU</span>
             </div>
-            <span className="font-bold text-xl text-white">XAU Market Pro</span>
+            <span className="text-xl font-bold text-white">XAU Market Pro</span>
           </Link>
         </div>
 
@@ -97,16 +113,16 @@ export function ResetPasswordPage() {
                   error={errors.password?.message}
                   {...register('password')}
                   autoComplete="new-password"
-                  icon={<Lock className="w-4 h-4" />}
+                  icon={<Lock className="h-4 w-4" />}
                   helperText="At least 8 characters"
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-[38px] text-dark-400 hover:text-white transition-colors"
+                  className="absolute right-3 top-[38px] text-dark-400 transition-colors hover:text-white"
                   aria-label={showPassword ? 'Hide password' : 'Show password'}
                 >
-                  {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                  {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
                 </button>
               </div>
 
@@ -117,18 +133,18 @@ export function ResetPasswordPage() {
                 error={errors.password_confirmation?.message}
                 {...register('password_confirmation')}
                 autoComplete="new-password"
-                icon={<Lock className="w-4 h-4" />}
+                icon={<Lock className="h-4 w-4" />}
               />
 
               <Button type="submit" className="w-full" size="lg" loading={isLoading}>
-                <Loader2 className="w-4 h-4" aria-hidden="true" />
+                <Loader2 className="h-4 w-4" aria-hidden="true" />
                 Reset Password
               </Button>
             </form>
             <CardFooter className="flex-col gap-4">
-              <p className="text-sm text-dark-400 text-center w-full">
+              <p className="w-full text-center text-sm text-dark-400">
                 Remember your password?{' '}
-                <Link to="/login" className="text-primary-400 hover:text-primary-300 font-medium">
+                <Link to="/login" className="font-medium text-primary-400 hover:text-primary-300">
                   Sign in
                 </Link>
               </p>

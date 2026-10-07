@@ -30,8 +30,8 @@ function ProtectedRoute({ children }: { children: React.ReactNode }) {
   // Show loading while initializing OR if token exists but auth not yet verified
   if (isLoading || (token && !isAuthenticated)) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-dark-950">
-        <div className="animate-spin-slow rounded-full h-12 w-12 border-4 border-primary-500 border-t-transparent"></div>
+      <div className="flex min-h-screen items-center justify-center bg-dark-950">
+        <div className="h-12 w-12 animate-spin-slow rounded-full border-4 border-primary-500 border-t-transparent"></div>
       </div>
     );
   }
@@ -48,8 +48,8 @@ function AdminRoute({ children }: { children: React.ReactNode }) {
 
   if (isLoading || (token && !isAuthenticated)) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-dark-950">
-        <div className="animate-spin-slow rounded-full h-12 w-12 border-4 border-primary-500 border-t-transparent"></div>
+      <div className="flex min-h-screen items-center justify-center bg-dark-950">
+        <div className="h-12 w-12 animate-spin-slow rounded-full border-4 border-primary-500 border-t-transparent"></div>
       </div>
     );
   }

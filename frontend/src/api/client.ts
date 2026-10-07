@@ -94,9 +94,14 @@ class ApiClient {
     this.failedQueue = [];
   }
 
-  private formatError(error: AxiosError<ApiError>): Error & { status?: number; errors?: Record<string, string[]> } {
+  private formatError(
+    error: AxiosError<ApiError>
+  ): Error & { status?: number; errors?: Record<string, string[]> } {
     const message = error.response?.data?.message || error.message || 'An error occurred';
-    const formattedError = new Error(message) as Error & { status?: number; errors?: Record<string, string[]> };
+    const formattedError = new Error(message) as Error & {
+      status?: number;
+      errors?: Record<string, string[]>;
+    };
     formattedError.status = error.response?.status;
     formattedError.errors = error.response?.data?.errors;
     return formattedError;
@@ -127,7 +132,10 @@ class ApiClient {
     return response.data;
   }
 
-  async getPaginated<T>(url: string, params?: Record<string, unknown>): Promise<PaginatedResponse<T>> {
+  async getPaginated<T>(
+    url: string,
+    params?: Record<string, unknown>
+  ): Promise<PaginatedResponse<T>> {
     const response = await this.client.get<PaginatedResponse<T>>(url, { params });
     return response.data;
   }

@@ -12,59 +12,86 @@ export function AdminSettingsPage() {
 
   const marketSymbols = ['XAUUSD', 'XAGUSD', 'EURUSD', 'BTCUSD'];
   const [marketParams, setMarketParams] = useState(
-    marketSymbols.reduce((acc, sym) => ({ ...acc, [sym]: { support: [2320, 2300, 2280], resistance: [2370, 2390, 2410] } }), {})
+    marketSymbols.reduce<Record<string, { support: number[]; resistance: number[] }>>(
+      (acc, sym) => ({
+        ...acc,
+        [sym]: { support: [2320, 2300, 2280], resistance: [2370, 2390, 2410] },
+      }),
+      {}
+    )
   );
 
   return (
-    <div className="space-y-6 max-w-4xl">
+    <div className="max-w-4xl space-y-6">
       <div>
         <h1 className="text-2xl font-bold text-light-900 dark:text-white">Admin Settings</h1>
-        <p className="text-light-600 dark:text-dark-400 mt-1">Configure platform settings and market parameters</p>
+        <p className="mt-1 text-light-600 dark:text-dark-400">
+          Configure platform settings and market parameters
+        </p>
       </div>
 
       {/* General Settings */}
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
-            <Globe className="w-5 h-5 text-light-500 dark:text-dark-400" />
+            <Globe className="h-5 w-5 text-light-500 dark:text-dark-400" />
             General Settings
           </CardTitle>
           <CardDescription>Basic platform configuration</CardDescription>
         </CardHeader>
         <CardContent className="space-y-6">
-          <Input label="Application Name" value={appName} onChange={(e) => setAppName(e.target.value)} placeholder="XAU Market Pro" />
+          <Input
+            label="Application Name"
+            value={appName}
+            onChange={(e) => setAppName(e.target.value)}
+            placeholder="XAU Market Pro"
+          />
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="flex items-center justify-between p-4 bg-light-100/50 dark:bg-dark-800/50 rounded-lg">
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+            <div className="flex items-center justify-between rounded-lg bg-light-100/50 p-4 dark:bg-dark-800/50">
               <div className="flex items-center gap-3">
-                <Database className="w-5 h-5 text-light-500 dark:text-dark-400" />
+                <Database className="h-5 w-5 text-light-500 dark:text-dark-400" />
                 <div>
                   <p className="font-medium text-light-900 dark:text-white">Maintenance Mode</p>
-                  <p className="text-sm text-light-600 dark:text-dark-400">Disable access for non-admin users</p>
+                  <p className="text-sm text-light-600 dark:text-dark-400">
+                    Disable access for non-admin users
+                  </p>
                 </div>
               </div>
-              <label className="relative inline-flex items-center cursor-pointer">
-                <input type="checkbox" checked={maintenanceMode} onChange={(e) => setMaintenanceMode(e.target.checked)} className="sr-only peer" />
-                <div className="w-11 h-6 bg-light-600 dark:bg-dark-600 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary-500/30 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary-600"></div>
+              <label className="relative inline-flex cursor-pointer items-center">
+                <input
+                  type="checkbox"
+                  checked={maintenanceMode}
+                  onChange={(e) => setMaintenanceMode(e.target.checked)}
+                  className="peer sr-only"
+                />
+                <div className="peer h-6 w-11 rounded-full bg-light-600 after:absolute after:left-[2px] after:top-[2px] after:h-5 after:w-5 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-primary-600 peer-checked:after:translate-x-full peer-checked:after:border-white peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary-500/30 dark:bg-dark-600"></div>
               </label>
             </div>
 
-            <div className="flex items-center justify-between p-4 bg-light-100/50 dark:bg-dark-800/50 rounded-lg">
+            <div className="flex items-center justify-between rounded-lg bg-light-100/50 p-4 dark:bg-dark-800/50">
               <div className="flex items-center gap-3">
-                <Key className="w-5 h-5 text-light-500 dark:text-dark-400" />
+                <Key className="h-5 w-5 text-light-500 dark:text-dark-400" />
                 <div>
                   <p className="font-medium text-light-900 dark:text-white">Debug Mode</p>
-                  <p className="text-sm text-light-600 dark:text-dark-400">Enable detailed error logging</p>
+                  <p className="text-sm text-light-600 dark:text-dark-400">
+                    Enable detailed error logging
+                  </p>
                 </div>
               </div>
-              <label className="relative inline-flex items-center cursor-pointer">
-                <input type="checkbox" checked={debugMode} onChange={(e) => setDebugMode(e.target.checked)} className="sr-only peer" />
-                <div className="w-11 h-6 bg-light-600 dark:bg-dark-600 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary-500/30 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary-600"></div>
+              <label className="relative inline-flex cursor-pointer items-center">
+                <input
+                  type="checkbox"
+                  checked={debugMode}
+                  onChange={(e) => setDebugMode(e.target.checked)}
+                  className="peer sr-only"
+                />
+                <div className="peer h-6 w-11 rounded-full bg-light-600 after:absolute after:left-[2px] after:top-[2px] after:h-5 after:w-5 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-primary-600 peer-checked:after:translate-x-full peer-checked:after:border-white peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary-500/30 dark:bg-dark-600"></div>
               </label>
             </div>
           </div>
 
-          <div className="flex gap-3 pt-4 border-t border-light-200 dark:border-dark-700">
+          <div className="flex gap-3 border-t border-light-200 pt-4 dark:border-dark-700">
             <Button onClick={() => alert('Settings saved!')}>Save Changes</Button>
             <Button variant="secondary">Reset to Defaults</Button>
           </div>
@@ -75,7 +102,7 @@ export function AdminSettingsPage() {
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
-            <Database className="w-5 h-5 text-light-500 dark:text-dark-400" />
+            <Database className="h-5 w-5 text-light-500 dark:text-dark-400" />
             Market Parameters
           </CardTitle>
           <CardDescription>Configure support and resistance levels for each symbol</CardDescription>
@@ -85,12 +112,12 @@ export function AdminSettingsPage() {
             {marketSymbols.map((symbol) => {
               const params = marketParams[symbol];
               return (
-                <div key={symbol} className="p-4 bg-dark-800/50 rounded-lg border border-dark-700">
-                  <div className="flex items-center justify-between mb-4">
+                <div key={symbol} className="rounded-lg border border-dark-700 bg-dark-800/50 p-4">
+                  <div className="mb-4 flex items-center justify-between">
                     <h3 className="font-semibold text-white">{symbol}</h3>
                     <Badge variant="gold">{symbol === 'XAUUSD' ? 'Primary' : 'Secondary'}</Badge>
                   </div>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
                     <div className="space-y-3">
                       <label className="label">Support Levels</label>
                       <div className="flex flex-wrap gap-2">
@@ -100,7 +127,17 @@ export function AdminSettingsPage() {
                             type="number"
                             step="0.01"
                             value={level}
-                            onChange={(e) => setMarketParams({ ...marketParams, [symbol]: { ...params, support: params.support.map((v, i) => i === idx ? parseFloat(e.target.value) : v) } })}
+                            onChange={(e) =>
+                              setMarketParams({
+                                ...marketParams,
+                                [symbol]: {
+                                  ...params,
+                                  support: params.support.map((v, i) =>
+                                    i === idx ? parseFloat(e.target.value) : v
+                                  ),
+                                },
+                              })
+                            }
                             className="w-24"
                             placeholder="0.00"
                           />
@@ -116,7 +153,17 @@ export function AdminSettingsPage() {
                             type="number"
                             step="0.01"
                             value={level}
-                            onChange={(e) => setMarketParams({ ...marketParams, [symbol]: { ...params, resistance: params.resistance.map((v, i) => i === idx ? parseFloat(e.target.value) : v) } })}
+                            onChange={(e) =>
+                              setMarketParams({
+                                ...marketParams,
+                                [symbol]: {
+                                  ...params,
+                                  resistance: params.resistance.map((v, i) =>
+                                    i === idx ? parseFloat(e.target.value) : v
+                                  ),
+                                },
+                              })
+                            }
                             className="w-24"
                             placeholder="0.00"
                           />
@@ -128,7 +175,7 @@ export function AdminSettingsPage() {
               );
             })}
           </div>
-          <div className="flex gap-3 pt-6 border-t border-dark-700">
+          <div className="flex gap-3 border-t border-dark-700 pt-6">
             <Button onClick={() => alert('Market parameters saved!')}>Save All Parameters</Button>
           </div>
         </CardContent>
@@ -138,7 +185,7 @@ export function AdminSettingsPage() {
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
-            <Shield className="w-5 h-5" />
+            <Shield className="h-5 w-5" />
             Subscription Plans
           </CardTitle>
           <CardDescription>Configure plan pricing and features</CardDescription>
@@ -158,32 +205,68 @@ export function AdminSettingsPage() {
               </thead>
               <tbody>
                 <tr>
-                  <td><span className="font-medium text-white">Basic</span></td>
-                  <td><Input type="number" value={29} className="w-24" /></td>
-                  <td><Input type="number" value={3} className="w-20" /></td>
-                  <td><Input type="number" value={0} className="w-20" /></td>
-                  <td><Badge variant="neutral">No</Badge></td>
-                  <td><Badge variant="neutral">No</Badge></td>
+                  <td>
+                    <span className="font-medium text-white">Basic</span>
+                  </td>
+                  <td>
+                    <Input type="number" value={29} className="w-24" />
+                  </td>
+                  <td>
+                    <Input type="number" value={3} className="w-20" />
+                  </td>
+                  <td>
+                    <Input type="number" value={0} className="w-20" />
+                  </td>
+                  <td>
+                    <Badge variant="neutral">No</Badge>
+                  </td>
+                  <td>
+                    <Badge variant="neutral">No</Badge>
+                  </td>
                 </tr>
                 <tr>
-                  <td><span className="font-medium text-white">Pro</span></td>
-                  <td><Input type="number" value={99} className="w-24" /></td>
-                  <td><Input type="number" value={-1} className="w-20" placeholder="Unlimited" /></td>
-                  <td><Input type="number" value={-1} className="w-20" placeholder="Unlimited" /></td>
-                  <td><Badge variant="success">Yes</Badge></td>
-                  <td><Badge variant="neutral">No</Badge></td>
+                  <td>
+                    <span className="font-medium text-white">Pro</span>
+                  </td>
+                  <td>
+                    <Input type="number" value={99} className="w-24" />
+                  </td>
+                  <td>
+                    <Input type="number" value={-1} className="w-20" placeholder="Unlimited" />
+                  </td>
+                  <td>
+                    <Input type="number" value={-1} className="w-20" placeholder="Unlimited" />
+                  </td>
+                  <td>
+                    <Badge variant="success">Yes</Badge>
+                  </td>
+                  <td>
+                    <Badge variant="neutral">No</Badge>
+                  </td>
                 </tr>
                 <tr>
-                  <td><span className="font-medium text-white">Enterprise</span></td>
-                  <td><Input type="number" value={299} className="w-24" /></td>
-                  <td><Input type="number" value={-1} className="w-20" placeholder="Unlimited" /></td>
-                  <td><Input type="number" value={-1} className="w-20" placeholder="Unlimited" /></td>
-                  <td><Badge variant="success">Yes</Badge></td>
-                  <td><Badge variant="success">Yes</Badge></td>
+                  <td>
+                    <span className="font-medium text-white">Enterprise</span>
+                  </td>
+                  <td>
+                    <Input type="number" value={299} className="w-24" />
+                  </td>
+                  <td>
+                    <Input type="number" value={-1} className="w-20" placeholder="Unlimited" />
+                  </td>
+                  <td>
+                    <Input type="number" value={-1} className="w-20" placeholder="Unlimited" />
+                  </td>
+                  <td>
+                    <Badge variant="success">Yes</Badge>
+                  </td>
+                  <td>
+                    <Badge variant="success">Yes</Badge>
+                  </td>
                 </tr>
               </tbody>
             </table>
-            <div className="flex gap-3 pt-4 border-t border-dark-700">
+            <div className="flex gap-3 border-t border-dark-700 pt-4">
               <Button>Save Plan Changes</Button>
             </div>
           </div>

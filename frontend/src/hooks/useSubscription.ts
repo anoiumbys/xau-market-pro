@@ -1,4 +1,12 @@
-import { useSubscriptionStore, selectSubscription, selectSubscriptionLoading, selectSubscriptionError, selectHasActiveSubscription, selectSubscriptionPlan, selectSubscriptionLimits } from '@stores/subscriptionStore';
+import {
+  useSubscriptionStore,
+  selectSubscription,
+  selectSubscriptionLoading,
+  selectSubscriptionError,
+  selectHasActiveSubscription,
+  selectSubscriptionPlan,
+  selectSubscriptionLimits,
+} from '@stores/subscriptionStore';
 
 export function useSubscription() {
   return useSubscriptionStore(selectSubscription);

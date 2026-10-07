@@ -29,7 +29,7 @@ function getSystemTheme(): 'light' | 'dark' {
 
 function applyTheme(theme: Theme) {
   if (typeof document === 'undefined') return;
-  
+
   const resolved = theme === 'system' ? getSystemTheme() : theme;
   document.documentElement.classList.toggle('dark', resolved === 'dark');
 }
@@ -47,7 +47,7 @@ export const useUIStore = create<UIState>()(
       setSidebarOpen: (open) => set({ sidebarOpen: open }),
       toggleMobileMenu: () => set((state) => ({ mobileMenuOpen: !state.mobileMenuOpen })),
       setMobileMenuOpen: (open) => set({ mobileMenuOpen: open }),
-      
+
       setTheme: (theme) => {
         applyTheme(theme);
         const resolved = theme === 'system' ? getSystemTheme() : theme;
@@ -73,7 +73,8 @@ export const useUIStore = create<UIState>()(
           };
           mediaQuery.addEventListener('change', handler);
           // Store cleanup function in window for potential cleanup
-          (window as unknown as { __themeCleanup?: () => void }).__themeCleanup = () => mediaQuery.removeEventListener('change', handler);
+          (window as unknown as { __themeCleanup?: () => void }).__themeCleanup = () =>
+            mediaQuery.removeEventListener('change', handler);
         }
       },
 

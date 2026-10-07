@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -5,7 +6,14 @@ import { z } from 'zod';
 import { authApi } from '@api';
 import { Button } from '@components/ui/Button';
 import { Input } from '@components/ui/Input';
-import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from '@components/ui/Card';
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+  CardContent,
+  CardFooter,
+} from '@components/ui/Card';
 import { toast } from 'sonner';
 import { Loader2, Mail } from 'lucide-react';
 
@@ -41,14 +49,14 @@ export function ForgotPasswordPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-4 bg-dark-950">
+    <div className="flex min-h-screen items-center justify-center bg-dark-950 p-4">
       <div className="w-full max-w-md">
-        <div className="flex justify-center mb-8">
+        <div className="mb-8 flex justify-center">
           <Link to="/login" className="flex items-center gap-2">
-            <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-primary-500 to-gold-500 flex items-center justify-center">
+            <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-primary-500 to-gold-500">
               <span className="text-sm font-bold text-dark-950">XAU</span>
             </div>
-            <span className="font-bold text-xl text-white">XAU Market Pro</span>
+            <span className="text-xl font-bold text-white">XAU Market Pro</span>
           </Link>
         </div>
 
@@ -67,18 +75,18 @@ export function ForgotPasswordPage() {
                 {...register('email')}
                 autoComplete="email"
                 autoFocus
-                icon={<Mail className="w-4 h-4" />}
+                icon={<Mail className="h-4 w-4" />}
               />
 
               <Button type="submit" className="w-full" size="lg" loading={isLoading}>
-                <Loader2 className="w-4 h-4" aria-hidden="true" />
+                <Loader2 className="h-4 w-4" aria-hidden="true" />
                 Send Reset Link
               </Button>
             </form>
             <CardFooter className="flex-col gap-4">
-              <p className="text-sm text-dark-400 text-center w-full">
+              <p className="w-full text-center text-sm text-dark-400">
                 Remember your password?{' '}
-                <Link to="/login" className="text-primary-400 hover:text-primary-300 font-medium">
+                <Link to="/login" className="font-medium text-primary-400 hover:text-primary-300">
                   Sign in
                 </Link>
               </p>

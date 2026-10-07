@@ -6,7 +6,14 @@ import { z } from 'zod';
 import useAuthStore from '@stores/authStore';
 import { Button } from '@components/ui/Button';
 import { Input } from '@components/ui/Input';
-import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from '@components/ui/Card';
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+  CardContent,
+  CardFooter,
+} from '@components/ui/Card';
 import { toast } from 'sonner';
 import { Eye, EyeOff, Loader2 } from 'lucide-react';
 
@@ -46,15 +53,15 @@ export function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-4 bg-dark-950">
+    <div className="flex min-h-screen items-center justify-center bg-dark-950 p-4">
       <div className="w-full max-w-md">
         {/* Logo */}
-        <div className="flex justify-center mb-8">
+        <div className="mb-8 flex justify-center">
           <Link to="/login" className="flex items-center gap-2">
-            <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-primary-500 to-gold-500 flex items-center justify-center">
+            <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-primary-500 to-gold-500">
               <span className="text-sm font-bold text-dark-950">XAU</span>
             </div>
-            <span className="font-bold text-xl text-white">XAU Market Pro</span>
+            <span className="text-xl font-bold text-white">XAU Market Pro</span>
           </Link>
         </div>
 
@@ -87,32 +94,32 @@ export function LoginPage() {
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-[38px] text-dark-400 hover:text-white transition-colors"
+                  className="absolute right-3 top-[38px] text-dark-400 transition-colors hover:text-white"
                   aria-label={showPassword ? 'Hide password' : 'Show password'}
                 >
-                  {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                  {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
                 </button>
               </div>
 
               <div className="flex items-center justify-between">
-                <label className="flex items-center gap-2 cursor-pointer">
+                <label className="flex cursor-pointer items-center gap-2">
                   <input
                     type="checkbox"
                     {...register('remember')}
-                    className="w-4 h-4 rounded border-dark-600 bg-dark-800 text-primary-600 focus:ring-primary-500"
+                    className="h-4 w-4 rounded border-dark-600 bg-dark-800 text-primary-600 focus:ring-primary-500"
                   />
                   <span className="text-sm text-dark-300">Remember me</span>
                 </label>
                 <Link
                   to="/forgot-password"
-                  className="text-sm text-primary-400 hover:text-primary-300 transition-colors"
+                  className="text-sm text-primary-400 transition-colors hover:text-primary-300"
                 >
                   Forgot password?
                 </Link>
               </div>
 
               <Button type="submit" className="w-full" size="lg" loading={isLoading}>
-                <Loader2 className="w-4 h-4" aria-hidden="true" />
+                <Loader2 className="h-4 w-4" aria-hidden="true" />
                 Sign in
               </Button>
             </form>
@@ -122,22 +129,28 @@ export function LoginPage() {
                 <div className="w-full border-t border-dark-700" />
               </div>
               <div className="relative flex justify-center text-sm">
-                <span className="px-2 bg-dark-900 text-dark-500">Or continue with</span>
+                <span className="bg-dark-900 px-2 text-dark-500">Or continue with</span>
               </div>
             </div>
 
             {/* Demo credentials */}
-            <div className="p-3 bg-dark-800/50 rounded-lg border border-dark-700 text-xs text-dark-500 space-y-1">
+            <div className="space-y-1 rounded-lg border border-dark-700 bg-dark-800/50 p-3 text-xs text-dark-500">
               <p className="font-medium text-dark-400">Demo credentials:</p>
-              <p><span className="font-mono text-dark-300">admin@xaupro.test</span> / password123</p>
-              <p><span className="font-mono text-dark-300">trader@xaupro.test</span> / password123</p>
-              <p><span className="font-mono text-dark-300">guest@xaupro.test</span> / password123</p>
+              <p>
+                <span className="font-mono text-dark-300">admin@xaupro.test</span> / password123
+              </p>
+              <p>
+                <span className="font-mono text-dark-300">trader@xaupro.test</span> / password123
+              </p>
+              <p>
+                <span className="font-mono text-dark-300">guest@xaupro.test</span> / password123
+              </p>
             </div>
           </CardContent>
           <CardFooter className="flex-col gap-4">
-            <p className="text-sm text-dark-400 text-center w-full">
+            <p className="w-full text-center text-sm text-dark-400">
               Don't have an account?{' '}
-              <Link to="/register" className="text-primary-400 hover:text-primary-300 font-medium">
+              <Link to="/register" className="font-medium text-primary-400 hover:text-primary-300">
                 Sign up
               </Link>
             </p>

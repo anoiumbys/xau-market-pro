@@ -1,4 +1,11 @@
-import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from '@components/ui/Card';
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+  CardContent,
+  CardFooter,
+} from '@components/ui/Card';
 import { Button } from '@components/ui/Button';
 import { Check, Crown, Shield } from 'lucide-react';
 import { PLAN_FEATURES, PLAN_PRICES, type PlanType } from '@types';
@@ -10,20 +17,28 @@ export function SubscriptionPage() {
     <div className="space-y-6">
       <div>
         <h1 className="text-2xl font-bold text-light-900 dark:text-white">Subscription</h1>
-        <p className="text-light-600 dark:text-dark-400 mt-1">Choose the plan that fits your trading needs</p>
+        <p className="mt-1 text-light-600 dark:text-dark-400">
+          Choose the plan that fits your trading needs
+        </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
         {plans.map((plan) => {
           const features = PLAN_FEATURES[plan];
           const price = PLAN_PRICES[plan];
           const isPopular = plan === 'pro';
 
           return (
-            <Card key={plan} className={isPopular ? 'border-gold-500/50 bg-gold-500/5' : ''} gold={isPopular}>
+            <Card
+              key={plan}
+              className={isPopular ? 'border-gold-500/50 bg-gold-500/5' : ''}
+              gold={isPopular}
+            >
               {isPopular && (
                 <div className="absolute -top-3 left-1/2 -translate-x-1/2">
-                  <span className="bg-gold-500 text-dark-950 text-xs font-bold px-3 py-1 rounded-full">Most Popular</span>
+                  <span className="rounded-full bg-gold-500 px-3 py-1 text-xs font-bold text-dark-950">
+                    Most Popular
+                  </span>
                 </div>
               )}
               <CardHeader className="text-center">
@@ -32,35 +47,46 @@ export function SubscriptionPage() {
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="text-center">
-                  <span className="text-4xl font-bold text-light-900 dark:text-white">${price}</span>
+                  <span className="text-4xl font-bold text-light-900 dark:text-white">
+                    ${price}
+                  </span>
                   <span className="text-light-600 dark:text-dark-400">/month</span>
                 </div>
                 <ul className="space-y-3">
                   <li className="flex items-center gap-3 text-light-700 dark:text-dark-300">
-                    <Check className="w-5 h-5 text-green-400 flex-shrink-0" />
-                    <span>Price alerts: {features.alerts === -1 ? 'Unlimited' : features.alerts}</span>
+                    <Check className="h-5 w-5 flex-shrink-0 text-green-400" />
+                    <span>
+                      Price alerts: {features.alerts === -1 ? 'Unlimited' : features.alerts}
+                    </span>
                   </li>
                   <li className="flex items-center gap-3 text-light-700 dark:text-dark-300">
-                    <Check className="w-5 h-5 text-green-400 flex-shrink-0" />
-                    <span>Report exports: {features.exports === -1 ? 'Unlimited' : features.exports === 0 ? 'Not included' : features.exports}</span>
+                    <Check className="h-5 w-5 flex-shrink-0 text-green-400" />
+                    <span>
+                      Report exports:{' '}
+                      {features.exports === -1
+                        ? 'Unlimited'
+                        : features.exports === 0
+                          ? 'Not included'
+                          : features.exports}
+                    </span>
                   </li>
                   <li className="flex items-center gap-3 text-light-700 dark:text-dark-300">
-                    <Check className="w-5 h-5 text-green-400 flex-shrink-0" />
+                    <Check className="h-5 w-5 flex-shrink-0 text-green-400" />
                     <span>Trade journal</span>
                   </li>
                   <li className="flex items-center gap-3 text-light-700 dark:text-dark-300">
-                    <Check className="w-5 h-5 text-green-400 flex-shrink-0" />
+                    <Check className="h-5 w-5 flex-shrink-0 text-green-400" />
                     <span>Real-time charts</span>
                   </li>
                   {plan !== 'basic' && (
                     <li className="flex items-center gap-3 text-light-700 dark:text-dark-300">
-                      <Check className="w-5 h-5 text-green-400 flex-shrink-0" />
+                      <Check className="h-5 w-5 flex-shrink-0 text-green-400" />
                       <span>Advanced analytics</span>
                     </li>
                   )}
                   {plan === 'enterprise' && (
                     <li className="flex items-center gap-3 text-light-700 dark:text-dark-300">
-                      <Check className="w-5 h-5 text-green-400 flex-shrink-0" />
+                      <Check className="h-5 w-5 flex-shrink-0 text-green-400" />
                       <span>Priority support</span>
                     </li>
                   )}
@@ -68,7 +94,11 @@ export function SubscriptionPage() {
               </CardContent>
               <CardFooter>
                 <Button className="w-full" variant={isPopular ? 'gold' : 'primary'}>
-                  {plan === 'basic' ? 'Start Free' : plan === 'pro' ? 'Get Started' : 'Contact Sales'}
+                  {plan === 'basic'
+                    ? 'Start Free'
+                    : plan === 'pro'
+                      ? 'Get Started'
+                      : 'Contact Sales'}
                 </Button>
               </CardFooter>
             </Card>
@@ -76,30 +106,32 @@ export function SubscriptionPage() {
         })}
       </div>
 
-      <Card className="bg-primary-500/10 border-primary-500/20">
+      <Card className="border-primary-500/20 bg-primary-500/10">
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
-            <Shield className="w-5 h-5 text-primary-400" />
+            <Shield className="h-5 w-5 text-primary-400" />
             Secure Payment
           </CardTitle>
           <CardDescription>All payments are processed securely. Cancel anytime.</CardDescription>
         </CardHeader>
-        <CardContent className="grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
+        <CardContent className="grid grid-cols-1 gap-4 text-center md:grid-cols-3">
           <div className="p-4">
-            <Crown className="w-8 h-8 text-gold-400 mx-auto mb-2" />
+            <Crown className="mx-auto mb-2 h-8 w-8 text-gold-400" />
             <p className="font-medium text-light-900 dark:text-white">No Contracts</p>
             <p className="text-sm text-light-600 dark:text-dark-400">Cancel anytime</p>
           </div>
           <div className="p-4">
             <CardTitle className="flex items-center justify-center gap-2">
-              <Check className="w-5 h-5 text-green-400" />
+              <Check className="h-5 w-5 text-green-400" />
               Instant Access
             </CardTitle>
-            <p className="text-sm text-light-600 dark:text-dark-400">Features activate immediately</p>
+            <p className="text-sm text-light-600 dark:text-dark-400">
+              Features activate immediately
+            </p>
           </div>
           <div className="p-4">
             <CardTitle className="flex items-center justify-center gap-2">
-              <Shield className="w-5 h-5 text-primary-400" />
+              <Shield className="h-5 w-5 text-primary-400" />
               Secure Billing
             </CardTitle>
             <p className="text-sm text-light-600 dark:text-dark-400">SSL encrypted payments</p>

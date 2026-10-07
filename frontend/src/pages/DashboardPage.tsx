@@ -43,21 +43,23 @@ export function DashboardPage() {
   return (
     <div className="space-y-6">
       {/* Page Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h1 className="text-2xl font-bold text-light-900 dark:text-white">Dashboard</h1>
-          <p className="text-light-600 dark:text-dark-400 mt-1">Welcome back! Here's your trading overview.</p>
+          <p className="mt-1 text-light-600 dark:text-dark-400">
+            Welcome back! Here's your trading overview.
+          </p>
         </div>
         <div className="flex items-center gap-3">
           <Link to="/subscription">
             <Button variant="ghost" size="sm">
-              <CreditCard className="w-4 h-4" />
+              <CreditCard className="h-4 w-4" />
               Subscription
             </Button>
           </Link>
           <Link to="/journal">
             <Button size="sm">
-              <Target className="w-4 h-4" />
+              <Target className="h-4 w-4" />
               New Trade
             </Button>
           </Link>
@@ -65,26 +67,47 @@ export function DashboardPage() {
       </div>
 
       {/* Market Header */}
-      <Card className="bg-gradient-to-r from-primary-600/20 to-gold-500/10 border-primary-500/20">
+      <Card className="border-primary-500/20 bg-gradient-to-r from-primary-600/20 to-gold-500/10">
         <CardContent className="pt-6">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-4">
             <div>
-              <p className="text-sm font-medium text-light-600 dark:text-dark-400">XAUUSD Spot Price</p>
-              <div className="flex items-baseline gap-3 mt-1">
-                <span className="text-4xl font-bold text-light-900 dark:text-white tabular-nums">{formatPrice(spotPrice)}</span>
-                <div className={cn('flex items-center gap-1 px-3 py-1 rounded-full text-sm font-medium', change24h >= 0 ? 'bg-green-500/20 text-green-400' : 'bg-red-500/20 text-red-400')}>
-                  {change24h >= 0 ? <TrendingUp className="w-4 h-4" /> : <TrendingDown className="w-4 h-4" />}
-                  <span className="tabular-nums">{change24h >= 0 ? '+' : ''}{formatPrice(change24h)} ({changePct24h >= 0 ? '+' : ''}{changePct24h.toFixed(2)}%)</span>
+              <p className="text-sm font-medium text-light-600 dark:text-dark-400">
+                XAUUSD Spot Price
+              </p>
+              <div className="mt-1 flex items-baseline gap-3">
+                <span className="text-4xl font-bold tabular-nums text-light-900 dark:text-white">
+                  {formatPrice(spotPrice)}
+                </span>
+                <div
+                  className={cn(
+                    'flex items-center gap-1 rounded-full px-3 py-1 text-sm font-medium',
+                    change24h >= 0 ? 'bg-green-500/20 text-green-400' : 'bg-red-500/20 text-red-400'
+                  )}
+                >
+                  {change24h >= 0 ? (
+                    <TrendingUp className="h-4 w-4" />
+                  ) : (
+                    <TrendingDown className="h-4 w-4" />
+                  )}
+                  <span className="tabular-nums">
+                    {change24h >= 0 ? '+' : ''}
+                    {formatPrice(change24h)} ({changePct24h >= 0 ? '+' : ''}
+                    {changePct24h.toFixed(2)}%)
+                  </span>
                 </div>
               </div>
             </div>
             <div>
               <p className="text-sm font-medium text-light-600 dark:text-dark-400">Daily High</p>
-              <p className="text-2xl font-bold text-light-900 dark:text-white mt-1 tabular-nums">{formatPrice(market?.daily_high ?? 0)}</p>
+              <p className="mt-1 text-2xl font-bold tabular-nums text-light-900 dark:text-white">
+                {formatPrice(market?.daily_high ?? 0)}
+              </p>
             </div>
             <div>
               <p className="text-sm font-medium text-light-600 dark:text-dark-400">Daily Low</p>
-              <p className="text-2xl font-bold text-light-900 dark:text-white mt-1 tabular-nums">{formatPrice(market?.daily_low ?? 0)}</p>
+              <p className="mt-1 text-2xl font-bold tabular-nums text-light-900 dark:text-white">
+                {formatPrice(market?.daily_low ?? 0)}
+              </p>
             </div>
             <div>
               <p className="text-sm font-medium text-light-600 dark:text-dark-400">Market Status</p>
@@ -92,7 +115,9 @@ export function DashboardPage() {
                 <Badge variant={market?.market_status === 'open' ? 'success' : 'neutral'} dot>
                   {market?.market_status === 'open' ? 'Open' : 'Closed'}
                 </Badge>
-                <span className="text-sm text-light-600 dark:text-dark-400">Last updated: {market?.timestamp ? formatDate(market.timestamp, 'datetime') : '-'}</span>
+                <span className="text-sm text-light-600 dark:text-dark-400">
+                  Last updated: {market?.timestamp ? formatDate(market.timestamp, 'datetime') : '-'}
+                </span>
               </div>
             </div>
           </div>
@@ -100,16 +125,18 @@ export function DashboardPage() {
       </Card>
 
       {/* Stats Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
         <Card hover>
           <CardContent className="pt-6">
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm font-medium text-light-600 dark:text-dark-400">Open Trades</p>
-                <p className="text-3xl font-bold text-light-900 dark:text-white mt-1">{stats?.open_trades ?? 0}</p>
+                <p className="mt-1 text-3xl font-bold text-light-900 dark:text-white">
+                  {stats?.open_trades ?? 0}
+                </p>
               </div>
-              <div className={cn('p-3 rounded-xl', 'bg-blue-500/20')}>
-                <BookOpen className="w-6 h-6 text-blue-400" />
+              <div className={cn('rounded-xl p-3', 'bg-blue-500/20')}>
+                <BookOpen className="h-6 w-6 text-blue-400" />
               </div>
             </div>
           </CardContent>
@@ -119,11 +146,15 @@ export function DashboardPage() {
           <CardContent className="pt-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-light-600 dark:text-dark-400">Active Alerts</p>
-                <p className="text-3xl font-bold text-light-900 dark:text-white mt-1">{pendingAlerts.length}</p>
+                <p className="text-sm font-medium text-light-600 dark:text-dark-400">
+                  Active Alerts
+                </p>
+                <p className="mt-1 text-3xl font-bold text-light-900 dark:text-white">
+                  {pendingAlerts.length}
+                </p>
               </div>
-              <div className={cn('p-3 rounded-xl', 'bg-purple-500/20')}>
-                <Bell className="w-6 h-6 text-purple-400" />
+              <div className={cn('rounded-xl p-3', 'bg-purple-500/20')}>
+                <Bell className="h-6 w-6 text-purple-400" />
               </div>
             </div>
           </CardContent>
@@ -134,10 +165,12 @@ export function DashboardPage() {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm font-medium text-light-600 dark:text-dark-400">Win Rate</p>
-                <p className="text-3xl font-bold text-light-900 dark:text-white mt-1 tabular-nums">{stats?.win_rate?.toFixed(1) ?? '0.0'}%</p>
+                <p className="mt-1 text-3xl font-bold tabular-nums text-light-900 dark:text-white">
+                  {stats?.win_rate?.toFixed(1) ?? '0.0'}%
+                </p>
               </div>
-              <div className={cn('p-3 rounded-xl', 'bg-primary-500/20')}>
-                <Target className="w-6 h-6 text-primary-400" />
+              <div className={cn('rounded-xl p-3', 'bg-primary-500/20')}>
+                <Target className="h-6 w-6 text-primary-400" />
               </div>
             </div>
           </CardContent>
@@ -148,12 +181,25 @@ export function DashboardPage() {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm font-medium text-light-600 dark:text-dark-400">Total PnL</p>
-                <p className={cn('text-3xl font-bold mt-1 tabular-nums', getPnLColor(stats?.total_pnl ?? null))}>
+                <p
+                  className={cn(
+                    'mt-1 text-3xl font-bold tabular-nums',
+                    getPnLColor(stats?.total_pnl ?? null)
+                  )}
+                >
                   {formatPnL(stats?.total_pnl ?? null)}
                 </p>
               </div>
-              <div className={cn('p-3 rounded-xl', getPnLBg(stats?.total_pnl ?? null))}>
-                <DollarSign className="w-6 h-6" style={{ color: stats?.total_pnl && stats.total_pnl >= 0 ? 'rgb(34, 197, 94)' : 'rgb(239, 68, 68)' }} />
+              <div className={cn('rounded-xl p-3', getPnLBg(stats?.total_pnl ?? null))}>
+                <DollarSign
+                  className="h-6 w-6"
+                  style={{
+                    color:
+                      stats?.total_pnl && stats.total_pnl >= 0
+                        ? 'rgb(34, 197, 94)'
+                        : 'rgb(239, 68, 68)',
+                  }}
+                />
               </div>
             </div>
           </CardContent>
@@ -161,9 +207,9 @@ export function DashboardPage() {
       </div>
 
       {/* Quick Actions & Recent Trades */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
         {/* Quick Actions */}
-        <div className="lg:col-span-1 space-y-4">
+        <div className="space-y-4 lg:col-span-1">
           <Card>
             <CardHeader>
               <CardTitle>Quick Actions</CardTitle>
@@ -172,38 +218,38 @@ export function DashboardPage() {
             <CardContent className="space-y-3">
               <Link to="/journal" className="block">
                 <Button variant="secondary" className="w-full justify-start gap-3">
-                  <BookOpen className="w-5 h-5" />
+                  <BookOpen className="h-5 w-5" />
                   <span>Add Trade Entry</span>
-                  <ChevronRight className="w-4 h-4 ml-auto" />
+                  <ChevronRight className="ml-auto h-4 w-4" />
                 </Button>
               </Link>
               <Link to="/alerts" className="block">
                 <Button variant="secondary" className="w-full justify-start gap-3">
-                  <Bell className="w-5 h-5" />
+                  <Bell className="h-5 w-5" />
                   <span>Create Price Alert</span>
-                  <ChevronRight className="w-4 h-4 ml-auto" />
+                  <ChevronRight className="ml-auto h-4 w-4" />
                 </Button>
               </Link>
               <Link to="/chart" className="block">
                 <Button variant="secondary" className="w-full justify-start gap-3">
-                  <Activity className="w-5 h-5" />
+                  <Activity className="h-5 w-5" />
                   <span>View Chart</span>
-                  <ChevronRight className="w-4 h-4 ml-auto" />
+                  <ChevronRight className="ml-auto h-4 w-4" />
                 </Button>
               </Link>
               <Link to="/reports" className="block">
                 <Button variant="secondary" className="w-full justify-start gap-3">
-                  <BarChart3 className="w-5 h-5" />
+                  <BarChart3 className="h-5 w-5" />
                   <span>View Reports</span>
-                  <ChevronRight className="w-4 h-4 ml-auto" />
+                  <ChevronRight className="ml-auto h-4 w-4" />
                 </Button>
               </Link>
               {!hasSubscription && (
                 <Link to="/subscription" className="block">
                   <Button variant="gold" className="w-full justify-start gap-3">
-                    <CreditCard className="w-5 h-5" />
+                    <CreditCard className="h-5 w-5" />
                     <span>Upgrade Subscription</span>
-                    <ChevronRight className="w-4 h-4 ml-auto" />
+                    <ChevronRight className="ml-auto h-4 w-4" />
                   </Button>
                 </Link>
               )}
@@ -219,7 +265,9 @@ export function DashboardPage() {
             <CardContent>
               <div className="space-y-3">
                 <PlanBadge plan="pro" />
-                <p className="text-sm text-light-700 dark:text-dark-300">Pro Plan - Unlimited alerts & exports</p>
+                <p className="text-sm text-light-700 dark:text-dark-300">
+                  Pro Plan - Unlimited alerts & exports
+                </p>
                 <Button variant="ghost" size="sm" className="w-full">
                   Manage Subscription
                 </Button>
@@ -238,7 +286,7 @@ export function DashboardPage() {
               </div>
               <Link to="/journal">
                 <Button variant="ghost" size="sm">
-                  View All <ChevronRight className="w-4 h-4" />
+                  View All <ChevronRight className="h-4 w-4" />
                 </Button>
               </Link>
             </CardHeader>
@@ -260,14 +308,23 @@ export function DashboardPage() {
                     {stats ? (
                       <>
                         <tr>
-                          <td className="text-center text-light-600 dark:text-dark-400 py-8" colSpan={7}>
-                            No trades yet. <Link to="/journal" className="text-primary-400 hover:underline">Add your first trade</Link>
+                          <td
+                            className="py-8 text-center text-light-600 dark:text-dark-400"
+                            colSpan={7}
+                          >
+                            No trades yet.{' '}
+                            <Link to="/journal" className="text-primary-400 hover:underline">
+                              Add your first trade
+                            </Link>
                           </td>
                         </tr>
                       </>
                     ) : (
                       <tr>
-                        <td className="text-center text-light-600 dark:text-dark-400 py-8" colSpan={7}>
+                        <td
+                          className="py-8 text-center text-light-600 dark:text-dark-400"
+                          colSpan={7}
+                        >
                           Loading...
                         </td>
                       </tr>

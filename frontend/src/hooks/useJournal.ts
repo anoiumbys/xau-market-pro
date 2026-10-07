@@ -1,4 +1,12 @@
-import { useJournalStore, selectTrades, selectStats, selectJournalLoading, selectJournalError, selectPagination, selectFilters } from '@stores/journalStore';
+import {
+  useJournalStore,
+  selectTrades,
+  selectStats,
+  selectJournalLoading,
+  selectJournalError,
+  selectPagination,
+  selectFilters,
+} from '@stores/journalStore';
 
 export function useTrades() {
   return useJournalStore(selectTrades);
@@ -36,5 +44,16 @@ export function useJournalActions() {
   const clearError = useJournalStore((state) => state.clearError);
   const setCurrentTrade = useJournalStore((state) => state.setCurrentTrade);
 
-  return { fetchTrades, fetchStats, createTrade, updateTrade, deleteTrade, closeTrade, setFilters, clearFilters, clearError, setCurrentTrade };
+  return {
+    fetchTrades,
+    fetchStats,
+    createTrade,
+    updateTrade,
+    deleteTrade,
+    closeTrade,
+    setFilters,
+    clearFilters,
+    clearError,
+    setCurrentTrade,
+  };
 }

@@ -22,9 +22,13 @@
       "@hooks/*": ["src/hooks/*"],
       "@pages/*": ["src/pages/*"],
       "@stores/*": ["src/stores/*"],
+      "@api": ["src/api"],
       "@api/*": ["src/api/*"],
+      "@types": ["src/types"],
       "@types/*": ["src/types/*"],
-      "@utils/*": ["src/utils/*"]
+      "@utils/*": ["src/utils/*"],
+      "@locales": ["src/locales"],
+      "@locales/*": ["src/locales/*"]
     }
   },
   "include": ["src"],

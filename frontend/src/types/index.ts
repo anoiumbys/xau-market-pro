@@ -348,8 +348,9 @@ export interface TradeJournalCreateForm {
   direction: TradeDirection;
   entry_price: number;
   lot_size: number;
-  stop_loss: number;
-  take_profit: number;
+  stop_loss?: number | null;
+  take_profit?: number | null;
+  exit_price?: number | null;
   notes?: string;
 }
 

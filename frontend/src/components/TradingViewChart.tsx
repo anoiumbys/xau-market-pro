@@ -46,10 +46,7 @@ export function TradingViewChart({
       enable_publishing: false,
       allow_symbol_change: true,
       container_id: containerId,
-      studies: [
-        'MAExp@tv-basicstudies',
-        'RSI@tv-basicstudies',
-      ],
+      studies: ['MAExp@tv-basicstudies', 'RSI@tv-basicstudies'],
       overrides: {
         'mainSeriesProperties.candleStyle.upColor': '#22c55e',
         'mainSeriesProperties.candleStyle.downColor': '#ef4444',

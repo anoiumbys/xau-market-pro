@@ -51,7 +51,6 @@ export const selectSubscriptionLoading = (state: SubscriptionState) => state.isL
 export const selectSubscriptionError = (state: SubscriptionState) => state.error;
 export const selectHasActiveSubscription = (state: SubscriptionState) =>
   state.subscription?.is_active ?? false;
-export const selectSubscriptionPlan = (state: SubscriptionState) =>
-  state.subscription?.plan_type;
+export const selectSubscriptionPlan = (state: SubscriptionState) => state.subscription?.plan_type;
 export const selectSubscriptionLimits = (state: SubscriptionState) =>
   state.subscription?.limits ?? { alerts: 0, exports: 0 };

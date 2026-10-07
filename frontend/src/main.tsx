@@ -19,10 +19,7 @@ const queryClient = new QueryClient({
 });
 
 // Initialize auth and theme before rendering
-await Promise.all([
-  useAuthStore.getState().initialize(),
-  useUIStore.getState().initializeTheme(),
-]);
+await Promise.all([useAuthStore.getState().initialize(), useUIStore.getState().initializeTheme()]);
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>

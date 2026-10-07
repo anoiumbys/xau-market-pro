@@ -24,17 +24,20 @@ import type {
   TradeJournalUpdateForm,
   PriceAlertCreateForm,
   SubscriptionCreateForm,
-} from './src/types';
+} from '@types';
 
 // Auth endpoints
 export const authApi = {
-  login: (data: LoginForm) => api.post<{ user: User; token: string; token_type: string }>('/login', data),
-  register: (data: RegisterForm) => api.post<{ user: User; token: string; token_type: string }>('/register', data),
+  login: (data: LoginForm) =>
+    api.post<{ user: User; token: string; token_type: string }>('/login', data),
+  register: (data: RegisterForm) =>
+    api.post<{ user: User; token: string; token_type: string }>('/register', data),
   logout: () => api.post('/logout'),
   forgotPassword: (data: ForgotPasswordForm) => api.post('/forgot-password', data),
   resetPassword: (data: ResetPasswordForm) => api.post('/reset-password', data),
   me: () => api.get<User>('/user'),
-  updateProfile: (data: { name?: string; email?: string }) => api.put<{ user: User; message: string }>('/user/profile', data),
+  updateProfile: (data: { name?: string; email?: string }) =>
+    api.put<{ user: User; message: string }>('/user/profile', data),
 };
 
 // Market endpoints
@@ -70,10 +73,13 @@ export const journalApi = {
   }) => api.getPaginated<TradeJournal>('/journal', params),
   create: (data: TradeJournalCreateForm) => api.post<TradeJournal>('/journal', data),
   get: (id: string) => api.get<TradeJournal>(`/journal/${id}`),
-  update: (id: string, data: TradeJournalUpdateForm) => api.put<TradeJournal>(`/journal/${id}`, data),
+  update: (id: string, data: TradeJournalUpdateForm) =>
+    api.put<TradeJournal>(`/journal/${id}`, data),
   delete: (id: string) => api.delete(`/journal/${id}`),
-  close: (id: string, exitPrice: number) => api.post<TradeJournal>(`/journal/${id}/close`, { exit_price: exitPrice }),
-  stats: (params?: { from?: string; to?: string }) => api.get<TradeStats>('/journal/stats/summary', params),
+  close: (id: string, exitPrice: number) =>
+    api.post<TradeJournal>(`/journal/${id}/close`, { exit_price: exitPrice }),
+  stats: (params?: { from?: string; to?: string }) =>
+    api.get<TradeStats>('/journal/stats/summary', params),
 };
 
 // Report endpoints
@@ -84,7 +90,8 @@ export const reportApi = {
     from?: string;
     to?: string;
   }) => api.get('/reports/export', params),
-  advanced: (params?: { from?: string; to?: string }) => api.get<AdvancedReport>('/reports/advanced', params),
+  advanced: (params?: { from?: string; to?: string }) =>
+    api.get<AdvancedReport>('/reports/advanced', params),
 };
 
 // Admin endpoints
@@ -94,23 +101,33 @@ export const adminApi = {
     api.getPaginated<User>('/admin/users', params),
   getUser: (id: string) => api.get<User>(`/admin/users/${id}`),
   updateUser: (id: string, data: Partial<User>) => api.put<User>(`/admin/users/${id}`, data),
-  updateUserRole: (id: string, role: User['role']) => api.put<User>(`/admin/users/${id}/role`, { role }),
+  updateUserRole: (id: string, role: User['role']) =>
+    api.put<User>(`/admin/users/${id}/role`, { role }),
   banUser: (id: string) => api.put(`/admin/users/${id}/ban`),
   unbanUser: (id: string) => api.put(`/admin/users/${id}/unban`),
   deleteUser: (id: string) => api.delete(`/admin/users/${id}`),
 
   // Markets
   getMarkets: () => api.get<Market[]>('/admin/markets'),
-  createMarket: (data: { symbol: string; name: string; asset_class: string; is_active?: boolean }) =>
-    api.post<Market>('/admin/markets', data),
+  createMarket: (data: {
+    symbol: string;
+    name: string;
+    asset_class: string;
+    is_active?: boolean;
+  }) => api.post<Market>('/admin/markets', data),
   getMarket: (id: string) => api.get<Market>(`/admin/markets/${id}`),
-  updateMarket: (id: string, data: Partial<Market>) => api.put<Market>(`/admin/markets/${id}`, data),
+  updateMarket: (id: string, data: Partial<Market>) =>
+    api.put<Market>(`/admin/markets/${id}`, data),
   toggleMarket: (id: string) => api.put<Market>(`/admin/markets/${id}/toggle`),
   deleteMarket: (id: string) => api.delete(`/admin/markets/${id}`),
 
   // Subscriptions
-  getSubscriptions: (params?: { page?: number; per_page?: number; status?: string; plan_type?: string }) =>
-    api.getPaginated<Subscription>('/admin/subscriptions', params),
+  getSubscriptions: (params?: {
+    page?: number;
+    per_page?: number;
+    status?: string;
+    plan_type?: string;
+  }) => api.getPaginated<Subscription>('/admin/subscriptions', params),
   getSubscription: (id: string) => api.get<Subscription>(`/admin/subscriptions/${id}`),
   approveSubscription: (id: string, durationDays?: number) =>
     api.put<Subscription>(`/admin/subscriptions/${id}/approve`, { duration_days: durationDays }),
@@ -121,20 +138,34 @@ export const adminApi = {
     api.put<Subscription>(`/admin/subscriptions/${id}/extend`, { additional_days: additionalDays }),
 
   // Alerts
-  getAlerts: (params?: { page?: number; per_page?: number; symbol?: string; is_triggered?: boolean; user_id?: string }) =>
-    api.getPaginated<PriceAlert>('/admin/alerts', params),
+  getAlerts: (params?: {
+    page?: number;
+    per_page?: number;
+    symbol?: string;
+    is_triggered?: boolean;
+    user_id?: string;
+  }) => api.getPaginated<PriceAlert>('/admin/alerts', params),
   getAlert: (id: string) => api.get<PriceAlert>(`/admin/alerts/${id}`),
   deleteAlert: (id: string) => api.delete(`/admin/alerts/${id}`),
 
   // Journal
-  getJournal: (params?: { page?: number; per_page?: number; user_id?: string; symbol?: string; status?: string; direction?: string; from?: string; to?: string }) =>
-    api.getPaginated<TradeJournal>('/admin/journal', params),
+  getJournal: (params?: {
+    page?: number;
+    per_page?: number;
+    user_id?: string;
+    symbol?: string;
+    status?: string;
+    direction?: string;
+    from?: string;
+    to?: string;
+  }) => api.getPaginated<TradeJournal>('/admin/journal', params),
   getJournalEntry: (id: string) => api.get<TradeJournal>(`/admin/journal/${id}`),
   deleteJournalEntry: (id: string) => api.delete(`/admin/journal/${id}`),
 
   // Reports
   getOverview: () => api.get<AdminOverview>('/admin/reports/overview'),
-  getUserReport: (params?: { from?: string; to?: string }) => api.get<AdminUserReport>('/admin/reports/users', params),
+  getUserReport: (params?: { from?: string; to?: string }) =>
+    api.get<AdminUserReport>('/admin/reports/users', params),
   getSubscriptionReport: (params?: { from?: string; to?: string }) =>
     api.get<AdminSubscriptionReport>('/admin/reports/subscriptions', params),
   getRevenueReport: (params?: { from?: string; to?: string }) =>

@@ -16,7 +16,7 @@ export function SettingsPage() {
   const theme = useUIStore(selectTheme);
   const setTheme = useUIStore((state) => state.setTheme);
   const locale = useLocaleStore(selectLocale);
-  const setLocale = useUIStore((state) => state.setLocale);
+  const setLocale = useLocaleStore((state) => state.setLocale);
   const { user, updateProfile } = useAuthStore();
   const { t } = useTranslation();
 
@@ -69,29 +69,31 @@ export function SettingsPage() {
   ] as const;
 
   return (
-    <div className="space-y-6 max-w-3xl">
+    <div className="max-w-3xl space-y-6">
       <div>
-        <h1 className="text-2xl font-bold text-light-900 dark:text-dark-50">{t('settings.title')}</h1>
-        <p className="text-light-600 dark:text-dark-400 mt-1">{t('settings.subtitle')}</p>
+        <h1 className="text-2xl font-bold text-light-900 dark:text-dark-50">
+          {t('settings.title')}
+        </h1>
+        <p className="mt-1 text-light-600 dark:text-dark-400">{t('settings.subtitle')}</p>
       </div>
 
       {/* Profile */}
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
-            <User className="w-5 h-5" />
+            <User className="h-5 w-5" />
             {t('settings.profile')}
           </CardTitle>
           <CardDescription>{t('settings.updateProfile')}</CardDescription>
         </CardHeader>
         <CardContent>
-          <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 max-w-md">
+          <form onSubmit={handleSubmit(onSubmit)} className="max-w-md space-y-4">
             <Input
               label={t('settings.fullName')}
               placeholder="John Doe"
               {...register('name')}
               error={errors.name?.message}
-              icon={<User className="w-4 h-4" />}
+              icon={<User className="h-4 w-4" />}
             />
             <Input
               label={t('settings.email')}
@@ -99,7 +101,7 @@ export function SettingsPage() {
               placeholder="you@example.com"
               {...register('email')}
               error={errors.email?.message}
-              icon={<Mail className="w-4 h-4" />}
+              icon={<Mail className="h-4 w-4" />}
             />
             <div className="flex gap-3 pt-4">
               <Button type="submit" loading={isSubmitting}>
@@ -117,39 +119,51 @@ export function SettingsPage() {
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
-            <Lock className="w-5 h-5" />
+            <Lock className="h-5 w-5" />
             {t('settings.security')}
           </CardTitle>
           <CardDescription>{t('settings.changePasswordManageSessions')}</CardDescription>
         </CardHeader>
         <CardContent>
           <div className="space-y-4">
-            <div className="flex items-center justify-between p-4 bg-light-100/50 dark:bg-dark-800/50 rounded-lg">
+            <div className="flex items-center justify-between rounded-lg bg-light-100/50 p-4 dark:bg-dark-800/50">
               <div className="flex items-center gap-3">
-                <Lock className="w-5 h-5 text-light-500 dark:text-dark-400" />
+                <Lock className="h-5 w-5 text-light-500 dark:text-dark-400" />
                 <div>
-                  <p className="font-medium text-light-900 dark:text-white">{t('settings.changePassword')}</p>
-                  <p className="text-sm text-light-600 dark:text-dark-400">{t('settings.updateAccountPassword')}</p>
+                  <p className="font-medium text-light-900 dark:text-white">
+                    {t('settings.changePassword')}
+                  </p>
+                  <p className="text-sm text-light-600 dark:text-dark-400">
+                    {t('settings.updateAccountPassword')}
+                  </p>
                 </div>
               </div>
               <Button variant="secondary">{t('settings.change')}</Button>
             </div>
-            <div className="flex items-center justify-between p-4 bg-light-100/50 dark:bg-dark-800/50 rounded-lg">
+            <div className="flex items-center justify-between rounded-lg bg-light-100/50 p-4 dark:bg-dark-800/50">
               <div className="flex items-center gap-3">
-                <Lock className="w-5 h-5 text-light-500 dark:text-dark-400" />
+                <Lock className="h-5 w-5 text-light-500 dark:text-dark-400" />
                 <div>
-                  <p className="font-medium text-light-900 dark:text-white">{t('settings.twoFactorAuth')}</p>
-                  <p className="text-sm text-light-600 dark:text-dark-400">{t('settings.addExtraLayerSecurity')}</p>
+                  <p className="font-medium text-light-900 dark:text-white">
+                    {t('settings.twoFactorAuth')}
+                  </p>
+                  <p className="text-sm text-light-600 dark:text-dark-400">
+                    {t('settings.addExtraLayerSecurity')}
+                  </p>
                 </div>
               </div>
               <Button variant="secondary">{t('settings.enable')}</Button>
             </div>
-            <div className="flex items-center justify-between p-4 bg-light-100/50 dark:bg-dark-800/50 rounded-lg">
+            <div className="flex items-center justify-between rounded-lg bg-light-100/50 p-4 dark:bg-dark-800/50">
               <div className="flex items-center gap-3">
-                <Lock className="w-5 h-5 text-light-500 dark:text-dark-400" />
+                <Lock className="h-5 w-5 text-light-500 dark:text-dark-400" />
                 <div>
-                  <p className="font-medium text-light-900 dark:text-white">{t('settings.activeSessions')}</p>
-                  <p className="text-sm text-light-600 dark:text-dark-400">{t('settings.manageLoggedInDevices')}</p>
+                  <p className="font-medium text-light-900 dark:text-white">
+                    {t('settings.activeSessions')}
+                  </p>
+                  <p className="text-sm text-light-600 dark:text-dark-400">
+                    {t('settings.manageLoggedInDevices')}
+                  </p>
                 </div>
               </div>
               <Button variant="secondary">{t('settings.view')}</Button>
@@ -162,37 +176,45 @@ export function SettingsPage() {
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
-            <Bell className="w-5 h-5" />
+            <Bell className="h-5 w-5" />
             {t('settings.notifications')}
           </CardTitle>
           <CardDescription>{t('settings.configureAlerts')}</CardDescription>
         </CardHeader>
         <CardContent>
           <div className="space-y-4">
-            <div className="flex items-center justify-between p-4 bg-light-100/50 dark:bg-dark-800/50 rounded-lg">
+            <div className="flex items-center justify-between rounded-lg bg-light-100/50 p-4 dark:bg-dark-800/50">
               <div className="flex items-center gap-3">
-                <Bell className="w-5 h-5 text-light-500 dark:text-dark-400" />
+                <Bell className="h-5 w-5 text-light-500 dark:text-dark-400" />
                 <div>
-                  <p className="font-medium text-light-900 dark:text-white">{t('settings.emailAlerts')}</p>
-                  <p className="text-sm text-light-600 dark:text-dark-400">{t('settings.receivePriceAlertsEmail')}</p>
+                  <p className="font-medium text-light-900 dark:text-white">
+                    {t('settings.emailAlerts')}
+                  </p>
+                  <p className="text-sm text-light-600 dark:text-dark-400">
+                    {t('settings.receivePriceAlertsEmail')}
+                  </p>
                 </div>
               </div>
-              <label className="relative inline-flex items-center cursor-pointer">
-                <input type="checkbox" defaultChecked className="sr-only peer" />
-                <div className="w-11 h-6 bg-light-600 dark:bg-dark-600 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary-500/30 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary-600"></div>
+              <label className="relative inline-flex cursor-pointer items-center">
+                <input type="checkbox" defaultChecked className="peer sr-only" />
+                <div className="peer h-6 w-11 rounded-full bg-light-600 after:absolute after:left-[2px] after:top-[2px] after:h-5 after:w-5 after:rounded-full after:border after:bg-white after:transition-all after:content-[''] peer-checked:bg-primary-600 peer-checked:after:translate-x-full peer-checked:after:border-white peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary-500/30 dark:bg-dark-600"></div>
               </label>
             </div>
-            <div className="flex items-center justify-between p-4 bg-light-100/50 dark:bg-dark-800/50 rounded-lg">
+            <div className="flex items-center justify-between rounded-lg bg-light-100/50 p-4 dark:bg-dark-800/50">
               <div className="flex items-center gap-3">
-                <Bell className="w-5 h-5 text-light-500 dark:text-dark-400" />
+                <Bell className="h-5 w-5 text-light-500 dark:text-dark-400" />
                 <div>
-                  <p className="font-medium text-light-900 dark:text-white">{t('settings.pushNotifications')}</p>
-                  <p className="text-sm text-light-600 dark:text-dark-400">{t('settings.receivePriceAlertsDevice')}</p>
+                  <p className="font-medium text-light-900 dark:text-white">
+                    {t('settings.pushNotifications')}
+                  </p>
+                  <p className="text-sm text-light-600 dark:text-dark-400">
+                    {t('settings.receivePriceAlertsDevice')}
+                  </p>
                 </div>
               </div>
-              <label className="relative inline-flex items-center cursor-pointer">
-                <input type="checkbox" className="sr-only peer" />
-                <div className="w-11 h-6 bg-light-600 dark:bg-dark-600 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary-500/30 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary-600"></div>
+              <label className="relative inline-flex cursor-pointer items-center">
+                <input type="checkbox" className="peer sr-only" />
+                <div className="peer h-6 w-11 rounded-full bg-light-600 after:absolute after:left-[2px] after:top-[2px] after:h-5 after:w-5 after:rounded-full after:border after:bg-white after:transition-all after:content-[''] peer-checked:bg-primary-600 peer-checked:after:translate-x-full peer-checked:after:border-white peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary-500/30 dark:bg-dark-600"></div>
               </label>
             </div>
           </div>
@@ -203,7 +225,7 @@ export function SettingsPage() {
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
-            <Palette className="w-5 h-5" />
+            <Palette className="h-5 w-5" />
             {t('settings.appearance')}
           </CardTitle>
           <CardDescription>{t('settings.customizeAppLook')}</CardDescription>
@@ -218,10 +240,10 @@ export function SettingsPage() {
                     key={tItem.value}
                     onClick={() => setTheme(tItem.value)}
                     className={cn(
-                      'p-4 rounded-lg border-2 transition-all font-medium',
+                      'rounded-lg border-2 p-4 font-medium transition-all',
                       theme === tItem.value
                         ? 'border-primary-500 bg-primary-500/10 text-light-900 dark:text-white'
-                        : 'border-light-300 dark:border-dark-600 hover:border-light-400 dark:hover:border-dark-500 text-light-700 dark:text-dark-300'
+                        : 'border-light-300 text-light-700 hover:border-light-400 dark:border-dark-600 dark:text-dark-300 dark:hover:border-dark-500'
                     )}
                     aria-pressed={theme === tItem.value}
                   >
@@ -238,10 +260,10 @@ export function SettingsPage() {
                     key={lang.value}
                     onClick={() => setLocale(lang.value)}
                     className={cn(
-                      'p-4 rounded-lg border-2 transition-all font-medium',
+                      'rounded-lg border-2 p-4 font-medium transition-all',
                       locale === lang.value
                         ? 'border-primary-500 bg-primary-500/10 text-light-900 dark:text-white'
-                        : 'border-light-300 dark:border-dark-600 hover:border-light-400 dark:hover:border-dark-500 text-light-700 dark:text-dark-300'
+                        : 'border-light-300 text-light-700 hover:border-light-400 dark:border-dark-600 dark:text-dark-300 dark:hover:border-dark-500'
                     )}
                     aria-pressed={locale === lang.value}
                   >

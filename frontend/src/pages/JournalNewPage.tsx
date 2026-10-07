@@ -7,7 +7,14 @@ import { useJournalStore } from '@stores/journalStore';
 import { Button } from '@components/ui/Button';
 import { Input } from '@components/ui/Input';
 import { Select } from '@components/ui/Input';
-import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from '@components/ui/Card';
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+  CardContent,
+  CardFooter,
+} from '@components/ui/Card';
 import { toast } from 'sonner';
 import { ArrowLeft } from 'lucide-react';
 import { Link } from 'react-router-dom';
@@ -68,14 +75,14 @@ export function JournalNewPage() {
   };
 
   return (
-    <div className="max-w-2xl mx-auto space-y-6">
+    <div className="mx-auto max-w-2xl space-y-6">
       <div className="flex items-center gap-4">
         <Link to="/journal" className="btn-ghost btn-icon">
-          <ArrowLeft className="w-5 h-5" />
+          <ArrowLeft className="h-5 w-5" />
         </Link>
         <div>
           <h1 className="text-2xl font-bold text-white">New Trade Journal</h1>
-          <p className="text-dark-400 mt-1">Record a new trade entry</p>
+          <p className="mt-1 text-dark-400">Record a new trade entry</p>
         </div>
       </div>
 
@@ -86,7 +93,7 @@ export function JournalNewPage() {
         </CardHeader>
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
           <CardContent className="space-y-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
               <Input
                 label="Symbol"
                 placeholder="XAUUSD"
@@ -104,7 +111,7 @@ export function JournalNewPage() {
               />
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
               <Input
                 label="Entry Price"
                 type="number"
@@ -123,7 +130,7 @@ export function JournalNewPage() {
               />
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
               <Input
                 label="Exit Price (Optional)"
                 type="number"
@@ -167,7 +174,7 @@ export function JournalNewPage() {
                 placeholder="Add any notes about this trade..."
                 {...register('notes')}
                 className={cn(
-                  'w-full px-3 py-2 bg-dark-800 border border-dark-600 rounded-lg text-white placeholder-dark-500 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent',
+                  'w-full rounded-lg border border-dark-600 bg-dark-800 px-3 py-2 text-white placeholder-dark-500 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-primary-500',
                   errors.notes && 'border-red-500 focus:ring-red-500'
                 )}
               />

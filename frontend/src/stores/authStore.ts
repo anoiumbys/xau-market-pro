@@ -56,7 +56,12 @@ const useAuthStore = create<AuthStore>()(
       register: async (name: string, email: string, password: string) => {
         set({ isLoading: true });
         try {
-          const response = await authApi.register({ name, email, password, password_confirmation: password });
+          const response = await authApi.register({
+            name,
+            email,
+            password,
+            password_confirmation: password,
+          });
           set({
             user: response.user,
             token: response.token,
@@ -136,6 +141,8 @@ const useAuthStore = create<AuthStore>()(
     }
   )
 );
+
+export const selectUser = (state: AuthStore) => state.user;
 
 export default useAuthStore;
 export type { AuthStore };

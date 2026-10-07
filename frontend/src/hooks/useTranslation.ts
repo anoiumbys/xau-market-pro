@@ -11,11 +11,11 @@ export function useTranslation() {
 
   const t = useMemo(() => {
     const dict = translations[locale] || translations.en;
-    
+
     return (key: string, params?: Record<string, string | number>) => {
       const keys = key.split('.');
       let value: unknown = dict;
-      
+
       for (const k of keys) {
         if (value && typeof value === 'object' && k in value) {
           value = (value as Record<string, unknown>)[k];
@@ -23,9 +23,9 @@ export function useTranslation() {
           return key; // Return key if not found
         }
       }
-      
+
       if (typeof value !== 'string') return key;
-      
+
       // Replace params if provided
       if (params) {
         return Object.entries(params).reduce(
@@ -33,7 +33,7 @@ export function useTranslation() {
           value
         );
       }
-      
+
       return value;
     };
   }, [locale]);

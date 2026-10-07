@@ -1,4 +1,10 @@
-import { useUIStore, selectSidebarOpen, selectMobileMenuOpen, selectTheme, selectToasts } from '@stores/uiStore';
+import {
+  useUIStore,
+  selectSidebarOpen,
+  selectMobileMenuOpen,
+  selectTheme,
+  selectToasts,
+} from '@stores/uiStore';
 
 export function useSidebarOpen() {
   return useUIStore(selectSidebarOpen);
@@ -25,5 +31,13 @@ export function useUIActions() {
   const addToast = useUIStore((state) => state.addToast);
   const removeToast = useUIStore((state) => state.removeToast);
 
-  return { toggleSidebar, setSidebarOpen, toggleMobileMenu, setMobileMenuOpen, setTheme, addToast, removeToast };
+  return {
+    toggleSidebar,
+    setSidebarOpen,
+    toggleMobileMenu,
+    setMobileMenuOpen,
+    setTheme,
+    addToast,
+    removeToast,
+  };
 }
