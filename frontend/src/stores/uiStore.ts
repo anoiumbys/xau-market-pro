@@ -73,7 +73,7 @@ export const useUIStore = create<UIState>()(
           };
           mediaQuery.addEventListener('change', handler);
           // Store cleanup function in window for potential cleanup
-          (window as any).__themeCleanup = () => mediaQuery.removeEventListener('change', handler);
+          (window as unknown as { __themeCleanup?: () => void }).__themeCleanup = () => mediaQuery.removeEventListener('change', handler);
         }
       },
 

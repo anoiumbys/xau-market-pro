@@ -17,7 +17,7 @@ interface MarketState {
   clearError: () => void;
 }
 
-export const useMarketStore = create<MarketState>((set, get) => ({
+export const useMarketStore = create<MarketState>((set) => ({
   currentMarket: null,
   markets: [],
   parameters: null,

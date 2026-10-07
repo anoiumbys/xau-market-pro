@@ -9,7 +9,6 @@ import { Input } from '@components/ui/Input';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from '@components/ui/Card';
 import { toast } from 'sonner';
 import { Eye, EyeOff, Loader2 } from 'lucide-react';
-import { cn } from '@utils/cn';
 
 const loginSchema = z.object({
   email: z.string().email('Invalid email address'),

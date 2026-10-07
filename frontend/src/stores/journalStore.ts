@@ -4,7 +4,6 @@ import type {
   TradeStats,
   TradeDirection,
   TradeStatus,
-  PaginatedResponse,
   TradeJournalCreateForm,
   TradeJournalUpdateForm,
 } from '@types';

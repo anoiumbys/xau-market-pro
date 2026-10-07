@@ -1,4 +1,4 @@
-import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@components/ui/Card';
+import { Card, CardContent } from '@components/ui/Card';
 import { Badge, AlertConditionBadge } from '@components/ui/Badge';
 import { Button } from '@components/ui/Button';
 import { Input } from '@components/ui/Input';
@@ -106,4 +106,3 @@ export function AdminAlertsPage() {
 }
 
 import { Select } from '@components/ui/Input';
-import { cn } from '@utils/cn';

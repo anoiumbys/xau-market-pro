@@ -2,7 +2,7 @@ import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@comp
 import { Button } from '@components/ui/Button';
 import { Input } from '@components/ui/Input';
 import { Badge } from '@components/ui/Badge';
-import { Shield, Globe, Bell, Database, Key, Palette } from 'lucide-react';
+import { Shield, Globe, Database, Key } from 'lucide-react';
 import { useState } from 'react';
 
 export function AdminSettingsPage() {

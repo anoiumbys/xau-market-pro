@@ -33,7 +33,7 @@ export function Layout() {
   const user = useAuthStore(selectUser);
   const sidebarOpen = useUIStore(selectSidebarOpen);
   const mobileMenuOpen = useUIStore(selectMobileMenuOpen);
-  const { setSidebarOpen, setMobileMenuOpen, toggleSidebar } = useUIStore();
+  const { setMobileMenuOpen, toggleSidebar } = useUIStore();
 
   const isMobile = typeof window !== 'undefined' && window.innerWidth < 1024;
 

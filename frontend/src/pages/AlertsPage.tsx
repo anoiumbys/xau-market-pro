@@ -1,7 +1,6 @@
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@components/ui/Card';
 import { Button } from '@components/ui/Button';
-import { Plus, Bell, Search } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Plus, Search } from 'lucide-react';
 
 export function AlertsPage() {
   return (

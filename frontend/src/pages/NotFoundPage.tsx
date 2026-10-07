@@ -2,7 +2,6 @@ import { Link } from 'react-router-dom';
 import { Button } from '@components/ui/Button';
 import { Card, CardContent } from '@components/ui/Card';
 import { Home, Search, ArrowLeft } from 'lucide-react';
-import { cn } from '@utils/cn';
 
 export function NotFoundPage() {
   return (

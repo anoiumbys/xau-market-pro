@@ -1,8 +1,8 @@
-import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@components/ui/Card';
+import { Card, CardContent } from '@components/ui/Card';
 import { Button } from '@components/ui/Button';
 import { Input } from '@components/ui/Input';
 import { Badge } from '@components/ui/Badge';
-import { Plus, Search, Edit, Trash2, ToggleRight } from 'lucide-react';
+import { Plus, Search, Edit, Trash2 } from 'lucide-react';
 import { useState } from 'react';
 import type { Market } from '@types';
 

@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { alertApi } from '@api';
-import type { PriceAlert, AlertCondition, PaginatedResponse, PriceAlertCreateForm } from '@types';
+import type { PriceAlert, PriceAlertCreateForm } from '@types';
 
 interface AlertState {
   alerts: PriceAlert[];

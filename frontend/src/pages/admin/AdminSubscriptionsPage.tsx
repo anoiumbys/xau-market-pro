@@ -1,10 +1,10 @@
-import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@components/ui/Card';
+import { Card, CardContent } from '@components/ui/Card';
 import { Button } from '@components/ui/Button';
-import { Badge, PlanBadge, SubscriptionStatusBadge } from '@components/ui/Badge';
+import { PlanBadge, SubscriptionStatusBadge } from '@components/ui/Badge';
 import { Input } from '@components/ui/Input';
 import { Search, Check, X, Clock } from 'lucide-react';
 import { useState } from 'react';
-import type { Subscription, PlanType } from '@types';
+import type { Subscription } from '@types';
 
 const MOCK_SUBSCRIPTIONS: (Subscription & { user_name: string; user_email: string })[] = [
   { id: '1', user_id: '1', user_name: 'John Trader', user_email: 'john@example.com', plan_type: 'pro', status: 'active', payment_ref: 'SIM-ABC123', starts_at: '2024-01-15', expires_at: '2024-02-15', created_at: '2024-01-15', updated_at: '2024-01-15', is_active: true, days_remaining: 30, limits: { alerts: -1, exports: -1 } },
@@ -141,4 +141,3 @@ export function AdminSubscriptionsPage() {
 }
 
 import { Select } from '@components/ui/Input';
-import { cn } from '@utils/cn';

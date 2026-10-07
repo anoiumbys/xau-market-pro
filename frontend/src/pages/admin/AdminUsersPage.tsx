@@ -1,8 +1,8 @@
-import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@components/ui/Card';
+import { Card, CardContent } from '@components/ui/Card';
 import { Button } from '@components/ui/Button';
 import { Input } from '@components/ui/Input';
-import { Badge, UserRoleBadge, SubscriptionStatusBadge } from '@components/ui/Badge';
-import { Plus, Search, MoreVertical, Edit, Trash2, Shield } from 'lucide-react';
+import { Badge, UserRoleBadge } from '@components/ui/Badge';
+import { Plus, Search, Edit, Trash2, Shield } from 'lucide-react';
 import { useState } from 'react';
 import type { User } from '@types';
 
@@ -129,4 +129,3 @@ export function AdminUsersPage() {
 }
 
 import { Select } from '@components/ui/Input';
-import { cn } from '@utils/cn';

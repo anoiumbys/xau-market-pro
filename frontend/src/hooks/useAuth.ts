@@ -1,4 +1,4 @@
-import useAuthStore, { type AuthStore } from '@stores/authStore';
+import useAuthStore from '@stores/authStore';
 
 export function useAuth() {
   return useAuthStore((state) => ({

@@ -1,7 +1,6 @@
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@components/ui/Card';
 import { Button } from '@components/ui/Button';
 import { Users, CreditCard, DollarSign, TrendingUp, Download, BarChart3 } from 'lucide-react';
-import { formatPrice } from '@utils/cn';
 
 const OVERVIEW_STATS = [
   { label: 'Total Users', value: '1,234', icon: Users, color: 'text-blue-400', bg: 'bg-blue-500/20' },

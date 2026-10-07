@@ -4,7 +4,7 @@ import { useJournalStore, selectStats } from '@stores/journalStore';
 import { useAlertStore, selectPendingAlerts } from '@stores/alertStore';
 import { useSubscriptionStore, selectHasActiveSubscription } from '@stores/subscriptionStore';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@components/ui/Card';
-import { Badge, PlanBadge, DirectionBadge, StatusBadge } from '@components/ui/Badge';
+import { Badge, PlanBadge } from '@components/ui/Badge';
 import { Button } from '@components/ui/Button';
 import { Link } from 'react-router-dom';
 import { formatPrice, formatPnL, formatDate, getPnLColor, getPnLBg } from '@utils/cn';
@@ -21,38 +21,6 @@ import {
   ChevronRight,
 } from 'lucide-react';
 import { cn } from '@utils/cn';
-
-const STAT_CARDS = [
-  {
-    title: 'XAUUSD Spot',
-    value: '--',
-    change: null,
-    icon: Activity,
-    color: 'text-gold-400',
-    bg: 'bg-gold-500/20',
-  },
-  {
-    title: 'Open Trades',
-    value: '0',
-    icon: BookOpen,
-    color: 'text-blue-400',
-    bg: 'bg-blue-500/20',
-  },
-  {
-    title: 'Active Alerts',
-    value: '0',
-    icon: Bell,
-    color: 'text-purple-400',
-    bg: 'bg-purple-500/20',
-  },
-  {
-    title: 'Total PnL',
-    value: '$0.00',
-    icon: DollarSign,
-    color: 'text-green-400',
-    bg: 'bg-green-500/20',
-  },
-] as const;
 
 export function DashboardPage() {
   const currentMarket = useMarketStore(selectCurrentMarket);

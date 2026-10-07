@@ -1,6 +1,6 @@
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@components/ui/Card';
 import { Button } from '@components/ui/Button';
-import { BookOpen, Plus, Search } from 'lucide-react';
+import { Plus, Search } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 export function JournalPage() {
