@@ -3,6 +3,8 @@
 use App\Jobs\CheckPriceAlerts;
 use Illuminate\Support\Facades\Schedule;
 
+Schedule::command('journals:check-sl-tp')->everyMinute()->withoutOverlapping();
+
 return function (Schedule $schedule) {
     // Check price alerts every minute
     $schedule->job(new CheckPriceAlerts)->everyMinute();
