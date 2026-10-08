@@ -267,6 +267,40 @@
       slideUp 0.3s ease-out;
   }
 
+  /* Page enter transition (keyed on route) */
+  .page-enter {
+    animation: pageIn 0.35s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  @keyframes pageIn {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Ambient app background: gold + indigo aurora over base */
+  .app-ambient {
+    position: relative;
+    isolation: isolate;
+  }
+
+  .app-ambient::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background:
+      radial-gradient(42rem 26rem at 12% -8%, rgba(245, 158, 11, 0.09), transparent 60%),
+      radial-gradient(46rem 30rem at 88% -12%, rgba(99, 102, 241, 0.13), transparent 62%),
+      radial-gradient(36rem 28rem at 50% 115%, rgba(99, 102, 241, 0.07), transparent 60%);
+  }
+
   .glass {
     @apply border border-dark-700/50 bg-dark-900/80 backdrop-blur-xl;
   }
@@ -281,5 +315,17 @@
 
   .gradient-border {
     @apply relative before:absolute before:inset-0 before:-z-10 before:rounded-xl before:bg-gradient-to-r before:from-primary-500 before:via-gold-500 before:to-primary-500 before:p-[1px];
+  }
+
+  /* Respect users who prefer less motion (a11y) */
+  @media (prefers-reduced-motion: reduce) {
+    .page-enter,
+    .animate-in {
+      animation: none;
+    }
+
+    * {
+      transition-duration: 0.01ms !important;
+    }
   }
 }

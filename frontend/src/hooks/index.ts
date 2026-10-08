@@ -4,3 +4,4 @@ export * from './useJournal';
 export * from './useAlerts';
 export * from './useSubscription';
 export * from './useUI';
+export * from './useIsMobile';
