@@ -50,7 +50,9 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/subscription', [SubscriptionController::class, 'store']);
     Route::get('/subscription', [SubscriptionController::class, 'show']);
 
-    // Trade Journal
+    // Trade Journal (specific routes must come before apiResource)
+    Route::get('/journal/stats/summary', [TradeJournalController::class, 'stats']);
+    Route::post('/journal/{id}/close', [TradeJournalController::class, 'close']);
     Route::apiResource('journal', TradeJournalController::class);
 
     // Reports

@@ -52,11 +52,16 @@ class MarketController extends Controller
         // Get market parameters for S/R levels
         $parameters = $market->parameters()->active()->first();
 
+        // NOTE: MarketDataService::updatePrice() caches the price under
+        // 'spot_price', while fetchFromExternal() returns it as 'price'.
+        // Accept both so spot is never silently 0.
+        $price = $marketData['spot_price'] ?? $marketData['price'] ?? 0;
+
         $response = (object) [
             'symbol' => $market->symbol,
-            'spot_price' => $marketData['price'] ?? 0,
-            'daily_high' => $marketData['daily_high'] ?? 0,
-            'daily_low' => $marketData['daily_low'] ?? 0,
+            'spot_price' => $price,
+            'daily_high' => $marketData['daily_high'] ?? $price,
+            'daily_low' => $marketData['daily_low'] ?? $price,
             'change_24h' => $marketData['change_24h'] ?? 0,
             'change_pct_24h' => $marketData['change_pct_24h'] ?? 0,
             'market_status' => $this->indicators->getMarketStatus(),
