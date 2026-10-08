@@ -20,7 +20,7 @@ class CheckJournalSlTp extends Command
 
         TradeJournal::open()->each(function (TradeJournal $t) use ($market, &$prices, &$closed, &$skipped) {
             $symbol = strtoupper($t->symbol);
-            if (! array_key_exists($symbol, $prices)) {
+            if (!array_key_exists($symbol, $prices)) {
                 $prices[$symbol] = $market->getCurrentPrice($symbol);
             }
             $price = $prices[$symbol];
