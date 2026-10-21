@@ -46,3 +46,10 @@ docker/data/
 *.pem
 *.key
 *.crt
+# Temp / log files
+ci-log.txt
+backend/ci-log.txt
+frontend/lint-out*.txt
+frontend/lint.json
+frontend/tsc-*.txt
+frontend/fix-unused.cjs

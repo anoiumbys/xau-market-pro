@@ -1,4 +1,5 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { RefreshCw } from 'lucide-react';
 
 interface TradingViewChartProps {
   symbol?: string;
@@ -7,9 +8,13 @@ interface TradingViewChartProps {
   height?: number | string;
   width?: number | string;
   autosize?: boolean;
-  containerId?: string;
 }
 
+/**
+ * TradingView Advanced Chart embed.
+ * Mirrors the official embed snippet exactly:
+ * container > widget div + script sibling (config as script JSON, no container_id).
+ */
 export function TradingViewChart({
   symbol = 'OANDA:XAUUSD',
   interval = 'D',
@@ -17,22 +22,24 @@ export function TradingViewChart({
   height = 500,
   width = '100%',
   autosize = true,
-  containerId = 'tradingview-chart',
 }: TradingViewChartProps) {
   const containerRef = useRef<HTMLDivElement>(null);
-  const scriptRef = useRef<HTMLScriptElement | null>(null);
-  const initializedRef = useRef(false);
+  const [failed, setFailed] = useState(false);
+  const [retryKey, setRetryKey] = useState(0);
 
   useEffect(() => {
     const container = containerRef.current;
-    if (!container || initializedRef.current) return;
+    if (!container) return;
 
-    initializedRef.current = true;
+    setFailed(false);
+    // Clear any previous embed (StrictMode remount / retry).
+    container.querySelectorAll('script[data-tv-widget]').forEach((s) => s.remove());
 
     const script = document.createElement('script');
     script.src = 'https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js';
     script.async = true;
     script.type = 'text/javascript';
+    script.dataset.tvWidget = 'advanced-chart';
 
     const widgetConfig = {
       autosize,
@@ -45,7 +52,6 @@ export function TradingViewChart({
       toolbar_bg: theme === 'dark' ? '#1a1a2e' : '#ffffff',
       enable_publishing: false,
       allow_symbol_change: true,
-      container_id: containerId,
       studies: ['MAExp@tv-basicstudies', 'RSI@tv-basicstudies'],
       overrides: {
         'mainSeriesProperties.candleStyle.upColor': '#22c55e',
@@ -61,29 +67,40 @@ export function TradingViewChart({
     };
 
     script.innerHTML = JSON.stringify(widgetConfig);
-    scriptRef.current = script;
-
+    script.onerror = () => setFailed(true);
     container.appendChild(script);
 
     return () => {
-      if (scriptRef.current && scriptRef.current.parentNode) {
-        scriptRef.current.parentNode.removeChild(scriptRef.current);
+      script.onerror = null;
+      if (script.parentNode === container) {
+        container.removeChild(script);
       }
-      scriptRef.current = null;
-      initializedRef.current = false;
     };
-  }, [symbol, interval, theme, height, width, autosize, containerId]);
+  }, [symbol, interval, theme, autosize, retryKey]);
 
   return (
     <div
+      key={`${symbol}-${theme}-${retryKey}`}
       ref={containerRef}
-      key={`${symbol}-${theme}`}
-      style={{
-        height,
-        width,
-        minHeight: 500,
-      }}
-      className="w-full"
-    />
+      className="tradingview-widget-container w-full overflow-hidden rounded-xl"
+      style={{ height, width, minHeight: 500 }}
+    >
+      <div className="tradingview-widget-container__widget h-full w-full" />
+      {failed && (
+        <div className="flex h-full flex-col items-center justify-center gap-3 p-8 text-center">
+          <p className="text-sm text-light-600 dark:text-dark-300">
+            Chart TradingView gagal dimuat (CDN diblokir adblock/Jaringan).
+          </p>
+          <button
+            type="button"
+            onClick={() => setRetryKey((k) => k + 1)}
+            className="btn-secondary btn-sm"
+          >
+            <RefreshCw className="h-4 w-4" aria-hidden="true" />
+            Coba lagi
+          </button>
+        </div>
+      )}
+    </div>
   );
 }

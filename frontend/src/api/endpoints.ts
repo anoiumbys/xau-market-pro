@@ -40,10 +40,20 @@ export const authApi = {
     api.put<{ user: User; message: string }>('/user/profile', data),
 };
 
+// Laravel JsonResource wraps single resources in {"data": ...}.
+// Unwrap here so consumers always get the inner object.
+function unwrap<T>(res: T | { data: T }): T {
+  if (res != null && typeof res === 'object' && 'data' in res) {
+    return (res as { data: T }).data;
+  }
+  return res as T;
+}
+
 // Market endpoints
 export const marketApi = {
-  getMarket: (symbol: string) => api.get<MarketData>(`/market/${symbol}`),
-  getParameters: (symbol: string) => api.get<MarketParameter>(`/market-parameters/${symbol}`),
+  getMarket: async (symbol: string) => unwrap(await api.get<MarketData | { data: MarketData }>(`/market/${symbol}`)),
+  getParameters: async (symbol: string) =>
+    unwrap(await api.get<MarketParameter | { data: MarketParameter }>(`/market-parameters/${symbol}`)),
 };
 
 // Subscription endpoints

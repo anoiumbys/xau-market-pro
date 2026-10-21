@@ -57,7 +57,7 @@ export function DashboardPage() {
               Subscription
             </Button>
           </Link>
-          <Link to="/journal">
+          <Link to="/journal/new">
             <Button size="sm">
               <Target className="h-4 w-4" />
               New Trade
@@ -112,8 +112,8 @@ export function DashboardPage() {
             <div>
               <p className="text-sm font-medium text-light-600 dark:text-dark-400">Market Status</p>
               <div className="mt-1 flex items-center gap-2">
-                <Badge variant={market?.market_status === 'open' ? 'success' : 'neutral'} dot>
-                  {market?.market_status === 'open' ? 'Open' : 'Closed'}
+                <Badge variant={market?.market_status?.toUpperCase() === 'OPEN' ? 'success' : 'neutral'} dot>
+                  {market?.market_status?.toUpperCase() === 'OPEN' ? 'Open' : 'Closed'}
                 </Badge>
                 <span className="text-sm text-light-600 dark:text-dark-400">
                   Last updated: {market?.timestamp ? formatDate(market.timestamp, 'datetime') : '-'}
