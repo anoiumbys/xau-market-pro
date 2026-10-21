@@ -26,6 +26,7 @@ class CheckJournalSlTp extends Command
             $price = $prices[$symbol];
             if ($price === null) {
                 $skipped++;
+
                 return;
             }
 
