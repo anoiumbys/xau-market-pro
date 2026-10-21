@@ -53,3 +53,10 @@ frontend/lint-out*.txt
 frontend/lint.json
 frontend/tsc-*.txt
 frontend/fix-unused.cjs
+
+# Backend test/debug files (should not be committed)
+backend/test_*.php
+backend/check_*.php
+backend/debug_*.php
+backend/composer-setup.php
+backend/composer.phar
