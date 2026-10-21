@@ -39,20 +39,17 @@ COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 # Set working directory
 WORKDIR /var/www
 
-# Copy composer files first for caching
-COPY backend/composer.json ./
+# Copy composer files first for better layer caching
+COPY backend/composer.json backend/composer.lock ./
 
 # Copy application code
 COPY backend/ .
 
-# Remove host vendor (contains dev packages like collision)
+# Remove host vendor directory
 RUN rm -rf vendor
 
-# Remove host composer.lock (contains dev packages like collision)
-RUN rm -f composer.lock
-
-# Install PHP dependencies (fresh install without dev packages)
-RUN composer install --no-dev --optimize-autoloader --no-scripts --no-interaction --no-cache
+# Install PHP dependencies (without dev packages)
+RUN composer install --no-dev --optimize-autoloader --no-scripts --no-interaction
 
 # Create storage directories and set permissions
 RUN mkdir -p \

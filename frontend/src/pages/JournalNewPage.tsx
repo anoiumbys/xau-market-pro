@@ -230,9 +230,7 @@ export function JournalNewPage() {
               <span
                 className={cn(
                   'inline-flex items-center gap-1.5 rounded-full px-3 py-1',
-                  entryAuto
-                    ? 'bg-green-500/10 text-green-400'
-                    : 'bg-dark-700 text-dark-300'
+                  entryAuto ? 'bg-green-500/10 text-green-400' : 'bg-dark-700 text-dark-300'
                 )}
               >
                 <span
@@ -296,7 +294,9 @@ export function JournalNewPage() {
                   {...register('entry_price')}
                   error={errors.entry_price?.message}
                   helperText={
-                    entryAuto ? 'Mengikuti harga live (ketik untuk kunci manual)' : 'Manual (klik di bawah untuk ikut live lagi)'
+                    entryAuto
+                      ? 'Mengikuti harga live (ketik untuk kunci manual)'
+                      : 'Manual (klik di bawah untuk ikut live lagi)'
                   }
                 />
                 {!entryAuto && (

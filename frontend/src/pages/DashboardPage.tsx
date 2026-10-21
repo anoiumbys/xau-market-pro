@@ -112,7 +112,10 @@ export function DashboardPage() {
             <div>
               <p className="text-sm font-medium text-light-600 dark:text-dark-400">Market Status</p>
               <div className="mt-1 flex items-center gap-2">
-                <Badge variant={market?.market_status?.toUpperCase() === 'OPEN' ? 'success' : 'neutral'} dot>
+                <Badge
+                  variant={market?.market_status?.toUpperCase() === 'OPEN' ? 'success' : 'neutral'}
+                  dot
+                >
                   {market?.market_status?.toUpperCase() === 'OPEN' ? 'Open' : 'Closed'}
                 </Badge>
                 <span className="text-sm text-light-600 dark:text-dark-400">

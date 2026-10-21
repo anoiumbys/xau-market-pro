@@ -153,7 +153,9 @@ export function AdminLayout() {
           </Link>
           <div className="flex items-center gap-3 rounded-xl bg-light-200/60 px-3 py-2.5 dark:bg-white/[0.04]">
             <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-gold-400 to-yellow-600 font-bold text-dark-950">
-              {user?.name?.charAt(0).toUpperCase() ?? <User className="h-4 w-4" aria-hidden="true" />}
+              {user?.name?.charAt(0).toUpperCase() ?? (
+                <User className="h-4 w-4" aria-hidden="true" />
+              )}
             </span>
             <span className="min-w-0 flex-1 leading-tight">
               <span className="block truncate text-sm font-semibold text-light-900 dark:text-white">

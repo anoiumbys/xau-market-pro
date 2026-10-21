@@ -111,7 +111,9 @@ export function JournalPage() {
           <div>
             <CardTitle>Your Trades</CardTitle>
             <CardDescription>
-              {pagination ? `${pagination.total} trade journal entries` : 'All your trade journal entries'}
+              {pagination
+                ? `${pagination.total} trade journal entries`
+                : 'All your trade journal entries'}
             </CardDescription>
           </div>
           <div className="flex items-center gap-2">
@@ -173,7 +175,7 @@ export function JournalPage() {
                           <DirectionBadge direction={t.direction} />
                         </td>
                         <td className="tabular-nums">{formatPrice(Number(t.entry_price))}</td>
-                        <td className="tabular-nums text-xs">
+                        <td className="text-xs tabular-nums">
                           {t.stop_loss != null ? formatPrice(Number(t.stop_loss)) : '-'} /{' '}
                           {t.take_profit != null ? formatPrice(Number(t.take_profit)) : '-'}
                         </td>
@@ -181,7 +183,7 @@ export function JournalPage() {
                         <td className="tabular-nums">
                           {t.exit_price != null ? formatPrice(Number(t.exit_price)) : '-'}
                         </td>
-                        <td className={cn('tabular-nums font-semibold', getPnLColor(t.pnl))}>
+                        <td className={cn('font-semibold tabular-nums', getPnLColor(t.pnl))}>
                           {formatPnL(t.pnl)}
                         </td>
                         <td>

@@ -51,9 +51,12 @@ function unwrap<T>(res: T | { data: T }): T {
 
 // Market endpoints
 export const marketApi = {
-  getMarket: async (symbol: string) => unwrap(await api.get<MarketData | { data: MarketData }>(`/market/${symbol}`)),
+  getMarket: async (symbol: string) =>
+    unwrap(await api.get<MarketData | { data: MarketData }>(`/market/${symbol}`)),
   getParameters: async (symbol: string) =>
-    unwrap(await api.get<MarketParameter | { data: MarketParameter }>(`/market-parameters/${symbol}`)),
+    unwrap(
+      await api.get<MarketParameter | { data: MarketParameter }>(`/market-parameters/${symbol}`)
+    ),
 };
 
 // Subscription endpoints
