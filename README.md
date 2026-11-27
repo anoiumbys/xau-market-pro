@@ -8,6 +8,14 @@ Aplikasi web untuk memantau pasar emas (XAU/USD): dashboard, chart TradingView, 
 > **UTS Pemrograman Website** (individu)
 > Nama: Firgiawan Zhaliam · NIM: 60225081 · Kelas: ADPL A
 
+## Demo publik
+
+Aplikasi sudah dideploy dan dapat diakses dosen di:
+
+**https://backend-autumn-grove-6913.fly.dev/**
+
+> Data pasar pada aplikasi ini masih berupa simulasi. Jangan memasukkan informasi pribadi atau data sensitif.
+
 ## Daftar isi
 
 - [Fitur](#fitur)
@@ -42,12 +50,12 @@ Daftar lengkap endpoint ada di [`backend/routes/api.php`](backend/routes/api.php
 
 Bagian ini sengaja ditulis jujur agar sesuai dengan kode yang ada.
 
-- **Harga pasar adalah data simulasi.** `MarketDataService::fetchFromExternal()` membangkitkan harga acak di sekitar nilai dasar, belum terhubung ke penyedia data pasar sungguhan. Price alert dan dashboard memakai harga simulasi ini. Widget TradingView di halaman Chart menampilkan data TradingView sendiri dan tidak terhubung ke harga backend.
-- **WebSocket real-time belum aktif.** Class event broadcast dan konfigurasinya sudah disiapkan, tetapi paket server WebSocket belum terpasang dan frontend belum punya client WebSocket. Frontend mengambil data lewat REST API.
-- **Batas paket belum dipaksakan.** Batas Basic (3 alert, tanpa ekspor) sudah didefinisikan dan ditampilkan di data langganan, tetapi belum divalidasi saat alert dibuat. Yang sudah dijaga middleware hanya laporan lanjutan (Pro/Enterprise).
+- **Harga pasar adalah data simulasi.** `MarketDataService::fetchFromExternal()` membangkitkan harga acak di sekitar nilai dasar, belum terhubung ke penyedia data pasar sungguhan. Price alert dan jurnal menggunakan data simulasi tersebut.
+- **WebSocket real-time belum aktif.** Class event broadcast dan konfigurasinya sudah disiapkan, tetapi paket server WebSocket belum terpasang dan frontend belum punya client WebSocket. Frontend memperbarui data melalui interval HTTP.
+- **Batas paket belum dipaksakan.** Batas Basic (3 alert, tanpa ekspor) sudah didefinisikan dan ditampilkan di data langganan, tetapi belum divalidasi saat alert dibuat. Yang sudah dijaga middleware adalah jenis laporan lanjutan.
 - **Dokumentasi OpenAPI/Swagger belum tersedia.** Gunakan `backend/routes/api.php` sebagai acuan endpoint.
 - **Tes backend masih minim** (baru tes contoh bawaan Laravel). Frontend punya 34 tes unit.
-- **Belum ada deployment publik.** Workflow `deploy.yml` adalah template deploy via SSH yang dijalankan manual dan butuh secrets server.
+- **Aplikasi sudah dideploy secara publik.** Deployment saat ini menggunakan Fly.io dan SQLite pada volume persisten.
 
 ## Tech stack
 
@@ -55,7 +63,7 @@ Bagian ini sengaja ditulis jujur agar sesuai dengan kode yang ada.
 
 **Frontend**: React 18, TypeScript, Vite 5, React Router 6, Zustand, Tailwind CSS, Axios, vite-plugin-pwa, Vitest + Testing Library, ESLint + Prettier
 
-**DevOps**: Docker Compose, GitHub Actions, Turborepo (npm workspaces)
+**DevOps**: Docker Compose, GitHub Actions, Fly.io, Turborepo (npm workspaces)
 
 ## Struktur proyek
 
@@ -178,7 +186,7 @@ cd backend
 php artisan test
 ```
 
-Tes frontend mencakup fungsi format dan helper warna, komponen `Button` dan `Badge`, store UI (sidebar, toast, tema), hook terjemahan, serta pemeriksaan bahwa ketiga file bahasa memiliki kunci yang identik.
+Tes frontend mencakup fungsi format dan helper warna, komponen `Button` dan `Badge`, store UI (sidebar, toast, tema), hook terjemahan, serta pemeriksaan bahwa ketiga file bahasa memiliki kunci yang lengkap.
 
 Kualitas kode otomatis dicek oleh CI: Laravel Pint (backend), ESLint, `tsc` dan Prettier (frontend).
 
@@ -191,7 +199,7 @@ Kualitas kode otomatis dicek oleh CI: Laravel Pint (backend), ESLint, `tsc` dan 
 <!--
 ## Tampilan aplikasi
 
-Hapus tanda komentar bagian ini setelah file gambar ditambahkan ke docs/screenshots/.
+Hapus tanda komentar bagian ini setelah file gambar ditambahkan ke docs/screenshots/
 
 | Dashboard | Chart |
 | --- | --- |
