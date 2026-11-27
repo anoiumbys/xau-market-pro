@@ -133,8 +133,14 @@ export function LoginPage() {
               </div>
             </div>
 
+            <Link to="/demo" className="block">
+              <Button type="button" variant="secondary" className="w-full" size="lg">
+                Coba demo gratis tanpa login
+              </Button>
+            </Link>
+
             {/* Demo credentials */}
-            <div className="space-y-1 rounded-lg border border-dark-700 bg-dark-800/50 p-3 text-xs text-dark-500">
+            <div className="mt-4 space-y-1 rounded-lg border border-dark-700 bg-dark-800/50 p-3 text-xs text-dark-500">
               <p className="font-medium text-dark-400">Demo credentials:</p>
               <p>
                 <span className="font-mono text-dark-300">admin@xaupro.test</span> / password123
