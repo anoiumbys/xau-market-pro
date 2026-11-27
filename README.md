@@ -10,7 +10,7 @@ Aplikasi web untuk memantau pasar emas (XAU/USD): dashboard, chart TradingView, 
 
 ## Demo publik
 
-Aplikasi sudah dideploy dan dapat diakses dosen di:
+klik link dibawah untuk mengakses website :
 
 **https://backend-autumn-grove-6913.fly.dev/**
 
