@@ -104,7 +104,7 @@ export function DemoPage() {
       setMessage(
         qty > account.ounces
           ? 'Jumlah emas virtual tidak mencukupi untuk dijual.'
-          : 'Masukkan kuantitas yang valid.',
+          : 'Masukkan kuantitas yang valid.'
       );
       return;
     }
@@ -133,7 +133,7 @@ export function DemoPage() {
       trades: [newTrade, ...current.trades].slice(0, 50),
     }));
     setMessage(
-      `${side === 'BUY' ? 'Pembelian' : 'Penjualan'} demo ${qty.toFixed(2)} oz berhasil dicatat.`,
+      `${side === 'BUY' ? 'Pembelian' : 'Penjualan'} demo ${qty.toFixed(2)} oz berhasil dicatat.`
     );
   };
 
@@ -206,9 +206,7 @@ export function DemoPage() {
           <Card>
             <CardContent className="pt-6">
               <p className="text-sm text-dark-400">Emas dimiliki</p>
-              <p className="mt-2 text-2xl font-bold tabular-nums">
-                {account.ounces.toFixed(2)} oz
-              </p>
+              <p className="mt-2 text-2xl font-bold tabular-nums">{account.ounces.toFixed(2)} oz</p>
             </CardContent>
           </Card>
           <Card>
@@ -232,24 +230,21 @@ export function DemoPage() {
               <CardTitle className="flex items-center gap-2">
                 <TrendingUp className="h-5 w-5 text-primary-400" /> XAUUSD sandbox
               </CardTitle>
-              <CardDescription>Harga ilustratif yang bergerak setiap beberapa detik</CardDescription>
+              <CardDescription>
+                Harga ilustratif yang bergerak setiap beberapa detik
+              </CardDescription>
             </CardHeader>
             <CardContent>
               <p className="text-sm text-dark-400">Harga simulasi per troy ounce</p>
               <p className="mt-1 text-4xl font-bold tabular-nums">{money(price)}</p>
               <p
-                className={`mt-2 text-sm ${
-                  unrealizedPnl >= 0 ? 'text-green-400' : 'text-red-400'
-                }`}
+                className={`mt-2 text-sm ${unrealizedPnl >= 0 ? 'text-green-400' : 'text-red-400'}`}
               >
                 P/L belum terealisasi: {unrealizedPnl >= 0 ? '+' : ''}
                 {money(unrealizedPnl)}
               </p>
               <div className="mt-6 space-y-4">
-                <label
-                  htmlFor="demo-quantity"
-                  className="block text-sm font-medium text-dark-200"
-                >
+                <label htmlFor="demo-quantity" className="block text-sm font-medium text-dark-200">
                   Kuantitas (troy oz)
                 </label>
                 <input
@@ -313,8 +308,8 @@ export function DemoPage() {
                 </span>
               </div>
               <p className="rounded-lg bg-dark-800 p-3 text-xs leading-5 text-dark-400">
-                Satu troy ounce XAUUSD dikalikan harga simulasi. Tidak ada order yang dikirim ke bursa
-                atau sistem pembayaran.
+                Satu troy ounce XAUUSD dikalikan harga simulasi. Tidak ada order yang dikirim ke
+                bursa atau sistem pembayaran.
               </p>
             </CardContent>
           </Card>
@@ -355,9 +350,7 @@ export function DemoPage() {
                         >
                           {item.side}
                         </td>
-                        <td className="py-3 pr-4 tabular-nums">
-                          {item.quantity.toFixed(2)} oz
-                        </td>
+                        <td className="py-3 pr-4 tabular-nums">{item.quantity.toFixed(2)} oz</td>
                         <td className="py-3 pr-4 tabular-nums">{money(item.price)}</td>
                         <td
                           className={`py-3 tabular-nums ${
