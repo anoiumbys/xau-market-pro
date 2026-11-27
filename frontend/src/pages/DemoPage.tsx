@@ -118,7 +118,7 @@ export function DemoPage() {
   };
 
   return (
-    <main className="min-h-screen bg-dark-950 px-4 py-8 text-white sm:px-6 lg:px-8">
+    <main className="dark min-h-screen bg-dark-950 px-4 py-8 text-white sm:px-6 lg:px-8">
       <div className="mx-auto max-w-6xl space-y-6">
         <header className="flex flex-wrap items-center justify-between gap-4">
           <Link to="/login" className="inline-flex items-center gap-2 text-sm text-dark-300 hover:text-white">
