@@ -13,7 +13,7 @@ concurrency:
 jobs:
   # ===== Backend Lint & Type Check =====
   backend-lint:
-    name: Backend - Lint & Type Check
+    name: Backend - Code Style (Pint)
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -50,12 +50,6 @@ jobs:
 
       - name: Run Laravel Pint (Code Style)
         run: ./vendor/bin/pint --test
-
-      - name: Run PHPStan (Static Analysis)
-        run: ./vendor/bin/phpstan analyse --memory-limit=256M || true
-
-      - name: Run Psalm (Static Analysis)
-        run: ./vendor/bin/psalm --no-cache || true
 
   # ===== Backend Tests =====
   backend-tests:

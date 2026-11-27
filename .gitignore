@@ -60,3 +60,7 @@ backend/check_*.php
 backend/debug_*.php
 backend/composer-setup.php
 backend/composer.phar
+
+backend/database/database.sqlite
+PROGRESS.md
+RESUME_COMMANDS.txt

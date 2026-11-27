@@ -1,344 +1,207 @@
-# XAU Market Pro 🥇
-
-> Professional Gold (XAU/USD) Market Analysis Platform with Real-time Data, Price Alerts, and Trade Journaling
+# XAU Market Pro
 
 [![CI Pipeline](https://github.com/anoiumbys/xau-market-pro/actions/workflows/ci.yml/badge.svg)](https://github.com/anoiumbys/xau-market-pro/actions/workflows/ci.yml)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-## 📖 About
+Aplikasi web untuk memantau pasar emas (XAU/USD): dashboard, chart TradingView, jurnal trading, price alert, langganan berjenjang, laporan, dan panel admin. Backend **Laravel 11** (REST API), frontend **React 18 + TypeScript**.
 
-XAU Market Pro is a comprehensive platform for gold market traders and analysts, providing real-time market data visualization, customizable price alerts, trade journaling, and detailed reporting capabilities. Built with a modern tech stack for performance and scalability.
+> **UTS Pemrograman Website** (individu)
+> Nama: Firgiawan Zhaliam · NIM: 60225081 · Kelas: ADPL A
 
-## ✨ Features
+## Daftar isi
 
-### Core Features
-- 📊 **Real-time Market Data** - Live gold price tracking with WebSocket integration
-- 📈 **Advanced Charting** - TradingView integration for professional technical analysis
-- 🔔 **Price Alerts** - Customizable notifications for price movements
-- 📝 **Trade Journal** - Track and analyze your trading performance
-- 📊 **Reports & Analytics** - Comprehensive trading reports and insights
-- 💼 **Subscription Management** - Flexible tier-based access control
-- 🛡️ **Admin Panel** - Complete administrative dashboard
+- [Fitur](#fitur)
+- [Status dan keterbatasan](#status-dan-keterbatasan)
+- [Tech stack](#tech-stack)
+- [Struktur proyek](#struktur-proyek)
+- [Menjalankan aplikasi](#menjalankan-aplikasi)
+- [Akun demo](#akun-demo)
+- [Pengujian](#pengujian)
+- [CI/CD](#cicd)
+- [Lisensi](#lisensi)
 
-### Technical Features
-- ⚡ Real-time updates via WebSockets
-- 🔐 Secure authentication with Laravel Sanctum
-- 📱 Progressive Web App (PWA) support
-- 🐳 Docker containerization for easy deployment
-- 🔄 CI/CD pipeline with GitHub Actions
-- 📚 OpenAPI documentation
+## Fitur
 
-## 🏗️ Architecture
+| Area | Yang tersedia |
+| --- | --- |
+| Autentikasi | Register, login, logout, lupa dan reset password, ubah profil (Laravel Sanctum, token Bearer) |
+| Role | `guest`, `trader`, `admin` (Spatie Permission + middleware `AdminOnly`) |
+| Dashboard | Harga XAUUSD, perubahan 24 jam, statistik trading, ringkasan alert dan langganan |
+| Chart | Widget TradingView Advanced Chart |
+| Jurnal trading | CRUD trade, tutup posisi, ringkasan statistik (win rate, total PnL). Trade yang menyentuh Stop Loss / Take Profit ditutup otomatis oleh scheduler tiap menit |
+| Price alert | Buat, lihat, hapus alert (di atas / di bawah / menembus level harga). Dicek tiap menit oleh job terjadwal |
+| Langganan | Paket Basic, Pro, Enterprise. Pengguna mengajukan, admin menyetujui / menolak / membatalkan / memperpanjang |
+| Laporan | Ekspor jurnal ke CSV, laporan lanjutan (khusus Pro/Enterprise, dijaga middleware `CheckSubscription`) |
+| Panel admin | Kelola pengguna (ubah role, ban/unban, hapus), pasar, langganan, alert, jurnal, laporan (ringkasan, pengguna, langganan, pendapatan), pengaturan dan parameter pasar |
+| Audit | Tabel `audit_logs` dengan observer pada model |
+| Antarmuka | 3 bahasa (Inggris, Spanyol, Indonesia, masing-masing 243 teks), tema terang/gelap/sistem, sidebar responsif, PWA |
 
-This is a monorepo project using Turborepo, consisting of:
+Daftar lengkap endpoint ada di [`backend/routes/api.php`](backend/routes/api.php).
 
-- **Backend** - Laravel 11 API with WebSocket support
-- **Frontend** - React 18 + TypeScript + Vite
-- **Contracts** - Shared type definitions and OpenAPI specs
+## Status dan keterbatasan
 
-### Tech Stack
+Bagian ini sengaja ditulis jujur agar sesuai dengan kode yang ada.
 
-#### Backend
-- PHP 8.2+
-- Laravel 11
-- MySQL 8.0+
-- Redis (for caching & queues)
-- Laravel WebSockets (beyondcode/laravel-websockets)
-- Laravel Sanctum (authentication)
+- **Harga pasar adalah data simulasi.** `MarketDataService::fetchFromExternal()` membangkitkan harga acak di sekitar nilai dasar, belum terhubung ke penyedia data pasar sungguhan. Price alert dan dashboard memakai harga simulasi ini. Widget TradingView di halaman Chart menampilkan data TradingView sendiri dan tidak terhubung ke harga backend.
+- **WebSocket real-time belum aktif.** Class event broadcast dan konfigurasinya sudah disiapkan, tetapi paket server WebSocket belum terpasang dan frontend belum punya client WebSocket. Frontend mengambil data lewat REST API.
+- **Batas paket belum dipaksakan.** Batas Basic (3 alert, tanpa ekspor) sudah didefinisikan dan ditampilkan di data langganan, tetapi belum divalidasi saat alert dibuat. Yang sudah dijaga middleware hanya laporan lanjutan (Pro/Enterprise).
+- **Dokumentasi OpenAPI/Swagger belum tersedia.** Gunakan `backend/routes/api.php` sebagai acuan endpoint.
+- **Tes backend masih minim** (baru tes contoh bawaan Laravel). Frontend punya 34 tes unit.
+- **Belum ada deployment publik.** Workflow `deploy.yml` adalah template deploy via SSH yang dijalankan manual dan butuh secrets server.
 
-#### Frontend
-- React 18
-- TypeScript
-- Vite
-- Zustand (state management)
-- Tailwind CSS
-- TradingView Charting Library
-- Axios
+## Tech stack
 
-#### DevOps
-- Docker & Docker Compose
-- GitHub Actions (CI/CD)
-- Turborepo (monorepo management)
-- Nginx
+**Backend**: PHP 8.2+, Laravel 11, Laravel Sanctum, Spatie Laravel Permission, MySQL 8 (Docker) atau SQLite (lokal), Redis (Docker), Laravel Pint (code style)
 
-## 🚀 Getting Started
+**Frontend**: React 18, TypeScript, Vite 5, React Router 6, Zustand, Tailwind CSS, Axios, vite-plugin-pwa, Vitest + Testing Library, ESLint + Prettier
 
-### Prerequisites
+**DevOps**: Docker Compose, GitHub Actions, Turborepo (npm workspaces)
 
-- Docker & Docker Compose (recommended)
-- **OR** Node.js 20+ and PHP 8.2+ (for local development)
-- Git
-
-### Option A: Docker Setup (Recommended)
-
-1. **Clone the repository**
-```bash
-git clone https://github.com/anoiumbys/xau-market-pro.git
-cd xau-market-pro
-```
-
-2. **Start with Docker Compose**
-```bash
-# Build and start all services
-docker-compose up -d --build
-
-# Install backend dependencies
-docker-compose exec app composer install
-
-# Setup environment
-docker-compose exec app cp .env.example .env
-docker-compose exec app php artisan key:generate
-
-# Run migrations and seeders
-docker-compose exec app php artisan migrate --seed
-
-# Install frontend dependencies
-docker-compose exec frontend npm install
-```
-
-3. **Access the application**
-- Frontend: http://localhost:3000
-- API: http://localhost:8000/api
-- WebSockets: ws://localhost:6001
-- API Documentation: http://localhost:8000/api/documentation
-
-### Option B: Local Development Setup
-
-1. **Clone the repository**
-```bash
-git clone https://github.com/anoiumbys/xau-market-pro.git
-cd xau-market-pro
-```
-
-2. **Backend Setup**
-```bash
-cd backend
-
-# Install PHP dependencies
-composer install
-
-# Setup environment
-cp .env.example .env
-php artisan key:generate
-
-# Configure database in .env file
-# Then run migrations
-php artisan migrate --seed
-```
-
-3. **Frontend Setup**
-```bash
-cd ../frontend
-
-# Install Node dependencies
-npm install
-
-# Setup environment
-cp .env.example .env
-```
-
-4. **Start Development Servers**
-
-Open 3 terminal windows:
-
-```bash
-# Terminal 1 - Laravel API
-cd backend
-php artisan serve
-
-# Terminal 2 - WebSocket Server
-cd backend
-php artisan websockets:serve
-
-# Terminal 3 - Frontend Dev Server
-cd frontend
-npm run dev
-```
-
-5. **Access the application**
-- Frontend: http://localhost:5173
-- API: http://localhost:8000/api
-- WebSockets: ws://localhost:6001
-
-## 📦 Project Structure
+## Struktur proyek
 
 ```
 xau-market-pro/
-├── backend/              # Laravel API
-│   ├── app/
-│   │   ├── Http/
-│   │   │   ├── Controllers/
-│   │   │   ├── Middleware/
-│   │   │   ├── Requests/
-│   │   │   └── Resources/
-│   │   ├── Models/
-│   │   ├── Services/
-│   │   ├── Events/
-│   │   └── Jobs/
-│   ├── database/
-│   │   ├── migrations/
-│   │   ├── factories/
-│   │   └── seeders/
-│   └── routes/
-├── frontend/            # React SPA
-│   ├── src/
-│   │   ├── components/
-│   │   ├── pages/
-│   │   ├── stores/
-│   │   ├── hooks/
-│   │   ├── api/
-│   │   └── types/
-│   └── public/
-├── contracts/           # Shared types
-│   └── types/
-├── docker/             # Docker configs
-├── .github/            # GitHub Actions
-└── docs/              # Documentation
+├── backend/            # Laravel API
+│   ├── app/            # Models, Controllers, Services, Jobs, Events, Middleware
+│   ├── database/       # migrations, seeders, factories
+│   ├── routes/         # api.php, console.php (jadwal scheduler)
+│   └── tests/
+├── frontend/           # React SPA
+│   └── src/            # pages, components, hooks, stores, api, locales
+├── contracts/          # tipe TypeScript bersama
+├── docker/             # Dockerfile PHP, konfigurasi Nginx, entrypoint
+├── .github/workflows/  # ci.yml, deploy.yml, release.yml
+└── docker-compose.yml
 ```
 
-## 🔧 Configuration
+## Menjalankan aplikasi
 
-### Environment Variables
+### Opsi A: Docker
 
-#### Backend (.env)
-```env
-APP_NAME="XAU Market Pro"
-APP_ENV=local
-APP_URL=http://localhost:8000
+Prasyarat: Docker dan Docker Compose.
 
-DB_CONNECTION=mysql
-DB_HOST=mysql
-DB_PORT=3306
-DB_DATABASE=xau_market_pro
-DB_USERNAME=root
-DB_PASSWORD=secret
-
-REDIS_HOST=redis
-REDIS_PORT=6379
-
-BROADCAST_DRIVER=pusher
-PUSHER_APP_ID=local
-PUSHER_APP_KEY=local
-PUSHER_APP_SECRET=local
-```
-
-#### Frontend (.env)
-```env
-VITE_API_URL=http://localhost:8000
-VITE_WS_HOST=localhost
-VITE_WS_PORT=6001
-VITE_WS_SECURE=false
-```
-
-## 🧪 Testing
-
-### Backend Tests
 ```bash
+git clone https://github.com/anoiumbys/xau-market-pro.git
+cd xau-market-pro
+
+docker compose up -d --build
+
+docker compose exec app composer install
+docker compose exec app cp .env.example .env
+docker compose exec app php artisan key:generate
+docker compose exec app php artisan migrate --seed
+
+# queue dan scheduler dimulai sebelum dependency terpasang, restart setelah composer install
+docker compose restart queue scheduler
+```
+
+Buka:
+
+- Frontend: http://localhost:3000 (container frontend menjalankan `npm install` sendiri saat pertama kali, tunggu beberapa saat)
+- API: http://localhost:8000/api
+
+### Opsi B: Lokal tanpa Docker (SQLite)
+
+Prasyarat: PHP 8.2+, Composer, Node.js 20+.
+
+```bash
+git clone https://github.com/anoiumbys/xau-market-pro.git
+cd xau-market-pro/backend
+
+composer install
+cp .env.example .env
+php artisan key:generate
+```
+
+Edit `backend/.env` agar tidak membutuhkan MySQL dan Redis:
+
+```env
+DB_CONNECTION=sqlite
+# hapus atau komentari: DB_HOST, DB_PORT, DB_DATABASE, DB_USERNAME, DB_PASSWORD
+CACHE_STORE=file
+QUEUE_CONNECTION=sync
+SESSION_DRIVER=file
+```
+
+Buat file database kosong lalu migrasi:
+
+```bash
+# Linux / macOS / Git Bash
+touch database/database.sqlite
+# PowerShell
+# New-Item database/database.sqlite -ItemType File
+
+php artisan migrate --seed
+```
+
+Jalankan tiga proses di terminal terpisah:
+
+```bash
+# 1. API (http://localhost:8000)
+cd backend && php artisan serve
+
+# 2. Scheduler (tutup otomatis SL/TP dan cek price alert tiap menit)
+cd backend && php artisan schedule:work
+
+# 3. Frontend (http://localhost:3000)
+cd frontend && cp .env.example .env && npm install && npm run dev
+```
+
+Variabel frontend (`frontend/.env`):
+
+```env
+VITE_API_URL=http://localhost:8000/api
+VITE_TRADINGVIEW_SYMBOL=XAUUSD
+```
+
+## Akun demo
+
+Dibuat oleh `php artisan migrate --seed`. Khusus untuk pengembangan dan penilaian, jangan dipakai di lingkungan produksi.
+
+| Role | Email | Password |
+| --- | --- | --- |
+| Admin | `admin@xaupro.test` | `password123` |
+| Trader | `trader@xaupro.test` | `password123` |
+| Guest | `guest@xaupro.test` | `password123` |
+
+Panel admin ada di `/admin` (login sebagai admin).
+
+## Pengujian
+
+```bash
+# Frontend (Vitest, 34 tes: util, komponen UI, store, i18n)
+cd frontend
+npm run test -- --run
+
+# Backend
 cd backend
 php artisan test
-
-# With coverage
-php artisan test --coverage
 ```
 
-### Frontend Tests
-```bash
-cd frontend
-npm run test
+Tes frontend mencakup fungsi format dan helper warna, komponen `Button` dan `Badge`, store UI (sidebar, toast, tema), hook terjemahan, serta pemeriksaan bahwa ketiga file bahasa memiliki kunci yang identik.
 
-# With coverage
-npm run test -- --coverage
-```
+Kualitas kode otomatis dicek oleh CI: Laravel Pint (backend), ESLint, `tsc` dan Prettier (frontend).
 
-### Run All Tests
-```bash
-# From root directory
-npm run test
-```
+## CI/CD
 
-## 📝 API Documentation
+- `ci.yml`: berjalan di setiap push dan pull request ke `main` / `develop`. Isinya Pint, tes backend, ESLint + TypeScript + Prettier, tes frontend, build frontend, build image Docker, dan audit keamanan.
+- `deploy.yml`: template deploy via SSH, dijalankan manual (`workflow_dispatch`) dan membutuhkan secrets server.
+- `release.yml`: membuat rilis saat tag `v*` di-push atau dijalankan manual.
 
-API documentation is available via Swagger UI:
-- Local: http://localhost:8000/api/documentation
-- The API follows RESTful conventions
-- Authentication via Bearer tokens (Laravel Sanctum)
+<!--
+## Tampilan aplikasi
 
-## 🔐 Authentication
+Hapus tanda komentar bagian ini setelah file gambar ditambahkan ke docs/screenshots/.
 
-The platform uses Laravel Sanctum for API authentication:
+| Dashboard | Chart |
+| --- | --- |
+| ![Dashboard](docs/screenshots/dashboard.png) | ![Chart](docs/screenshots/chart.png) |
 
-1. **Register**: `POST /api/register`
-2. **Login**: `POST /api/login` - Returns Bearer token
-3. **Use token**: Include in headers: `Authorization: Bearer {token}`
-4. **Logout**: `POST /api/logout`
+| Jurnal | Panel admin |
+| --- | --- |
+| ![Jurnal](docs/screenshots/journal.png) | ![Admin](docs/screenshots/admin.png) |
+-->
 
-## 📊 Database Schema
+## Lisensi
 
-Key tables:
-- `users` - User accounts and profiles
-- `markets` - Market data and configurations
-- `subscriptions` - User subscription tiers
-- `price_alerts` - User-defined price alerts
-- `trade_journals` - Trading activity records
-- `market_parameters` - Technical indicators
-- `audit_logs` - System audit trail
-
-## 🚢 Deployment
-
-### Production Build
-
-```bash
-# Build frontend
-cd frontend
-npm run build
-
-# Optimize backend
-cd ../backend
-composer install --optimize-autoloader --no-dev
-php artisan config:cache
-php artisan route:cache
-php artisan view:cache
-```
-
-### Docker Production
-
-```bash
-docker-compose -f docker-compose.prod.yml up -d
-```
-
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
-
-### Code Standards
-- Backend: Laravel Pint for code style
-- Frontend: ESLint + Prettier
-- Run `npm run lint` before committing
-
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## 👥 Authors
-
-- **anoiumbys** - *Initial work* - [GitHub](https://github.com/anoiumbys)
-
-## 🙏 Acknowledgments
-
-- TradingView for charting library
-- Laravel & React communities
-- All contributors and supporters
-
-## 📞 Support
-
-For support, please open an issue in the GitHub repository or contact the maintainers.
-
----
-
-**Note**: This project is in active development. Features and documentation are subject to change.
-
-**Last Updated**: October 2026
+[MIT](LICENSE) © 2026 Firgiawan Zhaliam

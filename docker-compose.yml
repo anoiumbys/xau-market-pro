@@ -78,27 +78,6 @@ services:
     command: redis-server --appendonly yes
     restart: unless-stopped
 
-  # Laravel WebSockets Server
-  websockets:
-    build:
-      context: .
-      dockerfile: docker/php.Dockerfile
-    container_name: xaupro_websockets
-    working_dir: /var/www
-    volumes:
-      - ./backend:/var/www
-      - vendor_data:/var/www/vendor
-      - bootstrap_cache_data:/var/www/bootstrap/cache
-    networks:
-      - xaupro-network
-    depends_on:
-      - app
-      - redis
-    command: php artisan websockets:serve --host=0.0.0.0 --port=6001
-    ports:
-      - "6001:6001"
-    restart: unless-stopped
-
   # Queue Worker
   queue:
     build:
