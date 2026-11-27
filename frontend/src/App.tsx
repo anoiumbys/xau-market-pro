@@ -23,6 +23,7 @@ import { AdminJournalPage } from '@pages/admin/AdminJournalPage';
 import { AdminReportsPage } from '@pages/admin/AdminReportsPage';
 import { AdminSettingsPage } from '@pages/admin/AdminSettingsPage';
 import { NotFoundPage } from '@pages/NotFoundPage';
+import { DemoPage } from '@pages/DemoPage';
 
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
   const { isAuthenticated, isLoading, token } = useAuthStore();
@@ -65,6 +66,7 @@ export default function App() {
   return (
     <Routes>
       {/* Public routes */}
+      <Route path="/demo" element={<DemoPage />} />
       <Route path="/login" element={<LoginPage />} />
       <Route path="/register" element={<RegisterPage />} />
       <Route path="/forgot-password" element={<ForgotPasswordPage />} />
